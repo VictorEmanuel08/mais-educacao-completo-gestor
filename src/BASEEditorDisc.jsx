@@ -3,7 +3,6 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd'
 import { v4 as uuid } from 'uuid'
 import { IoMdPerson, IoMdExit } from 'react-icons/io'
 import { MdOutlineNotifications } from 'react-icons/md'
-import logo from '../assets/logo.png'
 // import ArtImg from '../assets/Capas/ART.png'
 // import GeoImg from '../assets/Capas/GEO.png'
 // import MatImg from '../assets/Capas/Mat.png'
@@ -11,35 +10,32 @@ import logo from '../assets/logo.png'
 // import QuiImg from '../assets/Capas/QUI.png'
 
 const itemsFromBackend = [
-  { id: uuid(), content: 'Thumbnail', assunto: 'Divisão e fração' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Adição' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Multiplicação' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Equações' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Álgebra' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Álgebra 2' }
+  { id: uuid(), content: '1' },
+  { id: uuid(), content: '2' },
+  { id: uuid(), content: '3' },
+  { id: uuid(), content: '4' },
+  { id: uuid(), content: '5' }
 ]
 
 const itemsAnother = [
-  { id: uuid(), content: 'Thumbnail', assunto: 'Divisão e fração' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Adição' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Revisão primeiro sem...' },
-  { id: uuid(), content: 'Thumbnail', assunto: 'Multiplicação' }
+  { id: uuid(), content: '6' },
+  { id: uuid(), content: '7' },
+  { id: uuid(), content: '8' },
+  { id: uuid(), content: '9' },
+  { id: uuid(), content: '10' }
 ]
 
 const columnsFromBackend = {
-  1: {
-    title: 'aulas',
-    name: 'Vídeo Aulas',
+  colunaEsquerda: {
+    name: '',
     items: itemsFromBackend
   },
-  2: {
-    title: 'disciplina',
-    name: 'Matemática > 1 ano',
+  colunaMeio: {
+    name: '',
     items: []
   },
-  3: {
-    title: 'atividades',
-    name: 'Atividades cadastradas',
+  colunaDireita: {
+    name: ' ',
     items: itemsAnother
   }
 }
@@ -84,18 +80,11 @@ const onDragEnd = (result, columns, setColumns) => {
 function App() {
   const [columns, setColumns] = useState(columnsFromBackend)
   return (
-    <div className="flex w-full h-screen font-sans bg-dark-theme ">
+    <div className="flex w-full min-h-screen font-sans bg-dark-theme ">
       {/* <DragDropContext> */}
-      <main className="text-2xl font-semibold flex-1 bg-dark-theme gap-6 ">
+      <main className="text-2xl font-semibold flex-1 bg-dark-theme gap-6">
         <div className="w-full h-16 bg-dark-purple relative">
-          <div className="p-4">
-            <img
-              src={logo}
-              alt="logo maisEducação"
-              className={`cursor-pointer duration-500 w-40`}
-            />
-          </div>
-          <div className="absolute top-8 right-5 text-white ">
+          <div className="absolute right-5 pt-5 text-white">
             <ul className="flex">
               <li className="pr-2">
                 <IoMdPerson />
@@ -110,7 +99,7 @@ function App() {
             {/* <div style={{ display: "flex", justifyContent: "center", height: "100%" }}> */}
           </div>
         </div>
-        <div className="flex flex-wrap h-fit justify-between bg-dark-purple leading-none pt-[40px]">
+        <div className="flex h-screen bg-dark-purple relative duration-300 p-6 pt-8">
           <DragDropContext
             onDragEnd={result => (
               console.log(result),
@@ -123,29 +112,10 @@ function App() {
             {Object.entries(columns).map(([columnId, column], index) => {
               return (
                 <div
-                  className={`flex flex-col
-                  ${columnId == 1 ? 'pl-4' : '0'}
-                  ${
-                    columnId == 2
-                      ? 'bg-[#ffffff] w-8/12 h-full flex mt-[-40px] border-x-[41px] border-y-[20px] border-[#EDF2FF] '
-                      : '0'
-                  }
-                  ${columnId == 3 ? 'flex items-center' : '0'}
-                  }`}
+                  className="flex flex-col items-center bg-black"
                   key={columnId}
                 >
-                  <h2
-                    className={`font-[sans-serif] text-[#FFFFFF] 
-                  ${columnId == 1 ? 'pr-4' : '0'}
-                  ${columnId == 2 ? 'text-dark-purple p-8' : '0'}
-                  ${columnId == 3 ? 'pr-4' : '0'}
-                    `}
-                  >
-                    {column.title == 'aulas' ? `${column.name}` : ''}
-                    {column.title == 'disciplina' ? `${column.name}` : ''}
-                    {column.title == 'atividades' ? `${column.name}` : ''}
-                  </h2>
-
+                  {/* <h2>{column.name}</h2> */}
                   <div style={{ margin: 8 }}>
                     <Droppable droppableId={columnId} key={columnId}>
                       {(provided, snapshot) => {
@@ -153,12 +123,12 @@ function App() {
                           <div
                             {...provided.droppableProps}
                             ref={provided.innerRef}
-                            className={`w-60 h-screen ${
-                              columnId == 2
-                                ? 'ml-4 w-11/12 border-dashed border-2 border-[#4263EB] rounded-lg p-4 ?'
-                                : '0'
-                            }
-                            `}
+                            style={{
+                              background: snapshot.isDraggingOver
+                                ? 'lightblue'
+                                : 'lightgrey'
+                            }}
+                            className="p-4 w-60 min-h-full"
                           >
                             {column.items.map((item, index) => {
                               return (
@@ -168,38 +138,33 @@ function App() {
                                   index={index}
                                 >
                                   {(provided, snapshot) => {
+                                    // const list = Array.from(item.content)
+                                    // list.push(item.id)
+                                    // console.log('Lista:', list)
+
+                                    // console.log(
+                                    //   `Nome do item: ${item.content} \nId do item: ${item.id} \nNome da coluna:${column.name} \nId da coluna: ${columnId}`
+                                    // )
+
                                     return (
                                       <div
                                         ref={provided.innerRef}
                                         {...provided.draggableProps}
                                         {...provided.dragHandleProps}
-                                        className={`select-none flex justify-center items-center flex-col mb-[18px] w-[213px] h-[123px] rounded-lg bg-[#369AFF] active:bg-[#263B4A] ${
-                                          column.title == 'disciplina' ? (
-                                            <div>oi</div>
-                                          ) : (
-                                            ''
-                                          )
-                                        }
-                                        `}
+                                        style={{
+                                          userSelect: 'none',
+                                          padding: 16,
+                                          margin: '0 0 8px 0',
+                                          minHeight: '50px',
+                                          backgroundColor: snapshot.isDragging
+                                            ? '#263B4A'
+                                            : '#456C86',
+                                          color: 'white',
+                                          ...provided.draggableProps.style
+                                        }}
                                       >
-                                        <p className="text-white pb-[10px] mt-[40px]">
-                                          {/* {item.content} */}
-                                          {column.title == 'aulas'
-                                            ? `${item.content}`
-                                            : ''}
-                                          {column.title == 'disciplina'
-                                            ? `${item.content}`
-                                            : ''}
-                                          {column.title == 'atividades'
-                                            ? `${item.content}`
-                                            : ''}
-                                        </p>
+                                        {item.content}
                                         {/* <img src={item.thumb} alt={'Thumb'} /> */}
-                                        <div className="flex items-center w-[213px] h-[35px] bg-[#FFFFFF] mt-[15px] rounded-b-lg">
-                                          <p className="text-[#4263EB] text-[15px] p-[10px]">
-                                            {item.assunto}
-                                          </p>
-                                        </div>
                                       </div>
                                     )
                                   }}
