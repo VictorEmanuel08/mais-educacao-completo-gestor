@@ -2,7 +2,7 @@ import { IoMdPerson, IoMdExit } from 'react-icons/io'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { Sidebar } from '../components/Sidebar'
 import { Calendario } from '../components/Calendario'
-import { ContentDisciplinas } from '../components/ContentDisciplinas'
+import  {ContentDisciplinas} from '../components/ContentDisciplinas'
 
 function Disciplinas() {
   return (

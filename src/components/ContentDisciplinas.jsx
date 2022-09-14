@@ -39,6 +39,7 @@ export function ContentDisciplinas() {
                         alt={disciplina.name}
                         className="w-64 h-36 rounded-lg"
                       />
+
                     </a>
                     <div className="absolute mt-28 ml-1 bg-[#FFFFFF] w-40 h-6 rounded-lg">
                       <p className="flex items-center mt-[-4px] justify-center text-[#585858] text-[18px] ">
