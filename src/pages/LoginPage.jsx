@@ -44,6 +44,7 @@ const LoginPage = () => {
         <form
           className="flex justify-center items-center  flex-col"
           onSubmit={handleSubmit}
+          
         >
           <input
             className="h-12 w-80 rounded-lg bg-[#ffffff] p-3 border-0 my-4 outline-none"

@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) =>{
         const recoveredUser = localStorage.getItem("user");
 
         if(recoveredUser) {
-            setUser(JSON.parse(recoveredUser));
+            setUser(recoveredUser);
         }
         setLoading(false);
     }, []);
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) =>{
         localStorage.setItem("token", token);
         app.defaults.headers.Authorization = `Bearer ${token}`;
         setUser({loggedUser});
-        navigate('/');
+        navigate('/home');
 
     };
     

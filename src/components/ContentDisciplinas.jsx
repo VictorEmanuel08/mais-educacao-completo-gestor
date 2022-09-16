@@ -35,7 +35,7 @@ export function ContentDisciplinas() {
                   >
                     <a href={`/editar-disciplinas/${disciplina.id}`}>
                       <img
-                        src={disciplina.icon}
+                        src={disciplina.bk_img}
                         alt={disciplina.name}
                         className="w-64 h-36 rounded-lg"
                       />
