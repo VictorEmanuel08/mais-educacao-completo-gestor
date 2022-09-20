@@ -21,170 +21,26 @@ export function Editordisc() {
       });
   }, []);
 
-  console.log("oi",disc[0])
-  // const itemsDisc = [{ id: disc.data["aulas_final"][title] }];
-  
-  const itemsFromBackend2 = disc
-  
+  // console.log(disc);
 
-  const itemsFromBackend = [
-    {
-			"id": "02feecf3-57c4-4e36-87b3-4482f19e129a",
-			"created_at": "2022-08-31T14:12:40.859Z",
-			"updated_at": "2022-09-05T13:55:43.025Z",
-			"hash": "596271s1jwq4348",
-			"title": "O tempo, formas de registro da História e prod. de conhecimento histórico",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/596271s1jwq4348/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/596271s1jwq4348/cover/cover1.jpg",
-			"time": "00:09:41.648",
-			"id_conteudo": "cfd833b9-5dd4-464a-9b5a-955b59e4b68a",
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "0bd8c75c-dd65-4a94-bddf-250f03a1c295",
-			"created_at": "2022-08-31T14:12:40.935Z",
-			"updated_at": "2022-09-05T13:55:53.560Z",
-			"hash": "yub221cvb1eq3d1",
-			"title": "O Mediterrâneo como espaço de inter. entre Europa, África e Oriente Médio",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/yub221cvb1eq3d1/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/yub221cvb1eq3d1/cover/cover1.jpg",
-			"time": "00:06:57.684",
-			"id_conteudo": "cfd833b9-5dd4-464a-9b5a-955b59e4b68a",
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "179e0422-901a-49de-9c0c-4e58625a807d",
-			"created_at": "2022-08-31T14:12:40.954Z",
-			"updated_at": "2022-09-05T13:51:21.031Z",
-			"hash": "4158d5ftk101vrs",
-			"title": "O papel da religião cristã, dos mosteiros e da cultura da Idade Média",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/4158d5ftk101vrs/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/4158d5ftk101vrs/cover/cover1.jpg",
-			"time": "00:09:22.829",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "1ed5839c-59f2-4a48-952d-b0b722e1d723",
-			"created_at": "2022-08-31T14:12:40.924Z",
-			"updated_at": "2022-09-05T13:51:20.983Z",
-			"hash": "k1oueue151622l3",
-			"title": "A pass do mundo antigo para o medieval e a frag. política do ocidente euro",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/k1oueue151622l3/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/k1oueue151622l3/cover/cover1.jpg",
-			"time": "00:08:22.236",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "2519eb86-9c23-4cae-92f3-4f01a1bbf0f4",
-			"created_at": "2022-08-31T14:12:40.903Z",
-			"updated_at": "2022-09-05T13:51:20.962Z",
-			"hash": "9zw1w0r9ma9w4v4",
-			"title": "Formação política na Grécia Antiga e o conceito de cidadania",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/9zw1w0r9ma9w4v4/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/9zw1w0r9ma9w4v4/cover/cover1.jpg",
-			"time": "00:08:48.462",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "28e28c85-44ad-4b38-8407-296c37a7717d",
-			"created_at": "2022-08-31T14:12:40.873Z",
-			"updated_at": "2022-09-05T13:51:20.923Z",
-			"hash": "52zi2k2r26l1q2d",
-			"title": "As origens da humanidade, seus deslocamentos e processos de sedentarização",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/52zi2k2r26l1q2d/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/52zi2k2r26l1q2d/cover/cover1.jpg",
-			"time": "00:11:27.854",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "331fc4ee-58f9-4b57-8f74-f79efbfe85f7",
-			"created_at": "2022-08-31T14:12:40.894Z",
-			"updated_at": "2022-09-05T13:51:20.948Z",
-			"hash": "556pyoe51qo066g",
-			"title": "O Ocidente clássico_ aspectos da Cultura da Grécia e de Roma",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/556pyoe51qo066g/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/556pyoe51qo066g/cover/cover1.jpg",
-			"time": "00:09:33.974",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "951ccb29-c115-43e1-9018-5bf15133b57f",
-			"created_at": "2022-08-31T14:12:40.914Z",
-			"updated_at": "2022-09-05T13:51:20.972Z",
-			"hash": "yl4pfni6rm21010",
-			"title": "Formação política na Roma Antiga e o conceito de império",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/yl4pfni6rm21010/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/yl4pfni6rm21010/cover/cover1.jpg",
-			"time": "00:07:40.494",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "af38d8e1-0de4-4d2c-b047-97790c8c7268",
-			"created_at": "2022-08-31T14:12:40.944Z",
-			"updated_at": "2022-09-05T13:51:21.003Z",
-			"hash": "1x2yazl8671qnaz",
-			"title": "Escravos e servos no mundo antigo e medieval",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/1x2yazl8671qnaz/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/1x2yazl8671qnaz/cover/cover1.jpg",
-			"time": "00:08:55.469",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "bceca956-ae00-4ac5-b05f-394251691232",
-			"created_at": "2022-08-31T14:12:40.883Z",
-			"updated_at": "2022-09-05T13:51:20.935Z",
-			"hash": "qa5648q5m2sozgy",
-			"title": "Povos da Antiguidade nas Américas, na África e no Oriente Médio",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/qa5648q5m2sozgy/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/qa5648q5m2sozgy/cover/cover1.jpg",
-			"time": "00:08:25.772",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		},
-		{
-			"id": "dd227988-a100-4380-91a0-83ae59790756",
-			"created_at": "2022-08-31T14:12:40.961Z",
-			"updated_at": "2022-09-05T13:51:21.041Z",
-			"hash": "5c00k2gq26j2001",
-			"title": "O papel da mulher na Grécia, Roma e Europa medieval",
-			"file": "https://cdn.jmvstream.com/vod/vod_11696/f/5c00k2gq26j2001/h/4/playlist.m3u8",
-			"rating": null,
-			"thumb": "https://cdn.jmvstream.com/vod/vod_11696/f/5c00k2gq26j2001/cover/cover1.jpg",
-			"time": "00:09:39.179",
-			"id_conteudo": null,
-			"id_serie": "f076177d-ea29-4695-87bb-14a0a8a29c7b",
-			"id_disciplina": "0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
-		}
-  ]
+  const totais = []
+  const cont = []
+  const nomes = []
 
-  console.log(disc==itemsFromBackend2)
+  // for(let i=0; i < disc.length; i++){
+  disc.map((aula) => {
+    // console.log(aula.id)
+    totais.push(aula.id);
+    cont.push(aula.thumb);
+    nomes.push(aula.title);
+  });
+  // console.log(totais)
+  // console.log(nomes)
+  // }
+
+  const itemsUsados = [{ id: totais, content: cont, assunto: nomes }];
+
+  console.log(itemsUsados);
 
   const itemsAnother = [
     { id: uuid(), content: "Thumbnail", assunto: "Divisão e fração" },
@@ -197,7 +53,7 @@ export function Editordisc() {
     1: {
       title: "aulas",
       name: "Vídeo Aulas",
-      items: itemsFromBackend2,
+      items: itemsUsados,
     },
     2: {
       title: "disciplina",
@@ -348,20 +204,21 @@ export function Editordisc() {
                                       >
                                         <p className="text-white pb-[10px] mt-[40px]">
                                           {/* {item.content} */}
+                                          {/* <img src={item.thumb} /> */}
                                           {column.title == "aulas"
-                                            ? `${item.thumb}`
+                                            ? `${item.assunto}`
                                             : ""}
                                           {column.title == "disciplina"
-                                            ? `${item.thumb}`
+                                            ? `${item.assunto}`
                                             : ""}
                                           {column.title == "atividades"
-                                            ? `${item.thumb}`
+                                            ? `${item.assunto}`
                                             : ""}
                                         </p>
                                         {/* <img src={item.thumb} alt={'Thumb'} /> */}
                                         <div className="flex items-center w-[213px] h-[35px] bg-[#FFFFFF] mt-[15px] rounded-b-lg">
                                           <p className="text-[#4263EB] text-[15px] p-[10px]">
-                                            {item.title}
+                                            {item.assunto}
                                           </p>
                                         </div>
                                       </div>
