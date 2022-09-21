@@ -3,8 +3,17 @@ import { MdOutlineNotifications } from 'react-icons/md'
 import { Sidebar } from '../components/Sidebar'
 import { Calendario } from '../components/Calendario'
 import { ContentHome } from '../components/ContentHome'
+import { useNavigate } from 'react-router-dom'
 
 function Home() {
+
+  const navigate = useNavigate()
+
+  const logout = () => {
+    localStorage.removeItem('token')
+    navigate('/')
+  }
+
   return (
     <div className="flex w-full min-h-screen font-sans bg-dark-theme">
       <Sidebar />
@@ -19,7 +28,7 @@ function Home() {
                 <MdOutlineNotifications />
               </li>
               <li className="pr-2">
-                <IoMdExit />
+                <IoMdExit onClick={logout} className="cursor-pointer" alt="sair"/>
               </li>
             </ul>
           </div>

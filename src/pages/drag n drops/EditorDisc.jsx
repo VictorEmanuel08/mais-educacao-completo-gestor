@@ -3,8 +3,8 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { v4 as uuid } from "uuid";
 import { IoMdPerson, IoMdExit } from "react-icons/io";
 import { MdOutlineNotifications } from "react-icons/md";
-import logo from "../assets/logo.png";
-import { app } from "../api/app";
+import logo from "../../assets/logo.png";
+import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 
 export function Editordisc() {
@@ -118,7 +118,7 @@ export function Editordisc() {
               className={`cursor-pointer duration-500 w-40`}
             />
           </div>
-          <div className="absolute top-8 right-5 text-white ">
+          <div className="absolute top-5 right-5 text-white ">
             <ul className="flex">
               <li className="pr-2">
                 <IoMdPerson />

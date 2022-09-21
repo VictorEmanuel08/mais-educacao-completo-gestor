@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { app } from "../api/app";
+import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 import _ from "lodash";
 import { v4 } from "uuid";
