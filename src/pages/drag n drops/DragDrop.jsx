@@ -5,10 +5,13 @@ import logo from "../../assets/logo.png";
 import { IoMdPerson, IoMdExit } from "react-icons/io";
 import { MdNewLabel, MdOutlineNotifications } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export function DragDrop() {
-  //   const [activeIndex, setActiveIndex] = useState(0);
+  // const dispatch = useDispatch()
+  const [activeIndex, setActiveIndex] = useState(0);
+
   const { id } = useParams();
 
   const [disc, setDisc] = useState([]);
@@ -21,6 +24,18 @@ export function DragDrop() {
       });
   }, []);
 
+  // useEffect(() => {
+  //   const getDisc = async () => {
+  //     try {
+  //       const res = await app.getAll()
+  //       dispatch(setDisc(res))
+  //     } catch (err) {
+  //       alert(err)
+  //     }
+  //   }
+  //   getDisc()
+  // }, [dispatch])
+
   const navigate = useNavigate();
 
   const logout = () => {
@@ -32,15 +47,21 @@ export function DragDrop() {
     navigate("/home");
   };
 
-  //   const onDragEnd = ({source, destination}) => {
-  //     const newList = [...disc]
-  //     const [removed] = newList.splice(source.index, 1)
-  //     newList.splice(destination.index, 0, removed)
+  // const onDragEnd = async ({ source, destination }) => {
+  //   const newList = [...disc];
+  //   const [removed] = newList.splice(source.index, 1);
+  //   newList.splice(destination.index, 0, removed);
 
-  //     const activeItem = newList.findIndex(e => e.id === discId)
-  //     setActiveIndex(activeIndex)
-  //     dispatchEvent(setBoards)
-  //   };
+    // const activeItem = newList.findIndex((e) => e.id === boardId);
+    // setActiveIndex(activeItem);
+    // dispatch(setBoards(newList));
+
+    // try {
+    //   await boardApi.updatePositoin({ boards: newList });
+    // } catch (err) {
+    //   alert(err);
+    // }
+  // };
 
   const columnsFromBackend = {
     1: {

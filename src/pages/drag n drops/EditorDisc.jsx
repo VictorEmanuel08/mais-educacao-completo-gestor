@@ -21,26 +21,49 @@ export function Editordisc() {
       });
   }, []);
 
-  // console.log(disc);
+  const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   const newDados = disc.map((valor, i) => ({
+  //     valor,
+  //     discar: disc[1]
+  //   }));
+  // });
+
+  const newData = disc.map((valor, i) => ({
+    valor,
+    discar: disc[i]
+  }));
+
+  console.log(newData)
 
   const totais = []
-  const cont = []
+  const conts = []
   const nomes = []
 
-  // for(let i=0; i < disc.length; i++){
+  // const total = "";
+  // const cont = "";
+  // const nome = "";
+  const itemsUsados = [];
+
   disc.map((aula) => {
-    // console.log(aula.id)
+    // const total = aula.id;
+    // const cont = aula.thumb;
+    // const nome = aula.title;
+
     totais.push(aula.id);
-    cont.push(aula.thumb);
+    conts.push(aula.thumb);
     nomes.push(aula.title);
+    // console.log(nome)
+
+    // itemsUsados.push([{ id: total, content: cont, assunto: nome }]);
+    // console.log(itemsUsados);
+    itemsUsados.push({ id: totais, content: conts, assunto: nomes });
   });
-  // console.log(totais)
-  // console.log(nomes)
-  // }
+  
 
-  const itemsUsados = [{ id: totais, content: cont, assunto: nomes }];
 
-  console.log(itemsUsados);
+  //  console.log(itemsUsados);
 
   const itemsAnother = [
     { id: uuid(), content: "Thumbnail", assunto: "Divisão e fração" },
@@ -53,7 +76,7 @@ export function Editordisc() {
     1: {
       title: "aulas",
       name: "Vídeo Aulas",
-      items: itemsUsados,
+      items: itemsAnother,
     },
     2: {
       title: "disciplina",
@@ -206,13 +229,13 @@ export function Editordisc() {
                                           {/* {item.content} */}
                                           {/* <img src={item.thumb} /> */}
                                           {column.title == "aulas"
-                                            ? `${item.assunto}`
+                                            ? `${item.content}`
                                             : ""}
                                           {column.title == "disciplina"
-                                            ? `${item.assunto}`
+                                            ? `${item.content}`
                                             : ""}
                                           {column.title == "atividades"
-                                            ? `${item.assunto}`
+                                            ? `${item.content}`
                                             : ""}
                                         </p>
                                         {/* <img src={item.thumb} alt={'Thumb'} /> */}
