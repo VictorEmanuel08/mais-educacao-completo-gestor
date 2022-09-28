@@ -1,20 +1,18 @@
-import React, { useState, useContext } from "react";
-import { AuthContext } from "../context/auth";
-import { IoMdPerson, IoMdExit } from 'react-icons/io'
-import { MdOutlineNotifications } from 'react-icons/md'
-import { Sidebar } from '../components/Sidebar'
-import { Calendario } from '../components/Calendario'
-import  {ContentDisciplinas} from '../components/ContentDisciplinas'
+import { IoMdPerson, IoMdExit } from "react-icons/io";
+import { MdOutlineNotifications } from "react-icons/md";
+import { Sidebar } from "../components/Sidebar";
+import { Calendario } from "../components/Calendario";
+import { useNavigate } from 'react-router-dom'
+import ContentDados from "../components/ContentDados";
 
-function Disciplinas() {
+function Dados() {
+  const navigate = useNavigate();
 
-  const { logout } = useContext(AuthContext);
+  const logout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    logout();
-  }
   return (
     <div className="flex w-full min-h-screen font-sans bg-dark-theme">
       <Sidebar />
@@ -29,17 +27,24 @@ function Disciplinas() {
                 <MdOutlineNotifications />
               </li>
               <li className="pr-2">
-                <IoMdExit onClick={handleSubmit} className="cursor-pointer"/>
+                <IoMdExit
+                  onClick={logout}
+                  className="cursor-pointer"
+                  alt="sair"
+                />
               </li>
             </ul>
           </div>
         </div>
         <div className="flex pt-5">
-          <ContentDisciplinas />
+          <ContentDados/>
           <Calendario />
         </div>
       </main>
+
+      <aside></aside>
     </div>
-  )
+  );
 }
-export default Disciplinas
+
+export default Dados

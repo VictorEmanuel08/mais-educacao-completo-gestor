@@ -1,3 +1,5 @@
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../context/auth";
 import { IoMdPerson, IoMdExit } from 'react-icons/io'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { Sidebar } from '../components/Sidebar'
@@ -7,11 +9,16 @@ import { useNavigate } from 'react-router-dom'
 
 function Home() {
 
+  const { logout } = useContext(AuthContext);
   const navigate = useNavigate()
 
-  const logout = () => {
-    localStorage.removeItem('token')
-    navigate('/')
+  const [mat, setMat] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    logout();
   }
 
   return (
@@ -28,7 +35,7 @@ function Home() {
                 <MdOutlineNotifications />
               </li>
               <li className="pr-2">
-                <IoMdExit onClick={logout} className="cursor-pointer" alt="sair"/>
+                <IoMdExit onClick={handleSubmit} className="cursor-pointer" alt="sair"/>
               </li>
             </ul>
           </div>

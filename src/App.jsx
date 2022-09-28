@@ -1,13 +1,14 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
+import { Login } from "./pages/Login";
 import Home from "./pages/Home";
 import Disciplinas from "./pages/Disciplinas";
+import Dados from "./pages/Dados";
 import { Editordisc } from "./pages/drag n drops/EditorDisc";
 import { NewEditDisc } from "./pages/drag n drops/NewEditDisc";
+import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
 import { DragDrop } from "./pages/drag n drops/DragDrop";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
-import { Login } from "./pages/Login";
-import { MoveSelect } from "./pages/drag n drops/MoveSelect";
 
 function App() {
   return (
@@ -31,14 +32,7 @@ function App() {
               </Private>
             }
           />
-          <Route
-            path="/teste/:id"
-            element={
-              <Private>
-                <MoveSelect />
-              </Private>
-            }
-          />
+
           <Route
             path="/editar-disciplinas/:id"
             element={
@@ -60,6 +54,22 @@ function App() {
             element={
               <Private>
                 <DragDrop />
+              </Private>
+            }
+          />
+          <Route
+            path="/dados"
+            element={
+              <Private>
+                <Dados />
+              </Private>
+            }
+          />
+          <Route
+            path="/ItemNewEdit/:id"
+            element={
+              <Private>
+                <ItemNewEdit />
               </Private>
             }
           />

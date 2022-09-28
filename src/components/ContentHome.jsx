@@ -1,5 +1,5 @@
 import banner from "../assets/banner.png";
-import { PerfilData } from "./PerfilData";
+import PerfilData  from "./PerfilData";
 
 export function ContentHome() {
   return (

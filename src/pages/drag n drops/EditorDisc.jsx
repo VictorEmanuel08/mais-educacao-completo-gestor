@@ -17,61 +17,44 @@ export function Editordisc() {
       .get(`/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/${id}`)
       .then((response) => {
         setDisc(response.data["aulas_final"]);
-        // console.log(response.data["aulas_final"]);
       });
   }, []);
 
-  const [data, setData] = useState([]);
+  const totais = [];
+  const conts = [];
+  const nomes = [];
 
-  // useEffect(() => {
-  //   const newDados = disc.map((valor, i) => ({
-  //     valor,
-  //     discar: disc[1]
-  //   }));
-  // });
-
-  const newData = disc.map((valor, i) => ({
-    valor,
-    discar: disc[i]
-  }));
-
-  console.log(newData)
-
-  const totais = []
-  const conts = []
-  const nomes = []
-
-  // const total = "";
-  // const cont = "";
-  // const nome = "";
   const itemsUsados = [];
 
   disc.map((aula) => {
-    // const total = aula.id;
-    // const cont = aula.thumb;
-    // const nome = aula.title;
-
     totais.push(aula.id);
     conts.push(aula.thumb);
     nomes.push(aula.title);
-    // console.log(nome)
 
-    // itemsUsados.push([{ id: total, content: cont, assunto: nome }]);
-    // console.log(itemsUsados);
-    itemsUsados.push({ id: totais, content: conts, assunto: nomes });
+    // itemsUsados.push({ id: totais, content: conts, assunto: nomes });
   });
+
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  // const teste = newData[0]
+  let newData = disc.map((valor, i) => ({
+    valor,
+    total: totais[i],
+    cont: conts[i],
+    nome: nomes[i],
+  }));
+
+  console.log(typeof newData);
+  console.log(newData);
   
-
-
-  //  console.log(itemsUsados);
-
   const itemsAnother = [
     { id: uuid(), content: "Thumbnail", assunto: "Divisão e fração" },
     { id: uuid(), content: "Thumbnail", assunto: "Adição" },
     { id: uuid(), content: "Thumbnail", assunto: "Revisão primeiro sem..." },
     { id: uuid(), content: "Thumbnail", assunto: "Multiplicação" },
   ];
-
+  
   const columnsFromBackend = {
     1: {
       title: "aulas",
@@ -83,13 +66,10 @@ export function Editordisc() {
       name: "Matemática > 1 ano",
       items: [],
     },
-    // 3: {
-    //   title: "atividades",
-    //   name: "Atividades cadastradas",
-    //   items: itemsAnother,
-    // },
   };
 
+  console.log(itemsAnother);
+  
   const [columns, setColumns] = useState(columnsFromBackend);
 
   const onDragEnd = (result, columns, setColumns) => {

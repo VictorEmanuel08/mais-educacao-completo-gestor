@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { IoMdPerson, IoMdExit } from "react-icons/io";
+import { MdOutlineNotifications } from "react-icons/md";
+import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
-import _ from "lodash";
-import { v4 } from "uuid";
+import { ItemNewEdit } from "./items/ItemNewEdit";
 
 export function NewEditDisc() {
   const { id } = useParams();
@@ -18,121 +20,58 @@ export function NewEditDisc() {
       });
   }, []);
 
-  // console.log(disc);
-
-  const item = {
-    id: v4(),
-    thumb: "Clean the house 1",
-  };
-
-  const item2 = {
-    id: v4(),
-    thumb: "Clean the house 2",
-  };
-
-  const totais = []
-  const cont = [];
-  const nomes = [];
-
-  // for (let i = 0; i < disc.id; i++) {
-  disc.map((aula) => {
-    totais.push(aula.id);
-    cont.push(aula.thumb);
-    nomes.push(aula.title);
-  });
-  // }
-
-  const itemsUsados = { 'id': totais, 'content': cont, 'assunto': nomes };
-
-  console.log(itemsUsados);
-
-
-  const [state, setState] = useState({
-    todo: {
-      title: "Vídeo Aulas",
-      items: [item],
-    },
-    progress: {
-      title: "Aulas",
-      items: [],
-    },
-  });
-
-  const handleDragEnd = ({ destination, source }) => {
-    if (!destination) {
-      return;
-    }
-    if (
-      destination.index === source.index &&
-      destination.droppableId === source.droppableId
-    ) {
-      return;
-    }
-
-    //criando uma cópia do item antes de removê-lo do estado
-    const itemCopy = { ...state[source.droppableId].items[source.index] };
-    setState((prev) => {
-      prev = { ...prev };
-      //remove o array items de previous
-      prev[source.droppableId].items.splice(source.index, 1);
-
-      //adiciona o novo array de items ao local
-      prev[destination.droppableId].items.splice(
-        destination.index,
-        0,
-        itemCopy
-      );
-
-      return prev;
-    });
-  };
-
   return (
-    <div className="flex w-full justify-around">
-      <DragDropContext onDragEnd={handleDragEnd}>
-        {_.map(state, (data, key) => {
-          return (
-            <div key={key} className="w-5/12 flex flex-col">
-              <h3>{data.title}</h3>
-              <Droppable droppableId={key}>
-                {(provided, snapshot) => {
-                  return (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.droppableProps}
-                      className="w-full bg-[#808080] py-0.5 px-0.5 rounded-md flex flex-col"
-                    >
-                      {data.items.map((el, index) => {
-                        return (
-                          <Draggable
-                            key={el.id}
-                            index={index}
-                            draggableId={el.id}
-                          >
-                            {(provided, snapshot) => {
-                              return (
-                                <div
-                                  ref={provided.innerRef}
-                                  {...provided.draggableProps}
-                                  {...provided.dragHandleProps}
-                                  className="mb-[10px] text-white p-[5px] border-solid border-2 border-white rounded-md hover:bg-[#123456] active:bg-[#000000]"
-                                >
-                                  {el.thumb}
-                                </div>
-                              );
-                            }}
-                          </Draggable>
-                        );
-                      })}
-                      {provided.placeholder}
-                    </div>
-                  );
-                }}
-              </Droppable>
+    <div className="flex w-full h-screen font-sans bg-dark-theme ">
+      <main className="text-2xl font-semibold flex-1 bg-dark-theme gap-6 ">
+        <div className="w-full h-16 bg-dark-purple relative">
+          <div className="p-4">
+            <img
+              src={logo}
+              alt="logo maisEducaÃ§ÃĢo"
+              className={`cursor-pointer duration-500 w-40`}
+            />
+          </div>
+          <div className="absolute top-5 right-5 text-white ">
+            <ul className="flex">
+              <li className="pr-2">
+                <IoMdPerson />
+              </li>
+              <li className="pr-2">
+                <MdOutlineNotifications />
+              </li>
+              <li className="pr-2">
+                <IoMdExit />
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="p-10">
+          <div className="flex justify-between">
+            <div className="flex items-center">
+              {/* <div className="flex h-fit bg-dark-purple leading-none pt-[40px]">
+                <h4 className="font-[sans-serif] text-[#FFFFFF]">
+                  Vídeo Aulas
+                </h4>
+              </div> */}
             </div>
-          );
-        })}
-      </DragDropContext>
+          </div>
+
+          {/* Board columns */}
+          <div className="grid grid-cols-4 gap-5 my-5">
+            <div className="bg-dark-purple p-3">
+              <h4 className="flex justify-between items-center">
+                <span className="text-2xl text-[#FFFFFF]">Video Aulas</span>
+              </h4>
+              <div className="p-3">
+                <div className="flex h-fit bg-dark-purple leading-none pt-[40px]">
+                  <ItemNewEdit />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
     </div>
   );
 }
