@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import { IoMdPerson, IoMdExit } from "react-icons/io";
-import { MdOutlineNotifications } from "react-icons/md";
-// import logo from "../../assets/logo.png";
+import MenuIcon from "@mui/icons-material/Menu";
 import { app } from "../../../api/app";
 import { useParams } from "react-router-dom";
 
-export function ItemNewEdit() {
+export function ItemNewEdit(data) {
   const { id } = useParams();
 
   const [disc, setDisc] = useState([]);
@@ -17,23 +15,20 @@ export function ItemNewEdit() {
       .then((response) => {
         setDisc(response.data["aulas_final"]);
       });
+      console.log(disc)
   }, []);
 
   return (
-    <div className="p-3">
+    <div className="bg-dark-purple">
       {disc.map((aula) => {
         return (
           <div
             key={aula.id}
-            className="select-none flex justify-center items-center flex-col mb-[18px] w-[213px] h-[123px] rounded-lg bg-[#369AFF] active:bg-[#263B4A]"
+            className="cursor-pointer flex justify-center items-center flex-col mb-[30px] w-[200px] h-[100px] rounded-lg"
           >
-            <a className="pb-[10px] mt-[40px]">
+            <a className="flex flex-row items-center ">
+              <MenuIcon className="text-[#FFFFFF] active:text-[#263B4A] opacity-1" />
               <img src={aula.thumb} />
-              <div className="flex items-center w-full h-full bg-[#FFFFFF] mt-[15px] rounded-b-lg">
-                <p className="text-[#4263EB] text-[15px] p-[10px]">
-                  {aula.title}
-                </p>
-              </div>
             </a>
           </div>
         );

@@ -10,15 +10,27 @@ import { ItemNewEdit } from "./items/ItemNewEdit";
 export function NewEditDisc() {
   const { id } = useParams();
 
-  const [disc, setDisc] = useState([]);
+  const [aula, setAula] = useState([]);
 
   useEffect(() => {
-    app
-      .get(`/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/${id}`)
-      .then((response) => {
-        setDisc(response.data["aulas_final"]);
-      });
+    const getData = async () => {
+      const response = await app.get(
+        "/escolas/users/professores/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
+      );
+      setAula(response.data);
+    };
+    getData();
+    // app
+    //   .get(
+    //     "/escolas/users/professores/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
+    //   )
+    //   .then((response) => {
+    //     setAula(response.data["aulas"].items);
+    //     console.log(aula)
+    //   });
   }, []);
+
+  // console.log(aula)
 
   return (
     <div className="flex w-full h-screen font-sans bg-dark-theme ">
@@ -46,30 +58,41 @@ export function NewEditDisc() {
           </div>
         </div>
 
-        <div className="p-10">
-          <div className="flex justify-between">
-            <div className="flex items-center">
-              {/* <div className="flex h-fit bg-dark-purple leading-none pt-[40px]">
-                <h4 className="font-[sans-serif] text-[#FFFFFF]">
-                  Vídeo Aulas
+        <div className="grid grid-cols-3 gap-0">
+          {Object.entries(aula).map((board, index) => {
+            console.log(board[1].items);
+            return (
+              <div key={index} className="bg-dark-purple p-3 w-[300px]">
+                <h4 className="flex justify-between items-center">
+                  <span className="text-2xl text-[#FFFFFF] mt-4 mb-2 ">
+                    <p>{board[1].name}</p>
+                    {/* {board[1].items.map((conteudos) => {
+                      // console.log(conteudos);
+                      return (
+                        <div key={conteudos.id}>
+                          <a>
+                            <img src={conteudos.thumb} />
+                          </a>
+                        </div>
+                      );
+                    })} */}
+                  </span>
                 </h4>
-              </div> */}
-            </div>
-          </div>
 
-          {/* Board columns */}
-          <div className="grid grid-cols-4 gap-5 my-5">
-            <div className="bg-dark-purple p-3">
-              <h4 className="flex justify-between items-center">
-                <span className="text-2xl text-[#FFFFFF]">Video Aulas</span>
-              </h4>
-              <div className="p-3">
-                <div className="flex h-fit bg-dark-purple leading-none pt-[40px]">
-                  <ItemNewEdit />
-                </div>
+                {board[1].items.lenght > 0 &&
+                  board[1].items.map((item, iIndex) => {
+                    return (
+                      <div>
+                        {" "}
+                        <ItemNewEdit key={iIndex} data={item} /> asasass{" "}
+                      </div>
+                    );
+                  })}
+
+                {/* <div className="p-3"><ItemNewEdit /></div> */}
               </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </main>
     </div>
