@@ -36,9 +36,10 @@ function Dados() {
             </ul>
           </div>
         </div>
-        <div className="flex pt-5">
+        {/* <div className="grid grid-cols-2 gap-2"> */}
+        <div className="flex pt-6 space-x-20 ">
           <ContentDados/>
-          <Calendario />
+          <Calendario className=""/>
         </div>
       </main>
 

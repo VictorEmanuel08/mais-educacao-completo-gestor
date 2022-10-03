@@ -7,7 +7,7 @@ import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 
-export function Editordisc() {
+export function BackupEditorDisc() {
   const { id } = useParams();
 
   const [disc, setDisc] = useState([]);

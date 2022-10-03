@@ -6,9 +6,8 @@ import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 import { ItemNewEdit } from "./items/ItemNewEdit";
-import MenuIcon from "@mui/icons-material/Menu";
 
-export function NewEditDisc() {
+export function EditDisc() {
   const { id } = useParams();
 
   const [aula, setAula] = useState([]);

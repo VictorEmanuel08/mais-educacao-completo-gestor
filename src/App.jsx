@@ -3,12 +3,11 @@ import { Login } from "./pages/Login";
 import Home from "./pages/Home";
 import Disciplinas from "./pages/Disciplinas";
 import Dados from "./pages/Dados";
-import { Editordisc } from "./pages/drag n drops/EditorDisc";
-import { NewEditDisc } from "./pages/drag n drops/NewEditDisc";
 import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
-import { DragDrop } from "./pages/drag n drops/DragDrop";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
+import { EditDisc } from "./pages/drag n drops/EditDisc";
+import { BackupEditorDisc } from "./pages/drag n drops/BackupEditorDisc";
 
 function App() {
   return (
@@ -34,26 +33,18 @@ function App() {
           />
 
           <Route
+            path="/editar-disciplinas-backup/:id"
+            element={
+              <Private>
+                <BackupEditorDisc />
+              </Private>
+            }
+          />
+          <Route
             path="/editar-disciplinas/:id"
             element={
               <Private>
-                <Editordisc />
-              </Private>
-            }
-          />
-          <Route
-            path="/new-editar-disciplinas/:id"
-            element={
-              <Private>
-                <NewEditDisc />
-              </Private>
-            }
-          />
-          <Route
-            path="/dragdrop/:id"
-            element={
-              <Private>
-                <DragDrop />
+                <EditDisc />
               </Private>
             }
           />

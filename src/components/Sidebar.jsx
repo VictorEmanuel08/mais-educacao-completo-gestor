@@ -22,7 +22,7 @@ export function Sidebar() {
     <div
       className={`${
         open ? 'w-72' : 'w-20'
-      } h-screen bg-dark-purple relative duration-300 p-6 pt-8`}
+      } min-h-screen bg-dark-purple relative duration-300 p-6 pt-8`}
     >
       {open ? (
         <img

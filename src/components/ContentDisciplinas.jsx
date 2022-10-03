@@ -25,10 +25,10 @@ export function ContentDisciplinas() {
 
   return (
     <div>
-      <div className="w-full px-5 ml-3">
+      <div className="w-full pl-12">
         <div className="w-[60rem] flex flex-col p-6 pt-6 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
           <div className="flex justify-between flex-col">
-            <h1 className="text-[#4263EB] text-[20px] text-left">
+            <h1 className="text-[#4263EB] font-semibold text-left">
               Disciplinas
             </h1>
             {series.map((serie) => {

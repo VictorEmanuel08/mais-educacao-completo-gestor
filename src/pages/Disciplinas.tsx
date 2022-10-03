@@ -34,7 +34,7 @@ function Disciplinas() {
             </ul>
           </div>
         </div>
-        <div className="flex pt-5">
+        <div className="flex pt-6 space-x-20">
           <ContentDisciplinas />
           <Calendario />
         </div>
