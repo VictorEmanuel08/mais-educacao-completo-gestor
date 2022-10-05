@@ -25,7 +25,7 @@ export default function PerfilData() {
 
   return (
         <div className=" w-full px-2">
-          <div className="w-full h-52 p-6 grid grid-cols-2 text-center py-8">
+          <div className="w-full h-52 p-6 grid grid-cols-2 gap-6 text-center py-8 pl-12">
             <div className="shadow-md rounded-md bg-dark-purple w-full py-2 pt-2">
               <h2 className="text-center text-[16px] font-semibold text-[#FFF]">
                 {nameProf}
