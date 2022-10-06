@@ -1,12 +1,22 @@
 import ApexChart from "react-apexcharts";
-import Chart from "react-apexcharts";
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import DownloadIcon from "@mui/icons-material/Download";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+import { app } from "../api/app";
 
 function ContentDados() {
+  const [notas, setNotas] = useState([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await app.get("");
+      setNotas(response.data);
+    };
+    getData();
+  }, []);
+
   const optionsArea = {
     chart: {
       height: 350,
@@ -88,6 +98,10 @@ function ContentDados() {
     />
   );
 
+  const MostrarNome = ({}) => {
+    console.log("oi");
+  };
+
   return (
     <div className="flex flex-col ml-12 w-full">
       <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
@@ -147,46 +161,47 @@ function ContentDados() {
           <p className="text-[#02C4B2] text-[45px] font-semibold ">
             UEB Primavera
           </p>
-          <p className="text-[#748FFC] text-[25px] font-semibold mt-8 pb-12 border-b border-[#4263EB]">
+          <p className="text-[#748FFC] text-[25px] font-semibold mt-2 pb-8 border-b border-[#4263EB]">
             Física - 3 ano
           </p>
         </div>
-        <div className="grid grid-cols-3 gap-3 mt-10 mb-12 px-10">
-          <div className="flex flex-col">
-            <p className="text-[#02C4B2] text-[24px] font-bold">
+        <div className="w-full flex flex-row justify-between mt-10 mb-12 px-16">
+          <div className="flex flex-col w-1/3">
+            <p className="text-[#02C4B2] text-[20px] font-bold">
               Tempo na plataforma
             </p>
-            <div className="flex flex-row text-[18px] pt-2 justify-between">
+            <div className="flex flex-row justify-between text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">Tempo em aula:</p>
               <p className="text-[#748FFC] font-bold">90 min</p>
             </div>
-            <div className="flex flex-row text-[18px] pt-2 justify-between ">
+            <div className="flex flex-row justify-between  text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">
                 Tempo em atividade:
               </p>
-              <p className="text-[#748FFC] font-bold">22 min</p>
+              <p className="text-[#748FFC] font-bold ">22 min</p>
             </div>
           </div>
 
-          <div className="flex flex-col">
-            <p className="text-[#02C4B2] text-[24px] font-bold">Participação</p>
-            <div className="flex flex-row text-[18px] pt-2 justify-between">
+          <div className="flex flex-col w-1/3">
+            <p className="text-[#02C4B2] text-[20px] font-bold">Participação</p>
+            {/* <div className="grid grid-cols-2 gap-2 text-[16px] pt-2"> */}
+            <div className="flex flex-row justify-between text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">Aulas assistidas:</p>
               <p className="text-[#748FFC] font-bold">25</p>
             </div>
-            <div className="flex flex-row text-[18px] justify-between">
+            <div className="flex flex-row justify-between text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">
                 Atividades realizadas:
               </p>
               <p className="text-[#748FFC] font-bold ">16</p>
             </div>
-            <div className="flex flex-row text-[18px] justify-between">
+            <div className="flex flex-row justify-between text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">Materiais lidos:</p>
               <p className="text-[#748FFC] font-bold">12</p>
             </div>
           </div>
 
-          <div className="flex flex-col items-center bg-[#EDF2FF]">
+          <div className="flex flex-col w-1/3 items-center bg-[#EDF2FF]">
             <p className="text-[#02C4B2] text-[24px] font-bold">Média</p>
             <p className="text-[#748FFC] mt-8 text-[100px] font-extrabold">
               5.1
@@ -194,24 +209,30 @@ function ContentDados() {
           </div>
         </div>
 
-        <div className="flex flex-col px-10 pb-12">
-          <div className="flex flex-row ">
-            <p className="text-[#02C4B2] text-[24px] font-bold mr-4">
+        <div className="flex flex-col px-16 pb-12">
+          <div className="flex flex-row justify-between">
+            <p className="text-[#02C4B2] text-[20px] font-bold mr-4">
               Evolução
             </p>
-            <a
-              className="text-dark-purple text-[18px] font-semibold mr-4"
-              href="/"
-            >
-              <DownloadIcon /> Exportar XLS
-            </a>
-            <a className="text-dark-purple text-[18px] font-semibold" href="/">
-              {" "}
-              <PictureAsPdfIcon /> Exportar PDF
-            </a>
+            <div className="flex flex-row ">
+              <a
+                className="flex flex-row items-center text-dark-purple mr-4 hover:scale-110 duration-300"
+                href="/"
+              >
+                <DownloadIcon />
+                <p className="text-[16px] font-normal">Exportar XLS</p>
+              </a>
+              <a
+                className="flex flex-row items-center text-dark-purple hover:scale-110 duration-300"
+                href="/"
+              >
+                <PictureAsPdfIcon />
+                <p className="text-[16px] font-normal">Exportar PDF</p>
+              </a>
+            </div>
           </div>
 
-          <div className="flex flex-row justify-between mt-8">
+          <div className="flex flex-row mt-8 justify-between">
             <div className="flex flex-col ">
               <div className="flex flex-row">
                 <label className="cursor-pointer relative">
@@ -219,7 +240,10 @@ function ContentDados() {
                     type="checkbox"
                     className="h-4 w-4 border-2 rounded-lg border-dark-purple"
                   />
-                  <span className="text-[22px] font-semibold text-dark-purple pl-4">
+                  <span
+                    onClick={MostrarNome}
+                    className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]"
+                  >
                     Média
                   </span>
                 </label>
@@ -230,18 +254,32 @@ function ContentDados() {
                     type="checkbox"
                     className="h-4 w-4 border-2 rounded-lg border-dark-purple"
                   />
-                  <span className="text-[22px] font-semibold text-dark-purple pl-4">
+                  <span className="text-[18px] font-semibold text-dark-purple pl-4">
                     Notas
                   </span>
                 </label>
               </div>
+            </div>
+
+            <ApexChart
+              className=""
+              options={optionsArea}
+              series={seriesArea}
+              type="area"
+              height={300}
+              width={700}
+            />
+          </div>
+
+          <div className="flex flex-row mt-8 justify-between ">
+            <div className="flex flex-col">
               <div className="flex flex-row">
                 <label className="cursor-pointer relative">
                   <input
                     type="checkbox"
                     className="h-4 w-4 border-2 rounded-lg border-dark-purple"
                   />
-                  <span className="text-[22px] font-semibold text-dark-purple pl-4">
+                  <span className="text-[18px] font-semibold text-dark-purple pl-4">
                     Atividades
                   </span>
                 </label>
@@ -252,36 +290,44 @@ function ContentDados() {
                     type="checkbox"
                     className="h-4 w-4 border-2 rounded-lg border-dark-purple"
                   />
-                  <span className="text-[22px] font-semibold text-dark-purple pl-4">
+                  <span className="text-[18px] font-semibold text-dark-purple pl-4">
                     Aulas Assistidas
                   </span>
                 </label>
               </div>
             </div>
             <ApexChart
-              className="mr-16"
+              className=""
               options={optionsArea}
               series={seriesArea}
               type="area"
               height={250}
-              width={500}
+              width={700}
             />
           </div>
         </div>
-        <div className="flex flex-col pl-16 pb-12">
-          <div className="flex flex-row ">
-            <p className="text-[#02C4B2] text-[24px] font-bold mr-4">
+
+        <div className="flex flex-col px-16 pb-12">
+          <div className="flex flex-row justify-between">
+            <p className="text-[#02C4B2] text-[20px] font-bold mr-4">
               Média por intervalo
             </p>
-            <a
-              className="text-dark-purple text-[18px] font-semibold mr-4"
-              href="/"
-            >
-              <DownloadIcon /> Exportar XLS
-            </a>
-            <a className="text-dark-purple text-[18px] font-semibold" href="/">
-              <PictureAsPdfIcon /> Exportar PDF
-            </a>
+            <div className="flex flex-row mr-4">
+              <a
+                className="flex flex-row items-center text-dark-purple mr-4 hover:scale-110 duration-300"
+                href="/"
+              >
+                <DownloadIcon />
+                <p className="text-[16px] font-normal">Exportar XLS</p>
+              </a>
+              <a
+                className="flex flex-row items-center text-dark-purple hover:scale-110 duration-300"
+                href="/"
+              >
+                <PictureAsPdfIcon />
+                <p className="text-[16px] font-normal">Exportar PDF</p>
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-row justify-between mt-8">
@@ -322,7 +368,7 @@ function ContentDados() {
                     Aluno
                   </p>
                   <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
-                    Nome do aluno
+                    Nome do aluno ashuahsjahs
                   </p>
                   <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
                     Nome do aluno
@@ -383,7 +429,7 @@ function ContentDados() {
                 </Stack>
               </div>
             </div>
-            <div className="flex flex-col items-center mr-16">
+            <div className="flex flex-col items-center">
               <ApexChart
                 className="flex items-center justify-center"
                 series={[15, 20, 45, 41, 12]}
