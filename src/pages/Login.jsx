@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/auth";
 import backgroundImg from "../assets/background-1.png";
+import backgroundImgNew from "../assets/FOTO.png";
 
 export function Login() {
   const { login } = useContext(AuthContext);
@@ -19,7 +20,7 @@ export function Login() {
       <div className="hidden sm:block">
         <img
           className="w-full h-screen object-cover"
-          src={backgroundImg}
+          src={backgroundImgNew}
           alt="background image"
         />
       </div>

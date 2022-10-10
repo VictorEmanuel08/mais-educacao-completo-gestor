@@ -7,14 +7,7 @@ export function ContentDisciplinas() {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  // const [disc, setDisc] = useState([]);
   const [series, setSeries] = useState([]);
-
-  // useEffect(() => {
-  //   app.get(`/disciplinas`).then((data) => {
-  //     setDisc(data.data.disciplinas);
-  //   });
-  // }, []);
 
   useEffect(() => {
     app.get(`/escolas/users/professores/${user}/series`).then((response) => {

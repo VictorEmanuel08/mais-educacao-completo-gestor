@@ -2,7 +2,7 @@ import { IoMdPerson, IoMdExit } from "react-icons/io";
 import { MdOutlineNotifications } from "react-icons/md";
 import { Sidebar } from "../components/Sidebar";
 import { Calendario } from "../components/Calendario";
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 import ContentDados from "../components/ContentDados";
 
 function Dados() {
@@ -38,8 +38,8 @@ function Dados() {
         </div>
         {/* <div className="grid grid-cols-2 gap-2"> */}
         <div className="flex pt-6 space-x-20 ">
-          <ContentDados/>
-          <Calendario className=""/>
+          <ContentDados />
+          <Calendario className="" />
         </div>
       </main>
 
@@ -48,4 +48,4 @@ function Dados() {
   );
 }
 
-export default Dados
+export default Dados;

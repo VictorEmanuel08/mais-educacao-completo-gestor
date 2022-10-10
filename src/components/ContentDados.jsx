@@ -7,14 +7,28 @@ import Stack from "@mui/material/Stack";
 import { app } from "../api/app";
 
 function ContentDados() {
-  const [notas, setNotas] = useState([]);
+  const [dados, setDados] = useState([]);
+
+  // useEffect(() => {
+  //   const getData = async () => {
+  //     const response = await app.get(
+  //       "/dados/a8b56ba5-8dbb-4d51-ba74-e0c4f717081f"
+  //     );
+  //     setDados(response.data['dados']);
+  //   }
+  //   getData();
+  //   console.log(response.data['dados'])
+  // }, []);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await app.get("");
-      setNotas(response.data);
+      const response = await app.get(
+        "/dados/a8b56ba5-8dbb-4d51-ba74-e0c4f717081f"
+      );
+      setDados(response.data);
     };
     getData();
+    console.log(dados);
   }, []);
 
   const optionsArea = {
@@ -88,37 +102,11 @@ function ContentDados() {
     { value: "Victor", label: "Victor" },
   ];
 
-  const ColoredLine = ({ color }) => (
-    <hr
-      style={{
-        color,
-        backgroundColor: color,
-        height: 5,
-      }}
-    />
-  );
-
-  const MostrarNome = ({}) => {
-    console.log("oi");
-  };
-
   return (
     <div className="flex flex-col ml-12 w-full">
       <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
         <p className="text-[#4263EB] font-semibold">Dados</p>
         <div className="w-full flex flex-row p-6 pt-2 pr-10 grid grid-cols-4 gap-4 pb-1">
-          <div className="flex flex-col text-[#4263EB]">
-            <p className="text-[20px] font-semibold">Série</p>
-            <select
-              options={optionsSelectSeries}
-              className="bg-[#FFFFFF] w-4/5 text-[16px]"
-            >
-              {optionsSelectSeries.map((seriesSelect) => (
-                <option>{seriesSelect.value}</option>
-              ))}
-            </select>
-          </div>
-
           <div className="flex flex-col text-[#4263EB]">
             <p className="text-[20px] font-semibold">Disciplina</p>
             <select
@@ -127,6 +115,18 @@ function ContentDados() {
             >
               {optionsSelectDisciplina.map((disciplinasSelect) => (
                 <option>{disciplinasSelect.value}</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex flex-col text-[#4263EB]">
+            <p className="text-[20px] font-semibold">Série</p>
+            <select
+              options={optionsSelectSeries}
+              className="bg-[#FFFFFF] w-4/5 text-[16px]"
+            >
+              {optionsSelectSeries.map((seriesSelect) => (
+                <option>{seriesSelect.value}</option>
               ))}
             </select>
           </div>
@@ -184,7 +184,6 @@ function ContentDados() {
 
           <div className="flex flex-col w-1/3">
             <p className="text-[#02C4B2] text-[20px] font-bold">Participação</p>
-            {/* <div className="grid grid-cols-2 gap-2 text-[16px] pt-2"> */}
             <div className="flex flex-row justify-between text-[16px] pt-2 mr-16">
               <p className="text-[#748FFC] font-semibold">Aulas assistidas:</p>
               <p className="text-[#748FFC] font-bold">25</p>
@@ -201,11 +200,9 @@ function ContentDados() {
             </div>
           </div>
 
-          <div className="flex flex-col w-1/3 items-center bg-[#EDF2FF]">
-            <p className="text-[#02C4B2] text-[24px] font-bold">Média</p>
-            <p className="text-[#748FFC] mt-8 text-[100px] font-extrabold">
-              5.1
-            </p>
+          <div className="flex flex-col w-1/3 items-center">
+            <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
+            <p className="text-[#748FFC] mt-8 text-[100px] font-bold">5.1</p>
           </div>
         </div>
 
@@ -240,10 +237,7 @@ function ContentDados() {
                     type="checkbox"
                     className="h-4 w-4 border-2 rounded-lg border-dark-purple"
                   />
-                  <span
-                    onClick={MostrarNome}
-                    className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]"
-                  >
+                  <span className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]">
                     Média
                   </span>
                 </label>

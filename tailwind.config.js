@@ -3,8 +3,9 @@ module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     fontFamily: {
-      'rubik': ['Rubik', 'sans-serif'],
-      poppins: ['Poppins', 'sans-serif']
+      rubik: ['Rubik'],
+      poppins: ['Poppins'],
+      roboto: ['Roboto']
     },
     extend: {
       backgroundImage: {

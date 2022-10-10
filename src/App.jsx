@@ -1,7 +1,8 @@
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import Home from "./pages/Home";
-import Disciplinas from "./pages/Disciplinas";
+import DisciplinasFirst from "./pages/DisciplinasFirst";
+import DisciplinasSecond from "./pages/DisciplinasSecond";
 import Dados from "./pages/Dados";
 import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
 import { AuthProvider } from "./context/auth";
@@ -27,21 +28,20 @@ function App() {
             path="/disciplinas"
             element={
               <Private>
-                <Disciplinas />
-              </Private>
-            }
-          />
-
-          <Route
-            path="/editar-disciplinas-backup/:id"
-            element={
-              <Private>
-                <BackupEditorDisc />
+                <DisciplinasFirst />
               </Private>
             }
           />
           <Route
             path="/editar-disciplinas/:id"
+            element={
+              <Private>
+                <DisciplinasSecond />
+              </Private>
+            }
+          />
+          <Route
+            path="/editar-disciplina-conteudo/:id"
             element={
               <Private>
                 <EditDisc />

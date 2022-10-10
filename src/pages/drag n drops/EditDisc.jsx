@@ -6,12 +6,14 @@ import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 import { ItemNewEdit } from "./items/ItemNewEdit";
+import BoardData from "../../data/board-data.json";
+import CardItem from "./items/CardItem";
 
 export function EditDisc() {
   const { id } = useParams();
 
   const [aula, setAula] = useState([]);
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -23,17 +25,18 @@ export function EditDisc() {
     getData();
   }, []);
 
-  const [boardData, setBoardData] = useState(aula);
+  // const [boardData, setBoardData] = useState(aula);
+  // const [boardData, setBoardData] = useState(BoardData);
 
-  // useEffect(() => {
-  //   if (process.browser) {
-  //     setReady(true);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      setReady(true);
+    }
+  }, []);
 
   const onDragEnd = (re) => {
     if (!re.destination) return;
-    let newBoardData = boardData;
+    let newBoardData = aula;
     var dragItem =
       newBoardData[parseInt(re.source.droppableId)].items[re.source.index];
     newBoardData[parseInt(re.source.droppableId)].items.splice(
@@ -45,7 +48,8 @@ export function EditDisc() {
       0,
       dragItem
     );
-    setBoardData(newBoardData);
+    // setBoardData(newBoardData);
+    console.log(re.destination);
   };
 
   return (
@@ -74,42 +78,47 @@ export function EditDisc() {
           </div>
         </div>
 
-        {/* {ready && ( */}
-        <DragDropContext onDragEnd={onDragEnd}>
-          <div className="grid grid-cols-3 gap-0">
-            {Object.entries(aula).map((board, bIndex) => {
-            {/* {boardData.map((board, bIndex) => { */}
-              return (
-                <div key={board.name}>
-                  <Droppable droppableId={bIndex.toString()}>
-                    {(provided, snapshot) => (
-                      <div
-                        {...provided.droppableProps}
-                        ref={provided.innerRef}
-                        className="bg-dark-purple p-3 w-[300px] h-full select-none"
-                      >
-                        <h4 className="flex justify-between items-center">
-                          <span className="text-2xl text-[#FFFFFF] mt-4 mb-2 ">
-                            <p>{board[1].name}</p>
-                          </span>
-                        </h4>
+        {ready && (
+          <DragDropContext onDragEnd={onDragEnd}>
+            <div className="grid grid-cols-3 gap-0">
+              {aula.map((board, bIndex) => {
+                // {Object.entries(aula).map((board, bIndex) => {
+                // console.log(board);
+                return (
+                  <div key={board.name}>
+                    <Droppable droppableId={bIndex.toString()}>
+                      {(provided, snapshot) => (
+                        <div
+                          {...provided.droppableProps}
+                          ref={provided.innerRef}
+                          className="bg-dark-purple p-3 w-[300px] h-full select-none"
+                        >
+                          <h4 className="flex justify-between items-center">
+                            <span className="text-2xl text-[#FFFFFF] mt-4 mb-2 ">
+                              <p>{board.name}</p>
+                            </span>
+                          </h4>
 
-                        { 
-                        board[1].items.length > 0 &&
-                        board[1].items.map((item, iIndex) => {
-                          return (
-                            <ItemNewEdit key={item.id} data={item} index={iIndex}/>
-                          );
-                        })}
-                        {provided.placeholder}
-                      </div>
-                    )}
-                  </Droppable>
-                </div>
-              );
-            })}
-          </div>
-        </DragDropContext>
+                          {board.items.length > 0 &&
+                            board.items.map((item, iIndex) => {
+                              return (
+                                <ItemNewEdit
+                                  key={item.id}
+                                  data={item}
+                                  index={iIndex}
+                                />
+                              );
+                            })}
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </div>
+                );
+              })}
+            </div>
+          </DragDropContext>
+        )}
       </main>
     </div>
   );

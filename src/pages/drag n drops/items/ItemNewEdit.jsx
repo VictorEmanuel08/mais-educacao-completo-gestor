@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MenuIcon from "@mui/icons-material/Menu";
-import { app } from "../../../api/app";
-import { useParams } from "react-router-dom";
 
 export function ItemNewEdit({ data, index }) {
   return (
