@@ -5,9 +5,9 @@ import { MdOutlineNotifications } from "react-icons/md";
 import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
+import { Calendario } from "../../components/Calendario";
 import { ItemNewEdit } from "./items/ItemNewEdit";
-import BoardData from "../../data/board-data.json";
-import CardItem from "./items/CardItem";
+import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
 
 export function EditDisc() {
   const { id } = useParams();
@@ -24,9 +24,6 @@ export function EditDisc() {
     };
     getData();
   }, []);
-
-  // const [boardData, setBoardData] = useState(aula);
-  // const [boardData, setBoardData] = useState(BoardData);
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -48,7 +45,6 @@ export function EditDisc() {
       0,
       dragItem
     );
-    // setBoardData(newBoardData);
     console.log(re.destination);
   };
 
@@ -77,48 +73,67 @@ export function EditDisc() {
             </ul>
           </div>
         </div>
+        <div className="w-full flex flex-row justify-between">
+          <div className="flex flex-row">
+            {ready && (
+              <DragDropContext onDragEnd={onDragEnd}>
+                <div className="flex flex-row">
+                  {aula.map((board, bIndex) => {
+                    return (
+                      <div key={board.name}>
+                        <Droppable droppableId={bIndex.toString()}>
+                          {(provided, snapshot) => (
+                            <div
+                              {...provided.droppableProps}
+                              ref={provided.innerRef}
+                              className={`
+                          ${
+                            board.name == "aulas"
+                              ? "bg-dark-purple p-3 w-[300px] h-full select-none"
+                              : "0"
+                          }
+                          ${
+                            board.name == "aulas_conteudo"
+                              ? `mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12`
+                              : "0"
+                          }`}
+                            >
+                              <div className="flex justify-between items-center">
+                                <div className="text-[18px] text-[#FFFFFF] font-roboto mt-4 mb-4 ">
+                                  <p>
+                                    {board.name == "aulas" ? `Vídeo Aulas` : ""}
+                                  </p>
+                                </div>
+                                {board.name == "aulas_conteudo" ? (
+                                  <ComponentMiniHeader />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
 
-        {ready && (
-          <DragDropContext onDragEnd={onDragEnd}>
-            <div className="grid grid-cols-3 gap-0">
-              {aula.map((board, bIndex) => {
-                // {Object.entries(aula).map((board, bIndex) => {
-                // console.log(board);
-                return (
-                  <div key={board.name}>
-                    <Droppable droppableId={bIndex.toString()}>
-                      {(provided, snapshot) => (
-                        <div
-                          {...provided.droppableProps}
-                          ref={provided.innerRef}
-                          className="bg-dark-purple p-3 w-[300px] h-full select-none"
-                        >
-                          <h4 className="flex justify-between items-center">
-                            <span className="text-2xl text-[#FFFFFF] mt-4 mb-2 ">
-                              <p>{board.name}</p>
-                            </span>
-                          </h4>
-
-                          {board.items.length > 0 &&
-                            board.items.map((item, iIndex) => {
-                              return (
-                                <ItemNewEdit
-                                  key={item.id}
-                                  data={item}
-                                  index={iIndex}
-                                />
-                              );
-                            })}
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </div>
-                );
-              })}
-            </div>
-          </DragDropContext>
-        )}
+                              {board.items.length > 0 &&
+                                board.items.map((item, iIndex) => {
+                                  return (
+                                    <ItemNewEdit
+                                      key={item.id}
+                                      data={item}
+                                      index={iIndex}
+                                    />
+                                  );
+                                })}
+                              {provided.placeholder}
+                            </div>
+                          )}
+                        </Droppable>
+                      </div>
+                    );
+                  })}
+                </div>
+              </DragDropContext>
+            )}
+          </div>
+          <Calendario />
+        </div>
       </main>
     </div>
   );

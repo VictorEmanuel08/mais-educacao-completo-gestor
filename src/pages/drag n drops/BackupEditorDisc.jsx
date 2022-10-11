@@ -47,14 +47,14 @@ export function BackupEditorDisc() {
 
   console.log(typeof newData);
   console.log(newData);
-  
+
   const itemsAnother = [
     { id: uuid(), content: "Thumbnail", assunto: "Divisão e fração" },
     { id: uuid(), content: "Thumbnail", assunto: "Adição" },
     { id: uuid(), content: "Thumbnail", assunto: "Revisão primeiro sem..." },
     { id: uuid(), content: "Thumbnail", assunto: "Multiplicação" },
   ];
-  
+
   const columnsFromBackend = {
     1: {
       title: "aulas",
@@ -69,7 +69,7 @@ export function BackupEditorDisc() {
   };
 
   console.log(itemsAnother);
-  
+
   const [columns, setColumns] = useState(columnsFromBackend);
 
   const onDragEnd = (result, columns, setColumns) => {

@@ -5,7 +5,6 @@ import { AuthContext } from "../context/auth";
 
 export function ContentDisciplinas() {
   const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   const [series, setSeries] = useState([]);
 
@@ -18,16 +17,16 @@ export function ContentDisciplinas() {
 
   return (
     <div>
-      <div className="w-full pl-12">
-        <div className="w-[60rem] flex flex-col p-6 pt-6 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
+      <div className="w-full">
+        <div className="w-[60rem] flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12">
+          <div className="w-full bg-dark-purple rounded-t-lg py-5 px-5">
+            <p className="text-[#FFFFFF] text-[20px] font-rubik">Disciplinas</p>
+          </div>
           <div className="flex justify-between flex-col">
-            <h1 className="text-[#4263EB] font-semibold text-left">
-              Disciplinas
-            </h1>
             {series.map((serie) => {
               return (
                 <div key={serie.serie.id}>
-                  <h2 className="text-[#4263EB] text-[20px] text-left ml-6 p-3 mb-[-20px]">
+                  <h2 className="text-[#4263EB] text-[20px] font-rubik ml-6 p-3 mb-[-20px]">
                     {serie.serie.name}
                   </h2>
 
@@ -45,7 +44,7 @@ export function ContentDisciplinas() {
                                 alt={Disciplina.name}
                                 className="w-64 h-36 rounded-lg"
                               />
-                              <p className="flex items-center mt-[-4px] justify-center text-[#585858] text-[18px] ">
+                              <p className="flex items-center mt-[-4px] justify-center text-dark-purple text-[18px] font-rubik">
                                 {Disciplina.name}
                               </p>
                             </a>
