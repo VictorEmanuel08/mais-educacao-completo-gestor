@@ -105,7 +105,17 @@ export function EditDisc() {
                                   </p>
                                 </div>
                                 {board.name == "aulas_conteudo" ? (
-                                  <ComponentMiniHeader />
+                                  <div className="flex flex-row relative">
+                                    <ComponentMiniHeader />
+                                    <button
+                                      className="absolute right-20 top-5 bg-[#4263EB] rounded-lg px-4"
+                                      // onClick={EditarConteudo}
+                                    >
+                                      <p className="text-[18px] text-[#ffffff] font-poppins">
+                                        Editar Conteudo
+                                      </p>
+                                    </button>
+                                  </div>
                                 ) : (
                                   ""
                                 )}

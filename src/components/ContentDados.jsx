@@ -7,29 +7,28 @@ import Stack from "@mui/material/Stack";
 import { app } from "../api/app";
 
 function ContentDados() {
-  const [dados, setDados] = useState([]);
-
-  // useEffect(() => {
-  //   const getData = async () => {
-  //     const response = await app.get(
-  //       "/dados/a8b56ba5-8dbb-4d51-ba74-e0c4f717081f"
-  //     );
-  //     setDados(response.data['dados']);
-  //   }
-  //   getData();
-  //   console.log(response.data['dados'])
-  // }, []);
+  const [dados, setDados] = useState("");
 
   useEffect(() => {
     const getData = async () => {
       const response = await app.get(
         "/dados/a8b56ba5-8dbb-4d51-ba74-e0c4f717081f"
       );
-      setDados(response.data);
+      setDados(response.data["dados"]);
     };
     getData();
-    console.log(dados);
   }, []);
+
+  console.log(dados);
+
+  const [idItem, setIdItem] = useState(-1);
+
+  const handleCarregarItem = function (e) {
+    const op = e.target.value;
+    console.log(op);
+
+    setIdItem(op);
+  };
 
   const optionsArea = {
     chart: {
@@ -72,19 +71,17 @@ function ContentDados() {
     },
   ];
 
-  const optionsSelectSeries = [
-    { value: "", label: "" },
-    { value: "3 ano", label: "3 ano" },
-    { value: "2 ano", label: "2 ano" },
-    { value: "1 ano", label: "1 ano" },
-  ];
+  // const optionsSelectDisciplina = [
+  //   { value: "", label: "" },
+  //   { value: "Fisica", label: "Fisica" },
+  // ];
 
-  const optionsSelectDisciplina = [
-    { value: "", label: "" },
-    { value: "Fisica", label: "Fisica" },
-    { value: "Matemática", label: "Matemática" },
-    { value: "Português", label: "Português" },
-  ];
+  // const optionsSelectSeries = [
+  //   { value: "", label: "" },
+  //   { value: "3 ano", label: "3 ano" },
+  //   { value: "2 ano", label: "2 ano" },
+  //   { value: "1 ano", label: "1 ano" },
+  // ];
 
   const optionsSelectTurma = [
     { value: "", label: "" },
@@ -104,32 +101,38 @@ function ContentDados() {
 
   return (
     <div className="flex flex-col ml-12 w-full">
+      {dados["dados"].map((teste) => {
+        return console.log(teste[1].disciplinas);
+      })}
+
       <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
         <p className="text-[#4263EB] font-semibold">Dados</p>
         <div className="w-full flex flex-row p-6 pt-2 pr-10 grid grid-cols-4 gap-4 pb-1">
           <div className="flex flex-col text-[#4263EB]">
             <p className="text-[20px] font-semibold">Disciplina</p>
             <select
-              options={optionsSelectDisciplina}
               className="bg-[#FFFFFF] w-4/5 text-[16px]"
+              onClick={handleCarregarItem}
+              name="dados"
             >
-              {optionsSelectDisciplina.map((disciplinasSelect) => (
-                <option>{disciplinasSelect.value}</option>
+              <option value={-1}> Selecione uma disciplina:</option>
+              {Object.entries(dados).map((item, i) => (
+                <option key={i} value={i}>
+                  {item[1].disciplinas.name}
+                </option>
               ))}
             </select>
           </div>
 
-          <div className="flex flex-col text-[#4263EB]">
+          {/* <div className="flex flex-col text-[#4263EB]">
             <p className="text-[20px] font-semibold">Série</p>
-            <select
-              options={optionsSelectSeries}
-              className="bg-[#FFFFFF] w-4/5 text-[16px]"
-            >
-              {optionsSelectSeries.map((seriesSelect) => (
-                <option>{seriesSelect.value}</option>
-              ))}
-            </select>
-          </div>
+            <select className="bg-[#FFFFFF] w-4/5 text-[16px]">{idItem > -1 &&
+                dados[idItem].series.map((item, i) => (
+                  <option key={"series" + i} value="">
+                    {item}
+                  </option>
+                ))}</select>
+          </div> */}
 
           <div className="flex flex-col text-[#4263EB]">
             <p className="text-[20px]">Turma</p>
