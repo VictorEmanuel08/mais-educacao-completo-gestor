@@ -15,7 +15,6 @@ export function ComponentMiniHeader() {
     };
     getData();
   }, []);
-  console.log(disc);
 
   function EditarConteudo() {
     navigate(`/editar-disciplina-conteudo/${disc.id}`);

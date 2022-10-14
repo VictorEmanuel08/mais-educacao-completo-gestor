@@ -14,6 +14,11 @@ export function EditDisc() {
 
   const [aula, setAula] = useState([]);
   const [ready, setReady] = useState(true);
+  const [itemDragEnd, setItemDragEnd] = useState([]);
+
+  const [listIdAulas, setListIdAulas] = useState([]);
+
+  const arrayList = [];
 
   useEffect(() => {
     const getData = async () => {
@@ -31,6 +36,15 @@ export function EditDisc() {
     }
   }, []);
 
+//dragItem tudo sobre o item 
+//re tudo sobre as colunas
+
+  useEffect(() => {
+    setListIdAulas([...listIdAulas, itemDragEnd]);
+  }, [itemDragEnd]);
+  
+  console.log(listIdAulas);
+  
   const onDragEnd = (re) => {
     if (!re.destination) return;
     let newBoardData = aula;
@@ -45,8 +59,26 @@ export function EditDisc() {
       0,
       dragItem
     );
-    console.log(re.destination);
+
+    setItemDragEnd(dragItem);
+
+    // re.source.id === 0 && re.destination.id === 1
+    //   ? setListIdAulas([...listIdAulas, dragItem.id])
+    //   : null;
+
+    // if(re.source.id===0, re.destination.id===1) return (setListIdAulas([...listIdAulas, dragItem.id]))
+    // if(re.source.id==1, re.destination.id==0) return (setListIdAulas([...listIdAulas, dragItem.id]))
+
+    setListIdAulas([...listIdAulas, dragItem.id]);
+
+    // console.log("Item movido:", dragItem.id);
+    // console.log("Coluna de origem:", re.source.droppableId);
+    // console.log("Coluna de destino:", re.destination.droppableId);
+    // console.log(listIdAulas)
   };
+
+  // console.log(listIdAulas);
+  // console.log(aula);
 
   return (
     <div className="flex w-full h-screen font-sans bg-dark-theme ">
@@ -94,7 +126,7 @@ export function EditDisc() {
                           }
                           ${
                             board.name == "aulas_conteudo"
-                              ? `mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12`
+                              ? `h-[400px] mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12 overflow-y-scroll`
                               : "0"
                           }`}
                             >
@@ -104,17 +136,17 @@ export function EditDisc() {
                                     {board.name == "aulas" ? `Vídeo Aulas` : ""}
                                   </p>
                                 </div>
-                                {board.name == "aulas_conteudo" ? (
-                                  <div className="flex flex-row relative">
+                                {board.name === "aulas_conteudo" ? (
+                                  <div className="w-full relative">
                                     <ComponentMiniHeader />
-                                    <button
-                                      className="absolute right-20 top-5 bg-[#4263EB] rounded-lg px-4"
-                                      // onClick={EditarConteudo}
-                                    >
-                                      <p className="text-[18px] text-[#ffffff] font-poppins">
-                                        Editar Conteudo
-                                      </p>
-                                    </button>
+                                    <div className="w-[180px] flex justify-between items-center flex-row absolute top-5 right-5">
+                                      <button className="py-[2px] px-[15px] text-[14px] bg-[#FFFFFF] rounded-md">
+                                        Cancelar
+                                      </button>
+                                      <button className="text-white text-[14px] py-[2px] px-[15px] bg-[#3B5BDB] rounded-md">
+                                        Salvar
+                                      </button>
+                                    </div>
                                   </div>
                                 ) : (
                                   ""
