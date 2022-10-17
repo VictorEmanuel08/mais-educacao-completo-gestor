@@ -9,16 +9,6 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   const recoveredUser = localStorage.getItem("user");
-
-  // if (recoveredUser) {
-  //   setUser(JSON.parse(recoveredUser));
-  // }
-
-  //   setLoading(false);
-  // }, []);
-
   useEffect(() => {
     const recoveredUser = localStorage.getItem("user");
 
@@ -44,10 +34,10 @@ export const AuthProvider = ({ children }) => {
 
     // console.log(varId);
 
-    setUser( loggedUser.id );
+    setUser(loggedUser.id);
     navigate("/home");
 
-    console.log(response.data.user)
+    console.log(response.data.user);
   };
 
   const logout = () => {

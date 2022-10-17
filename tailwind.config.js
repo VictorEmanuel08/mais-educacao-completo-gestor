@@ -1,30 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}'],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     fontFamily: {
-      rubik: ['Rubik'],
-      poppins: ['Poppins'],
-      roboto: ['Roboto']
+      rubik: ["Rubik"],
+      poppins: ["Poppins"],
+      roboto: ["Roboto"],
     },
     extend: {
       backgroundImage: {
         // maiseduc: "url(/background-1.png)",
         loginBackground: "url('background-2.png')",
-        'mais-gradient': 'linear-gradient(90deg, #4263EB 0%, #4263EB00 100%)',
+        "mais-gradient": "linear-gradient(90deg, #4263EB 0%, #4263EB00 100%)",
       },
       colors: {
-        'dark-purple': '#4263EB',
-        'light-white': '#748FFC',
-        'dark-theme': '#EDF2FF',
-        'white-write': '#dee2e6',
-        'blue-write': '#4263EB',
-        125: '#4263EB'
+        "dark-purple": "#4263EB",
+        "light-white": "#748FFC",
+        "dark-theme": "#EDF2FF",
+        "white-write": "#dee2e6",
+        "blue-write": "#4263EB",
+        125: "#4263EB",
       },
       spacing: {
-        128: '73rem'
-      }
-    }
+        128: "73rem",
+      },
+    },
   },
-  plugins: []
-}
+  plugins: [require("tailwind-scrollbar")],
+};

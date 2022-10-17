@@ -33,19 +33,19 @@ export function ContentDisciplinasConteudo() {
             className="absolute right-10 top-5 bg-[#4263EB] rounded-lg px-4"
             onClick={EditarConteudo}
           >
-            <p className="text-[18px] text-[#ffffff] font-poppins">
+            <p className="text-[16px] text-[#ffffff] font-semibold">
               Editar Conteudo
             </p>
           </button>
         </div>
         <div className="w-full flex flex-col">
-          <div className="flex flex-row justify-center py-8 border-dashed border-b-2 border-[#4263EB] text-[18px] font-rubik">
-            <p className="text-[#707070] mr-4 ">Nenhum conteúdo cadastrado</p>
+          <div className="flex flex-row justify-center py-8 border-dashed border-b-2 border-[#4263EB] text-[16px]">
+            <p className="text-[#707070] font-rubik mr-4 ">Nenhum conteúdo cadastrado</p>
             <button
               className="bg-[#4263EB] rounded-lg px-4 ml-4"
               onClick={EditarConteudo}
             >
-              <p className="text-[#ffffff]">Criar um novo conteúdo</p>
+              <p className="text-[#ffffff] font-semibold">Criar um novo conteúdo</p>
             </button>
           </div>
           <div></div>

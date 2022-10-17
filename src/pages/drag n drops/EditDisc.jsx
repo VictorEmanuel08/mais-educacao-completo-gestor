@@ -8,17 +8,12 @@ import { useParams } from "react-router-dom";
 import { Calendario } from "../../components/Calendario";
 import { ItemNewEdit } from "./items/ItemNewEdit";
 import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
+import MenuIcon from "@mui/icons-material/Menu";
 
 export function EditDisc() {
-  const { id } = useParams();
-
   const [aula, setAula] = useState([]);
   const [ready, setReady] = useState(true);
-  const [itemDragEnd, setItemDragEnd] = useState([]);
-
-  const [listIdAulas, setListIdAulas] = useState([]);
-
-  const arrayList = [];
+  const [text, setText] = useState();
 
   useEffect(() => {
     const getData = async () => {
@@ -36,15 +31,32 @@ export function EditDisc() {
     }
   }, []);
 
-//dragItem tudo sobre o item 
-//re tudo sobre as colunas
+  async function AddAula() {
+    try {
+      await app.post("/conteudos", {
+        name: text,
+        id_disciplina: "0edbbd06-e902-4714-a18e-ddd4dc82ddeb",
+        created_by: "a8b56ba5-8dbb-4d51-ba74-e0c4f717081f",
+        array_aulas: lista,
+        array_atividades: [],
+      });
+      document.location.reload(true);
+      alert("Conteudo cadastrado!");
+    } catch {
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  }
 
-  useEffect(() => {
-    setListIdAulas([...listIdAulas, itemDragEnd]);
-  }, [itemDragEnd]);
-  
-  console.log(listIdAulas);
-  
+  const lista = [];
+
+  function handleInput(id) {
+    lista.push(id);
+  }
+
+  function handleInput2(id) {
+    lista.pop(id);
+  }
+
   const onDragEnd = (re) => {
     if (!re.destination) return;
     let newBoardData = aula;
@@ -60,36 +72,26 @@ export function EditDisc() {
       dragItem
     );
 
-    setItemDragEnd(dragItem);
-
-    // re.source.id === 0 && re.destination.id === 1
-    //   ? setListIdAulas([...listIdAulas, dragItem.id])
-    //   : null;
-
-    // if(re.source.id===0, re.destination.id===1) return (setListIdAulas([...listIdAulas, dragItem.id]))
-    // if(re.source.id==1, re.destination.id==0) return (setListIdAulas([...listIdAulas, dragItem.id]))
-
-    setListIdAulas([...listIdAulas, dragItem.id]);
-
-    // console.log("Item movido:", dragItem.id);
-    // console.log("Coluna de origem:", re.source.droppableId);
-    // console.log("Coluna de destino:", re.destination.droppableId);
-    // console.log(listIdAulas)
+    if (re.source.droppableId == 0 && re.destination.droppableId == 1) {
+      handleInput(dragItem.id);
+    } else if (re.source.droppableId == 1 && re.destination.droppableId == 0) {
+      handleInput2(dragItem.id);
+    } else {
+    }
   };
 
-  // console.log(listIdAulas);
-  // console.log(aula);
-
   return (
-    <div className="flex w-full h-screen font-sans bg-dark-theme ">
+    <div className="flex w-full h-full font-sans bg-dark-theme ">
       <main className="text-2xl font-semibold flex-1 bg-dark-theme gap-6 ">
         <div className="w-full h-16 bg-dark-purple relative">
           <div className="p-4">
-            <img
-              src={logo}
-              alt="logo maisEducaÃ§ÃĢo"
-              className={`cursor-pointer duration-500 w-40`}
-            />
+            <a href="/home">
+              <img
+                src={logo}
+                alt="logo maisEducaÃ§ÃĢo"
+                className={`cursor-pointer duration-500 w-40`}
+              />
+            </a>
           </div>
           <div className="absolute top-5 right-5 text-white ">
             <ul className="flex">
@@ -126,7 +128,7 @@ export function EditDisc() {
                           }
                           ${
                             board.name == "aulas_conteudo"
-                              ? `h-[400px] mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12 overflow-y-scroll`
+                              ? `h-[800px] mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12 scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#EDF2FF]-300 overflow-y-scroll`
                               : "0"
                           }`}
                             >
@@ -138,14 +140,63 @@ export function EditDisc() {
                                 </div>
                                 {board.name === "aulas_conteudo" ? (
                                   <div className="w-full relative">
-                                    <ComponentMiniHeader />
-                                    <div className="w-[180px] flex justify-between items-center flex-row absolute top-5 right-5">
-                                      <button className="py-[2px] px-[15px] text-[14px] bg-[#FFFFFF] rounded-md">
-                                        Cancelar
-                                      </button>
-                                      <button className="text-white text-[14px] py-[2px] px-[15px] bg-[#3B5BDB] rounded-md">
-                                        Salvar
-                                      </button>
+                                    <div>
+                                      <ComponentMiniHeader />
+                                      <div className="w-[180px] flex justify-between items-center flex-row absolute top-5 right-5">
+                                        <button className="py-[2px] px-[15px] text-[14px] bg-[#FFFFFF] rounded-md">
+                                          Cancelar
+                                        </button>
+                                        <button
+                                          className="text-white text-[14px] py-[2px] px-[15px] bg-[#3B5BDB] rounded-md"
+                                          type="submit"
+                                          onClick={() => AddAula()}
+                                        >
+                                          Salvar
+                                        </button>
+                                      </div>
+                                    </div>
+                                    <div className="flex flex-col p-8 w-full ">
+                                      <form>
+                                        <input placeholder="Título do conteúdo"
+                                          className="bg-[#EDF2FF] rounded-lg border-none text-[16px] text-[#131313] font-roboto mb-4 p-1 pl-4 w-1/3 outline-none placeholder:text-[14px] font-light"
+                                          type="texte"
+                                          onChange={(e) =>
+                                            setText(e.target.value)
+                                          }
+                                        />
+                                      </form>
+                                      {board.items.length == 0 && (
+                                        <div className="bg-[#EDF2FF] h-[150px] rounded-lg mb-4 p-1 pl-4 flex items-center justify-center">
+                                          <p className="text-center text-[#707070] text-[18px] font-roboto">
+                                            Nenhuma aula cadastrada
+                                          </p>
+                                        </div>
+                                      )}
+
+                                      {board.name == "aulas_conteudo"
+                                        ? board.items.length > 0 &&
+                                          board.items.map((item, iIndex) => {
+                                            return (
+                                              <div className="bg-[#EDF2FF] rounded-lg p-4">
+                                                <div className="flex flex-row">
+                                                  <div className="w-1/3 flex items-center">
+                                                    <MenuIcon className="text-[#4263EB] active:text-[#263B4A] opacity-1 mb-8 mr-1" />
+                                                    <ItemNewEdit
+                                                      key={item.id}
+                                                      data={item}
+                                                      index={iIndex}
+                                                    />
+                                                  </div>
+                                                  <div>
+                                                    <p className="text-[#343434] text-[16px] font-semibold">
+                                                      {item.title}
+                                                    </p>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            );
+                                          })
+                                        : ""}
                                     </div>
                                   </div>
                                 ) : (
@@ -153,16 +204,22 @@ export function EditDisc() {
                                 )}
                               </div>
 
-                              {board.items.length > 0 &&
-                                board.items.map((item, iIndex) => {
-                                  return (
-                                    <ItemNewEdit
-                                      key={item.id}
-                                      data={item}
-                                      index={iIndex}
-                                    />
-                                  );
-                                })}
+                              {board.name == "aulas"
+                                ? board.items.length > 0 &&
+                                  board.items.map((item, iIndex) => {
+                                    return (
+                                      <div className="flex flex-row items-center">
+                                        <MenuIcon className="text-[#FFFFFF] active:text-[#263B4A] opacity-1 mb-8 mr-1" />
+                                        <ItemNewEdit
+                                          key={item.id}
+                                          data={item}
+                                          index={iIndex}
+                                        />
+                                      </div>
+                                    );
+                                  })
+                                : ""}
+
                               {provided.placeholder}
                             </div>
                           )}

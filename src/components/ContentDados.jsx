@@ -66,9 +66,6 @@ function ContentDados() {
         "2018-09-19T01:30:00.000Z",
         "2018-09-19T02:30:00.000Z",
         "2018-09-19T03:30:00.000Z",
-        "2018-09-19T04:30:00.000Z",
-        "2018-09-19T05:30:00.000Z",
-        "2018-09-19T06:30:00.000Z",
       ],
     },
     tooltip: {
@@ -81,11 +78,11 @@ function ContentDados() {
   const seriesArea = [
     {
       name: "series1",
-      data: [31, 40, 28, 51, 42, 109, 100],
+      data: [8, 2, 10, 5],
     },
     {
       name: "series2",
-      data: [11, 32, 45, 32, 34, 52, 41],
+      data: [],
     },
   ];
 
@@ -380,7 +377,7 @@ function ContentDados() {
                       Aluno
                     </p>
                     <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
-                      Nome do aluno ashuahsjahs
+                      Nome do aluno
                     </p>
                     <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
                       Nome do aluno
