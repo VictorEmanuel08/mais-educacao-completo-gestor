@@ -3,8 +3,7 @@ import { AuthContext } from "../context/auth";
 import { IoMdPerson, IoMdExit } from 'react-icons/io'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { Sidebar } from '../components/Sidebar'
-import { Calendario } from '../components/Calendario'
-import { ContentDisciplinasConteudo } from "../components/ContentDisciplinasConteudo";
+import { ContentDisciplinasAulas } from "../components/ContentDisciplinasAulas";
 
 function Disciplinas() {
 
@@ -35,8 +34,7 @@ function Disciplinas() {
           </div>
         </div>
         <div className="flex pt-6 flex-row justify-between">
-          <ContentDisciplinasConteudo />
-          <Calendario />
+          <ContentDisciplinasAulas />
         </div>
       </main>
     </div>

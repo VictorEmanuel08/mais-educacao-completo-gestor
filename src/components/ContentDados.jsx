@@ -22,7 +22,8 @@ function ContentDados() {
   const [idItemSerie, setIdItemSerie] = useState(-1);
   const [idItemTurma, setIdItemTurma] = useState(-1);
   const [idItemAluno, setIdItemAluno] = useState(-1);
-  const [idItemItem, setIdItemItem] = useState(-1);
+  const [idItemNota, setIdItemNota] = useState(-1);
+  const [idItemMedia, setIdItemMedia] = useState(-1);
 
   const handleCarregarDisc = function (e) {
     const opDisc = e.target.value;
@@ -45,7 +46,13 @@ function ContentDados() {
   const handleCarregarAluno = function (e) {
     const opAluno = e.target.value;
 
-    setIdItemItem(opAluno);
+    setIdItemNota(opAluno);
+  };
+
+  const handleCarregarNota = function (e) {
+    const opNota = e.target.value;
+
+    setIdItemMedia(opNota);
   };
 
   const optionsArea = {
@@ -54,24 +61,14 @@ function ContentDados() {
       type: "area",
     },
     dataLabels: {
-      enabled: false,
+      enabled: true,
     },
     stroke: {
       curve: "smooth",
     },
     xaxis: {
-      type: "datetime",
-      categories: [
-        "2018-09-19T00:00:00.000Z",
-        "2018-09-19T01:30:00.000Z",
-        "2018-09-19T02:30:00.000Z",
-        "2018-09-19T03:30:00.000Z",
-      ],
-    },
-    tooltip: {
-      x: {
-        format: "dd/MM/yy HH:mm",
-      },
+      // type: "datetime",
+      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
     },
   };
 
@@ -87,7 +84,7 @@ function ContentDados() {
   ];
 
   return (
-    <div className="flex flex-col ml-12 w-full">
+    <div className="flex flex-col ml-12 w-4/5">
       <div>
         <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
           <p className="text-[#4263EB] font-semibold">Dados</p>
@@ -217,7 +214,15 @@ function ContentDados() {
 
             <div className="flex flex-col w-1/3 items-center">
               <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
-              <p className="text-[#748FFC] mt-8 text-[100px] font-bold">5.1</p>
+              <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
+                {idItemAluno > -1 &&
+                  dados[idItemSerie].series[idItemTurma].turmas[
+                    idItemAluno
+                  ].alunos.map((item, i) => {
+                    console.log(item);
+                  })}
+                5.1
+              </p>
             </div>
           </div>
 
@@ -346,97 +351,61 @@ function ContentDados() {
                     <p className="font-normal px-2 text-white text-[20px]">
                       Turma
                     </p>
-                    <div className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
+                    {/* <div className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
                       3A
-                    </div>
-                    <div className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
-                    <div className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      3A
-                    </div>
+                    </div> */}
+                    {idItemAluno > -1 &&
+                      dados[idItemSerie].series[idItemTurma].turmas.map(
+                        (item, index) =>
+                          idItemAluno == index && (
+                            <div className="bg-[#748FFC] h-full flex items-center px-5">
+                              <p className=" text-[18px] text-white font-normal w-full ">
+                                {item.name}
+                              </p>
+                            </div>
+                          )
+                      )}
                   </div>
 
                   <div className="flex flex-col border-r">
                     <p className="font-normal pl-4 pr-4 text-white text-[20px]">
                       Aluno
                     </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
+                    {/* <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
                       Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#BECEE0] text-dark-purple font-normal text-dark-purple font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
-                    <p className="pr-14 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                      Nome do aluno
-                    </p>
+                    </p> */}
+                    {idItemAluno > -1 &&
+                      dados[idItemSerie].series[idItemTurma].turmas[
+                        idItemAluno
+                      ].alunos.map((item, i) => (
+                        <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                          {item.name}
+                        </p>
+                      ))}
                   </div>
 
                   <div className="flex flex-col ">
                     <p className="font-normal pl-4 pr-4 text-white text-[20px]">
                       Média
                     </p>
-                    <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
+                    {/* <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
                       6,75
-                    </p>
-                    <p className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
-                    <p className="bg-[#748FFC] text-white font-normal w-full text-[18px] flex justify-center items-center">
-                      6,75
-                    </p>
+                    </p> */}
+                    {idItemAluno > -1 &&
+                      dados[idItemSerie].series[idItemTurma].turmas[
+                        idItemAluno
+                      ].alunos.map((item, i) => (
+                        <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                          {item.name}
+                        </p>
+                      ))}
                   </div>
                 </div>
-                <div className="flex bg-dark-purple rounded-b-lg ">
+                {/* <div className="flex bg-dark-purple rounded-b-lg ">
                   <Stack spacing={2}>
                     <Pagination count={5} showFirstButton showLastButton />
                   </Stack>
-                </div>
+                </div> */}
               </div>
               <div className="flex flex-col items-center">
                 <ApexChart
@@ -476,11 +445,11 @@ function ContentDados() {
                   </div>
                   <div className="flex flex-col justify-between items-center">
                     <p>Alunos</p>
-                    <span>6,75</span>
-                    <span>6,75</span>
-                    <span>6,75</span>
-                    <span>6,75</span>
-                    <span>6,75</span>
+                    <span>6</span>
+                    <span>10</span>
+                    <span>11</span>
+                    <span>2</span>
+                    <span>1</span>
                   </div>
                 </div>
               </div>

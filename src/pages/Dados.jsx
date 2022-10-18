@@ -1,7 +1,6 @@
 import { IoMdPerson, IoMdExit } from "react-icons/io";
 import { MdOutlineNotifications } from "react-icons/md";
 import { Sidebar } from "../components/Sidebar";
-import { Calendario } from "../components/Calendario";
 import { useNavigate } from "react-router-dom";
 import ContentDados from "../components/ContentDados";
 
@@ -39,11 +38,8 @@ function Dados() {
         {/* <div className="grid grid-cols-2 gap-2"> */}
         <div className="flex pt-6 flex-row justify-between">
           <ContentDados />
-          <Calendario />
         </div>
       </main>
-
-      <aside></aside>
     </div>
   );
 }

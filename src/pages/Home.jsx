@@ -3,7 +3,6 @@ import { AuthContext } from "../context/auth";
 import { IoMdPerson, IoMdExit } from 'react-icons/io'
 import { MdOutlineNotifications } from 'react-icons/md'
 import { Sidebar } from '../components/Sidebar'
-import { Calendario } from '../components/Calendario'
 import { ContentHome } from '../components/ContentHome'
 import { useNavigate } from 'react-router-dom'
 
@@ -42,7 +41,6 @@ function Home() {
         </div>
         <div className="flex pt-5">
           <ContentHome />
-          <Calendario />
         </div>
       </main>
 

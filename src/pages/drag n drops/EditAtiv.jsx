@@ -10,10 +10,12 @@ import { ItemNewEdit } from "./items/ItemNewEdit";
 import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
 import MenuIcon from "@mui/icons-material/Menu";
 
-export function EditDisc() {
+export function EditAtiv() {
   const [aula, setAula] = useState([]);
   const [ready, setReady] = useState(true);
   const [text, setText] = useState();
+
+  const [nameHook, setNameHook] = useState("Atividades");
 
   useEffect(() => {
     const getData = async () => {
@@ -133,15 +135,19 @@ export function EditDisc() {
                           }`}
                             >
                               <div className="flex justify-between items-center">
-                                <div className="text-[18px] text-[#FFFFFF] font-roboto mt-4 mb-4 ">
+                                <div className="text-[22px] text-[#FFFFFF] font-roboto mt-4 mb-4 ">
                                   <p>
-                                    {board.name == "aulas" ? `Vídeo Aulas` : ""}
+                                    {board.name == "aulas" ? `Atividades` : ""}
                                   </p>
                                 </div>
                                 {board.name === "aulas_conteudo" ? (
                                   <div className="w-full relative">
                                     <div>
-                                      <ComponentMiniHeader />
+                                      <ComponentMiniHeader
+                                        nameHook={nameHook}
+                                        setNameHook={setNameHook}
+                                        rotaId={aula.id}
+                                      />
                                       <div className="w-[180px] flex justify-between items-center flex-row absolute top-5 right-5">
                                         <button className="py-[2px] px-[15px] text-[14px] bg-[#FFFFFF] rounded-md">
                                           Cancelar
@@ -157,7 +163,8 @@ export function EditDisc() {
                                     </div>
                                     <div className="flex flex-col p-8 w-full ">
                                       <form>
-                                        <input placeholder="Título do conteúdo"
+                                        <input
+                                          placeholder="Título do conteúdo"
                                           className="bg-[#EDF2FF] rounded-lg border-none text-[16px] text-[#131313] font-roboto mb-4 p-1 pl-4 w-1/3 outline-none placeholder:text-[14px] font-light"
                                           type="texte"
                                           onChange={(e) =>
@@ -168,7 +175,7 @@ export function EditDisc() {
                                       {board.items.length == 0 && (
                                         <div className="bg-[#EDF2FF] h-[150px] rounded-lg mb-4 p-1 pl-4 flex items-center justify-center">
                                           <p className="text-center text-[#707070] text-[18px] font-roboto">
-                                            Nenhuma aula cadastrada
+                                            Nenhuma atividade cadastrada
                                           </p>
                                         </div>
                                       )}

@@ -7,8 +7,8 @@ import Dados from "./pages/Dados";
 import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
-import { EditDisc } from "./pages/drag n drops/EditDisc";
-import { BackupEditorDisc } from "./pages/drag n drops/BackupEditorDisc";
+import { EditAula } from "./pages/drag n drops/EditAula";
+import { EditAtiv } from "./pages/drag n drops/EditAtiv";
 
 function App() {
   return (
@@ -41,10 +41,18 @@ function App() {
             }
           />
           <Route
-            path="/editar-disciplina-conteudo/:id"
+            path="/editar-disciplinas-Aulas/:id"
             element={
               <Private>
-                <EditDisc />
+                <EditAula />
+              </Private>
+            }
+          />
+          <Route
+            path="/editar-disciplinas-Atividades/:id"
+            element={
+              <Private>
+                <EditAtiv />
               </Private>
             }
           />
