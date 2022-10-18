@@ -6,7 +6,6 @@ import professorIcon from "../assets/professor.png";
 
 export default function PerfilData() {
   const { user } = useContext(AuthContext);
-
   const [nameProf, setNameProf] = useState("");
   const [matProf, setMatProf] = useState("");
   const [emailProf, setEmail] = useState("");
@@ -15,12 +14,10 @@ export default function PerfilData() {
 
   useEffect(() => {
     app.get(`/escolas/users/professores/${user}`).then((response) => {
-      // console.log(varId)
       setNameProf(response.data.professor.escola_user.name);
       setMatProf(response.data.professor.escola_user.mat);
       setEmail(response.data.professor.escola_user.email);
-      setCPFProf(response.data.professor.escola_user.cpf);
-      // console.log(response.data.professor);
+      setCPFProf(response.data.professor.escola_user.cpf);      
     });
   });
 
@@ -46,6 +43,7 @@ export default function PerfilData() {
               </div>
 
               <div className="flex flex-row justify-evenly">
+
               <div className="flex flex-col mr-20">
                 <div className="flex flex-row items-center">
                   
