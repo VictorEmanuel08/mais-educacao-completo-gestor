@@ -396,7 +396,7 @@ function ContentDados() {
                         idItemAluno
                       ].alunos.map((item, i) => (
                         <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                          {item.name}
+                          {/* {item.name} */}
                         </p>
                       ))}
                   </div>

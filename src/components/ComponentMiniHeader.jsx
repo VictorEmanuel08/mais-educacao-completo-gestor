@@ -13,7 +13,7 @@ export function ComponentMiniHeader({ nameHook, setNameHook, rotaId }) {
   const handleClicked = (id, name) => {
     setClicked(id);
     setNameHook(name);
-    navigate(`/editar-disciplinas-${nameHook}/${rotaId}`);
+    // navigate(`/editar-disciplinas-${nameHook}/${rotaId}`);
   };
 
   const labels = [
