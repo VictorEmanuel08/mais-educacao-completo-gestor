@@ -2,6 +2,7 @@ import { MessageChat } from "./MessageChat";
 import { useContext, useEffect, useState } from "react";
 import { app } from "../api/app";
 import { AuthContext } from "../context/auth";
+import professorIcon from "../assets/professor.png";
 
 export default function PerfilData() {
   const { user } = useContext(AuthContext);
@@ -32,52 +33,79 @@ export default function PerfilData() {
           </h2>
 
           <div className="bg-white h-full w-full">
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-col">
+            <div className="flex flex-col justify-between relative">
+
+              <div className="flex ml-[80px] mt-6">
+              <div className="flex flex-row items-center mb-4">
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
+                    E-mail:
+                  </strong>
+                  <p className="text-sm text-[#707070]">{emailProf}</p>
+                </div>
+
+              </div>
+
+              <div className="flex flex-row justify-evenly">
+              <div className="flex flex-col mr-20">
                 <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
+                  
+                </div>
+
+                <div className="flex flex-row items-center">
+                 
+                </div>
+
+                <div className="flex flex-row items-center">
+                                  
+                </div>
+              </div>
+
+              <div className="flex flex-col w-[50%]">
+                <div className="flex flex-row items-center mb-4">
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
                     Matrícula:
                   </strong>
                   <p className="text-sm text-[#707070]">{matProf}</p>
                 </div>
 
-                <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
+                <div className="flex flex-row items-center mb-4">
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
                     Série:
                   </strong>
                   <p className="text-sm text-[#707070]">2</p>
                 </div>
 
                 <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
-                    CPF:
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
+                    Disciplina:
                   </strong>
-                  <p className="text-sm text-[#707070]">{CPFProf}</p>
+                  <p className="text-sm text-[#707070]">3</p>
                 </div>
               </div>
 
-              <div className="flex flex-col pr-4">
-                <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
-                    E-mail:
+              <div className="flex flex-col pr-4 w-[50%]">
+                <div className="flex flex-row items-center mb-4">
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
+                    CPF:
                   </strong>
-                  <p className="text-sm text-[#707070]">{emailProf}</p>
+                  <p className="text-sm text-[#707070]">{CPFProf}-01</p>
                 </div>
 
-                <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
+                <div className="flex flex-row items-center mb-4">
+                  <strong className="text-[16px] font-semibold text-[#4263EB] px-4">
                     Turmas:
                   </strong>
                   <p className="text-sm text-[#707070]">6</p>
                 </div>
 
-                <div className="flex flex-row items-center">
-                  <strong className="text-[16px] font-semibold text-[#707070] px-4">
-                    Disciplinas:
-                  </strong>
-                  <p className="text-sm text-[#707070]">3</p>
-                </div>
               </div>
+
+              </div>
+              <div className="absolute top-[-32px] left-5">
+                <img src={professorIcon} alt="" className="w-[60px] h-[60px]" />
+              </div>
+
+              
             </div>
           </div>
         </div>

@@ -10,11 +10,15 @@ import { ItemNewEdit } from "./items/ItemNewEdit";
 import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import EyesCloked from "../../assets/hidden.png";
+import EyesOpen from "../../assets/view.png";
+
 export function EditAula() {
   const [aula, setAula] = useState([]);
   const [ready, setReady] = useState(true);
   const [text, setText] = useState();
-
+  const [ clicked, setClicked ] = useState(true)
+  const [ clicked2, setClicked2 ] = useState(true)
   useEffect(() => {
     const getData = async () => {
       const response = await app.get(
@@ -24,6 +28,14 @@ export function EditAula() {
     };
     getData();
   }, []);
+
+  function switchEyes() {
+    setClicked(!clicked)
+  }
+  function switchEyesGlobal(e) {
+    e.preventDefault();
+    setClicked2(!clicked2)
+  }
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -38,7 +50,7 @@ export function EditAula() {
         id_disciplina: "0edbbd06-e902-4714-a18e-ddd4dc82ddeb",
         created_by: "a8b56ba5-8dbb-4d51-ba74-e0c4f717081f",
         array_aulas: lista,
-        array_atividades: [],
+        array_atividades: [],        
       });
       document.location.reload(true);
       alert("Conteudo cadastrado!");
@@ -156,7 +168,7 @@ export function EditAula() {
                                       </div>
                                     </div>
                                     <div className="flex flex-col p-8 w-full ">
-                                      <form>
+                                      <div className="flex flex-row justify-between">
                                         <input placeholder="Título do conteúdo"
                                           className="bg-[#EDF2FF] rounded-lg border-none text-[16px] text-[#131313] font-roboto mb-4 p-1 pl-4 w-1/3 outline-none placeholder:text-[14px] font-light"
                                           type="texte"
@@ -164,7 +176,16 @@ export function EditAula() {
                                             setText(e.target.value)
                                           }
                                         />
-                                      </form>
+                                        {
+                                          clicked2 ?
+                                        <button className="w-[25px] h-[25px]" onClick={switchEyesGlobal}>
+                                          <img className="w-[25px] h-[25px]" src={EyesOpen} alt="" />
+                                        </button>
+                                        : <button onClick={switchEyesGlobal} className="w-[25px] h-[25px]">
+                                            <img className="w-[25px] h-[25px]" src={EyesCloked} alt="" />
+                                          </button>
+                                        }
+                                      </div>
                                       {board.items.length == 0 && (
                                         <div className="bg-[#EDF2FF] h-[150px] rounded-lg mb-4 p-1 pl-4 flex items-center justify-center">
                                           <p className="text-center text-[#707070] text-[18px] font-roboto">
@@ -178,7 +199,7 @@ export function EditAula() {
                                           board.items.map((item, iIndex) => {
                                             return (
                                               <div className="bg-[#EDF2FF] rounded-lg p-4">
-                                                <div className="flex flex-row">
+                                                <div className="flex flex-row items-center">
                                                   <div className="w-1/3 flex items-center">
                                                     <MenuIcon className="text-[#4263EB] active:text-[#263B4A] opacity-1 mb-8 mr-1" />
                                                     <ItemNewEdit
@@ -190,7 +211,12 @@ export function EditAula() {
                                                   <div>
                                                     <p className="text-[#343434] text-[16px] font-semibold">
                                                       {item.title}
-                                                    </p>
+                                                    </p>                                                    
+                                                  </div>
+                                                  <div>
+                                                    {clicked ? <button className="w-[25px] h-[25px] ml-4" onClick={()=> switchEyes()}><img src={EyesOpen} alt="" className="w-[25px] h-[25px]" /></button> 
+                                                    : <button className="w-[25px] h-[25px] ml-4" onClick={()=>switchEyes()}><img className="w-[25px] h-[25px]" src={EyesCloked} alt="" /></button>}
+                                                    
                                                   </div>
                                                 </div>
                                               </div>

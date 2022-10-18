@@ -14,9 +14,7 @@ export function Sidebar() {
     { title: "Conquistas" },
     { title: "Dados" },
     { title: "Disciplinas" },
-    { title: "Turmas" },
-    { title: "Notas" },
-    { title: "Frequência" },
+
   ];
 
   return (
