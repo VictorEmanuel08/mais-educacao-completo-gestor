@@ -25,6 +25,8 @@ function ContentDados() {
   const [idItemNota, setIdItemNota] = useState(-1);
   const [idItemMedia, setIdItemMedia] = useState(-1);
 
+  const [viewDisc, setViewDisc] = useState("");
+
   const handleCarregarDisc = function (e) {
     const opDisc = e.target.value;
 
@@ -152,11 +154,12 @@ function ContentDados() {
                 name="aluno"
               >
                 <option value={-1}> Selecione um aluno:</option>
+
                 {idItemAluno > -1 &&
                   dados[idItemSerie].series[idItemTurma].turmas[
                     idItemAluno
                   ].alunos.map((item, i) => (
-                    <option key={"turma" + i} value={i}>
+                    <option key={"aluno" + i} value={i}>
                       {item.name}
                     </option>
                   ))}
@@ -165,13 +168,25 @@ function ContentDados() {
           </div>
         </div>
         <div className="w-full flex flex-col p-6 pt-6 bg-white rounded-lg shadow-md shaow-[#333] mt-4">
-          <div className="px-10 mt-10">
-            <p className="text-[#02C4B2] text-[45px] font-semibold ">
-              UEB Primavera
-            </p>
-            <p className="text-[#748FFC] text-[25px] font-semibold mt-2 pb-8 border-b border-[#4263EB]">
-              Física - 3 ano
-            </p>
+          <div className="flex flex-row justify-between pb-8 border-b border-[#4263EB] px-10 mt-10">
+            <div className="">
+              <p className="text-[#02C4B2] text-[45px] font-semibold ">
+                UEB Primavera
+              </p>
+              <p className="text-[#748FFC] text-[25px] font-semibold mt-2">
+                Física - 3 ano
+              </p>
+            </div>
+
+            <div>
+              <div
+                className="flex flex-row items-center text-dark-purple hover:scale-110 duration-300"
+                //  onClick={}
+              >
+                <PictureAsPdfIcon />
+                <p className="text-[16px] font-normal">Exportar PDF</p>
+              </div>
+            </div>
           </div>
           <div className="w-full flex flex-row justify-between mt-10 mb-12 px-16">
             <div className="flex flex-col w-1/3">
@@ -190,7 +205,7 @@ function ContentDados() {
               </div>
             </div>
 
-            <div className="flex flex-col w-1/3">
+            <div className="flex flex-col w-1/3 pl-4">
               <p className="text-[#02C4B2] text-[20px] font-bold">
                 Participação
               </p>
@@ -214,15 +229,25 @@ function ContentDados() {
 
             <div className="flex flex-col w-1/3 items-center">
               <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
-              <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
-                {idItemAluno > -1 &&
-                  dados[idItemSerie].series[idItemTurma].turmas[
-                    idItemAluno
-                  ].alunos.map((item, i) => {
-                    console.log(item);
-                  })}
-                5.1
-              </p>
+              {idItemNota > -1 &&
+                dados[idItemSerie].series[idItemTurma].turmas[
+                  idItemAluno
+                ].alunos[idItemNota].Media.map((item, index) => {
+                  console.log(item);
+                  return (
+                    <div>
+                      {item == null ? (
+                        <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
+                          Nao tem nada
+                        </p>
+                      ) : (
+                        <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
+                          {item.value}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
             </div>
           </div>
 

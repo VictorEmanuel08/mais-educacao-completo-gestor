@@ -1,19 +1,18 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/auth";
-import { IoMdPerson, IoMdExit } from 'react-icons/io'
-import { MdOutlineNotifications } from 'react-icons/md'
-import { Sidebar } from '../components/Sidebar'
+import { IoMdPerson, IoMdExit } from "react-icons/io";
+import { MdOutlineNotifications } from "react-icons/md";
+import { Sidebar } from "../components/Sidebar";
 import { ContentDisciplinasAulas } from "../components/ContentDisciplinasAulas";
 
 function Disciplinas() {
-
   const { logout } = useContext(AuthContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     logout();
-  }
+  };
   return (
     <div className="flex w-full min-screen font-sans bg-dark-theme">
       <Sidebar />
@@ -28,16 +27,16 @@ function Disciplinas() {
                 <MdOutlineNotifications />
               </li>
               <li className="pr-2">
-                <IoMdExit onClick={handleSubmit} className="cursor-pointer"/>
+                <IoMdExit onClick={handleSubmit} className="cursor-pointer" />
               </li>
             </ul>
           </div>
         </div>
-        <div className="flex pt-6 flex-row justify-between">
+        <div className="flex pt-6">
           <ContentDisciplinasAulas />
         </div>
       </main>
     </div>
-  )
+  );
 }
-export default Disciplinas
+export default Disciplinas;

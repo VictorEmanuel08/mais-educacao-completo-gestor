@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import DisciplinasFirst from "./pages/DisciplinasFirst";
 import DisciplinasSecond from "./pages/DisciplinasSecond";
 import Dados from "./pages/Dados";
+import Teste from "./teste";
 import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
@@ -16,6 +17,7 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/teste" element={<Teste />} />
           <Route
             path="/home"
             element={
