@@ -8,12 +8,34 @@ import { app } from "../api/app";
 
 function ContentDados() {
   const [dados, setDados] = useState("");
+  const [dadosNotas, setDadosNotas] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
+      const newValue = [];
       const response = await app.get(
         "/dados/a8b56ba5-8dbb-4d51-ba74-e0c4f717081f"
       );
+
+      // for (let i = 0; i < response.data.length; i++) {
+      //   if (response.data[0].series[0].turmas[i].alunos[i].Media.lenght > 0) {
+      //     newValue.push({
+      //       name: response.data[0].series[0].turmas[i].alunos[i].Media[i]
+      //         .bimestre.number,
+      //       data: response.data[0].series[0].turmas[i].alunos[i].Media[i].value,
+      //     });
+      //   }else{
+      //     newValue.push({
+      //       name: 0,
+      //       data: 0,
+      //     });
+      //   }
+      // }
+      // console.log(response.data.length);
+      // console.log(response.data[0].series[0].turmas[0]);
+
+      setDadosNotas(newValue);
+
       setDados(response.data);
     };
     getData();
@@ -25,7 +47,10 @@ function ContentDados() {
   const [idItemNota, setIdItemNota] = useState(-1);
   const [idItemMedia, setIdItemMedia] = useState(-1);
 
-  const [viewDisc, setViewDisc] = useState("");
+  const [nota1, setNota1] = useState("");
+  const [nota2, setNota2] = useState("");
+  const [nota3, setNota3] = useState("");
+  const [nota4, setNota4] = useState("");
 
   const handleCarregarDisc = function (e) {
     const opDisc = e.target.value;
@@ -57,6 +82,19 @@ function ContentDados() {
     setIdItemMedia(opNota);
   };
 
+  // function handleReturnOCaralhoDaNota(e) {
+  //   e.preventDefault();
+  //   idItemNota > -1 &&
+  //     dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //       idItemNota
+  //     ].Media.map((item, index) => {
+  //       return (
+  //         <div>{item.bimestre.number == 2 ? setNota1(item.value) : ""};</div>
+  //       );
+  //     });
+  //   console.log(nota1);
+  // }
+
   const optionsArea = {
     chart: {
       height: 350,
@@ -69,27 +107,25 @@ function ContentDados() {
       curve: "smooth",
     },
     xaxis: {
-      // type: "datetime",
-      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+      categories: ["1º Bimestre"],
     },
   };
 
-  const seriesArea = [
-    {
-      name: "series1",
-      data: [8, 2, 10, 5],
-    },
-    {
-      name: "series2",
-      data: [],
-    },
-  ];
+  // const seriesArea = [
+  //   {
+  //     name: "series1",
+  //     data: [5, 10, 2, 8],
+  //   },
+  //   {
+  //     name: "series2",
+  //     data: [],
+  //   },
+  // ];
 
   return (
     <div className="flex flex-col ml-12 w-4/5">
       <div>
         <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
-          <p className="text-[#4263EB] font-semibold">Dados</p>
           <div className="w-full flex flex-row p-6 pt-2 pr-10 grid grid-cols-4 gap-4 pb-1">
             <div className="flex flex-col text-[#4263EB]">
               <p className="text-[20px] font-semibold">Disciplina</p>
@@ -179,10 +215,7 @@ function ContentDados() {
             </div>
 
             <div>
-              <div
-                className="flex flex-row items-center text-dark-purple hover:scale-110 duration-300"
-                //  onClick={}
-              >
+              <div className="flex flex-row items-center text-dark-purple hover:scale-110 duration-300">
                 <PictureAsPdfIcon />
                 <p className="text-[16px] font-normal">Exportar PDF</p>
               </div>
@@ -229,27 +262,38 @@ function ContentDados() {
 
             <div className="flex flex-col w-1/3 items-center">
               <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
+
               {idItemNota > -1 &&
+              dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+                idItemNota
+              ].Media != 0 ? (
                 dados[idItemSerie].series[idItemTurma].turmas[
                   idItemAluno
                 ].alunos[idItemNota].Media.map((item, index) => {
-                  console.log(item);
                   return (
                     <div>
-                      {item == null ? (
-                        <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
-                          Nao tem nada
-                        </p>
-                      ) : (
+                      {item.bimestre.number == 2 ? (
                         <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
                           {item.value}
                         </p>
+                      ) : (
+                        ""
                       )}
                     </div>
                   );
-                })}
+                })
+              ) : (
+                <div className="flex items-center justify-center">
+                  <p className="text-[#748FFC] mt-8 text-[20px] font-bold">
+                    Sem nota cadastrada.
+                  </p>
+                </div>
+              )}
             </div>
           </div>
+
+          {/* {item.bimestre.number == 1 ? setNota1(item.value) : ""}
+          {console.log(nota1)} */}
 
           <div className="flex flex-col px-16 pb-12">
             <div className="flex flex-row justify-between">
@@ -303,7 +347,19 @@ function ContentDados() {
               <ApexChart
                 className=""
                 options={optionsArea}
-                series={seriesArea}
+                series={
+                  dadosNotas
+                  //   [
+                  //   {
+                  //     name: "series1",
+                  //     data: [5, 10, 2, 8],
+                  //   },
+                  //   {
+                  //     name: "series2",
+                  //     data: [],
+                  //   },
+                  // ]
+                }
                 type="area"
                 height={300}
                 width={700}
@@ -338,7 +394,16 @@ function ContentDados() {
               <ApexChart
                 className=""
                 options={optionsArea}
-                series={seriesArea}
+                series={[
+                  {
+                    name: "series1",
+                    data: [5, 10, 2, 8],
+                  },
+                  {
+                    name: "series2",
+                    data: [],
+                  },
+                ]}
                 type="area"
                 height={250}
                 width={700}
@@ -409,28 +474,50 @@ function ContentDados() {
                       ))}
                   </div>
 
-                  <div className="flex flex-col ">
+                  <div className="flex flex-col">
                     <p className="font-normal pl-4 pr-4 text-white text-[20px]">
                       Média
                     </p>
                     {/* <p className="bg-[#BECEE0] text-dark-purple font-normal w-full text-[18px] flex justify-center items-center">
                       6,75
                     </p> */}
-                    {idItemAluno > -1 &&
+
+                    {/* {idItemAluno > -1 &&
                       dados[idItemSerie].series[idItemTurma].turmas[
                         idItemAluno
                       ].alunos.map((item, i) => (
                         <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                          {/* {item.name} */}
+                          {item.name}
                         </p>
-                      ))}
+                      ))} */}
+
+                    {idItemNota > -1 &&
+                    dados[idItemSerie].series[idItemTurma].turmas[idItemAluno]
+                      .alunos[idItemNota].Media != 0 ? (
+                      dados[idItemSerie].series[idItemTurma].turmas[
+                        idItemAluno
+                      ].alunos[idItemNota].Media.map((item, index) => {
+                        return (
+                          <p>
+                            {item.bimestre.number == 1 ? (
+                              <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                                {item.value}
+                              </p>
+                            ) : (
+                              ""
+                            )}
+                          </p>
+                        );
+                      })
+                    ) : (
+                      <div className="flex items-center justify-center">
+                        <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                          Sem nota cadastrada.
+                        </p>
+                      </div>
+                    )}
                   </div>
                 </div>
-                {/* <div className="flex bg-dark-purple rounded-b-lg ">
-                  <Stack spacing={2}>
-                    <Pagination count={5} showFirstButton showLastButton />
-                  </Stack>
-                </div> */}
               </div>
               <div className="flex flex-col items-center">
                 <ApexChart
