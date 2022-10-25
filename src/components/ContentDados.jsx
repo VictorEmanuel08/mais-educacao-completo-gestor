@@ -8,7 +8,7 @@ import { app } from "../api/app";
 
 function ContentDados() {
   const [dados, setDados] = useState("");
-  const [dadosNotas, setDadosNotas] = useState([]);
+  const [visivle, setVisivle] = useState("");
 
   useEffect(() => {
     const getData = async () => {
@@ -58,7 +58,7 @@ function ContentDados() {
     setIdItemMedia(opNota);
   };
 
-  const optionsArea = {
+  const optionsArea1 = {
     chart: {
       height: 350,
       type: "area",
@@ -74,14 +74,113 @@ function ContentDados() {
     },
   };
 
-  const seriesArea = [
+  const seriesArea1 = [
     {
-      name: "series1",
-      data: [8, 2, 10, 5],
+      name: "Notas",
+      data: [
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre1,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre2,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre3,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre4,
+      ],
     },
+  ];
+
+  const optionsArea2 = {
+    chart: {
+      height: 350,
+      type: "area",
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+    },
+  };
+
+  const seriesArea2 = [
     {
-      name: "series2",
-      data: [],
+      name: "Notas",
+      data: [
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre1,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre2,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre3,
+        idItemNota > -1 &&
+          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+            idItemNota
+          ].bimestre4,
+      ],
+    },
+  ];
+
+  const optionsArea3 = {
+    chart: {
+      height: 350,
+      type: "area",
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+    },
+  };
+
+  const seriesArea3 = [
+    {
+      name: "Notas",
+      data: [4, 3, 2, 1],
+    },
+  ];
+
+  const optionsArea4 = {
+    chart: {
+      height: 350,
+      type: "area",
+    },
+    dataLabels: {
+      enabled: true,
+    },
+    stroke: {
+      curve: "smooth",
+    },
+    xaxis: {
+      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+    },
+  };
+
+  const seriesArea4 = [
+    {
+      name: "Notas",
+      data: [1, 2, 3, 4],
     },
   ];
 
@@ -158,7 +257,6 @@ function ContentDados() {
                   dados[idItemSerie].series[idItemTurma].turmas[
                     idItemAluno
                   ].alunos.map((item, i) => {
-                    // console.log(item);
                     return (
                       <option key={"aluno" + i} value={i}>
                         {item.name}
@@ -230,27 +328,17 @@ function ContentDados() {
               <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
 
               {idItemNota > -1 &&
-                console.log(
-                  dados[idItemSerie].series[idItemTurma].turmas[idItemAluno]
-                    .alunos[idItemNota].bimestre1
-                )}
-              {/* 
-              {idItemNota > -1 &&
               dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
                 idItemNota
-              ].bimestre1 > 0 ? (
-                dados[idItemSerie].series[idItemTurma].turmas[
-                  idItemAluno
-                ].alunos[idItemNota].bimestre1.map((item, index) => {
-                  console.log(item);
-                  return (
-                    <div>
-                      <p className="text-[#748FFC] mt-8 text-[100px] font-bold">
-                        {item}
-                      </p>
-                    </div>
-                  );
-                })
+              ].media_geral > 0 ? (
+                <div>
+                  <p className="text-[#748FFC] mt-8 text-[75px] font-bold">
+                    {
+                      dados[idItemSerie].series[idItemTurma].turmas[idItemAluno]
+                        .alunos[idItemNota].media_geral
+                    }
+                  </p>
+                </div>
               ) : (
                 <div className="flex items-center justify-center">
                   <p className="text-[#748FFC] mt-8 text-[20px] font-bold">
@@ -258,7 +346,6 @@ function ContentDados() {
                   </p>
                 </div>
               )}
-            */}
             </div>
           </div>
 
@@ -287,73 +374,120 @@ function ContentDados() {
 
             <div className="flex flex-row mt-8 justify-between">
               <div className="flex flex-col ">
-                <div className="flex flex-row">
-                  <label className="cursor-pointer relative">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 border-2 rounded-lg border-dark-purple"
-                    />
+                <div className="flex flex-row items-center">
+                  <input
+                    name="theradio"
+                    id="radio1"
+                    type="radio"
+                    // checked
+                    className="h-4 w-4 cursor-pointer rounded-full"
+                    value="1"
+                    onClick={() => setVisivle("1")}
+                    // className="h-4 w-4 cursor-pointer appearance-none rounded-full outline-none	border-solid border-2 border-indigo-500 relative flex items-center justify-center before:[content-none absolute h-4 w-4 bg-indigo rounded-lg opacity-0] checked:before:[opacity-1]"
+                  />
+                  <label for="radio1" className="cursor-pointer">
                     <span className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]">
-                      Média
+                      Médias
                     </span>
                   </label>
                 </div>
-                <div className="flex flex-row">
-                  <label className="cursor-pointer relative">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 border-2 rounded-lg border-dark-purple"
-                    />
-                    <span className="text-[18px] font-semibold text-dark-purple pl-4">
-                      Notas
+                <div className="flex flex-row items-center">
+                  <input
+                    name="theradio"
+                    id="radio2"
+                    type="radio"
+                    className="h-4 w-4 cursor-pointer"
+                    value="2"
+                    onClick={() => setVisivle("2")}
+                  />
+                  <label for="radio2" className="cursor-pointer">
+                    <span className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]">
+                      Notas das atividades
+                    </span>
+                  </label>
+                </div>
+                <div className="flex flex-row items-center">
+                  <input
+                    name="theradio"
+                    id="radio3"
+                    type="radio"
+                    className="h-4 w-4 cursor-pointer"
+                    value="3"
+                    onClick={() => setVisivle("3")}
+                  />
+                  <label for="radio3" className="cursor-pointer">
+                    <span className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]">
+                      Quantidade de atividades
+                    </span>
+                  </label>
+                </div>
+                <div className="flex flex-row items-center">
+                  <input
+                    name="theradio"
+                    id="radio4"
+                    type="radio"
+                    className="h-4 w-4 cursor-pointer"
+                    value="4"
+                    onClick={() => setVisivle("4")}
+                  />
+                  <label for="radio4" className="cursor-pointer">
+                    <span className="text-[18px] font-semibold text-dark-purple pl-4 hover:text-[#02C4B2] active:text-[#02C4B2]">
+                      Quantidades de aulas Assistidas
                     </span>
                   </label>
                 </div>
               </div>
 
-              <ApexChart
+              {/* <ApexChart
                 className=""
-                options={optionsArea}
-                series={seriesArea}
+                options={optionsArea1}
+                series={seriesArea1}
                 type="area"
                 height={300}
                 width={700}
-              />
-            </div>
+              /> */}
 
-            <div className="flex flex-row mt-8 justify-between ">
-              <div className="flex flex-col">
-                <div className="flex flex-row">
-                  <label className="cursor-pointer relative">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 border-2 rounded-lg border-dark-purple"
-                    />
-                    <span className="text-[18px] font-semibold text-dark-purple pl-4">
-                      Atividades
-                    </span>
-                  </label>
-                </div>
-                <div className="flex flex-row">
-                  <label className="cursor-pointer relative">
-                    <input
-                      type="checkbox"
-                      className="h-4 w-4 border-2 rounded-lg border-dark-purple"
-                    />
-                    <span className="text-[18px] font-semibold text-dark-purple pl-4">
-                      Aulas Assistidas
-                    </span>
-                  </label>
-                </div>
-              </div>
-              <ApexChart
-                className=""
-                options={optionsArea}
-                series={seriesArea}
-                type="area"
-                height={250}
-                width={700}
-              />
+              {visivle == "1" && (
+                <ApexChart
+                  className=""
+                  options={optionsArea1}
+                  series={seriesArea1}
+                  type="area"
+                  height={300}
+                  width={700}
+                />
+              )}
+
+              {visivle == "2" && (
+                <ApexChart
+                  className=""
+                  options={optionsArea2}
+                  series={seriesArea2}
+                  type="area"
+                  height={300}
+                  width={700}
+                />
+              )}
+              {visivle == "3" && (
+                <ApexChart
+                  className=""
+                  options={optionsArea3}
+                  series={seriesArea3}
+                  type="area"
+                  height={300}
+                  width={700}
+                />
+              )}
+              {visivle == "4" && (
+                <ApexChart
+                  className=""
+                  options={optionsArea4}
+                  series={seriesArea4}
+                  type="area"
+                  height={300}
+                  width={700}
+                />
+              )}
             </div>
           </div>
 
