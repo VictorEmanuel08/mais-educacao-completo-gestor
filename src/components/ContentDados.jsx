@@ -64,7 +64,6 @@ function ContentDados() {
   const handleVerificarNota = (nota) => {
     if (8 <= nota && nota <= 10) {
       count1++;
-      console.log(count1);
     }
     if (nota >= 6 && nota < 8) {
       count2++;
@@ -81,141 +80,141 @@ function ContentDados() {
     return null;
   };
 
-  const optionsArea1 = {
-    chart: {
-      height: 350,
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
-    },
-  };
+  // const optionsArea1 = {
+  //   chart: {
+  //     height: 350,
+  //     type: "area",
+  //   },
+  //   dataLabels: {
+  //     enabled: true,
+  //   },
+  //   stroke: {
+  //     curve: "smooth",
+  //   },
+  //   xaxis: {
+  //     categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+  //   },
+  // };
 
-  const seriesArea1 = [
-    {
-      name: "Notas",
-      data: [
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre1,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre2,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre3,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre4,
-      ],
-    },
-  ];
+  // const seriesArea1 = [
+  //   {
+  //     name: "Notas",
+  //     data: [
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre1,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre2,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre3,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre4,
+  //     ],
+  //   },
+  // ];
 
-  const optionsArea2 = {
-    chart: {
-      height: 350,
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
-    },
-  };
+  // const optionsArea2 = {
+  //   chart: {
+  //     height: 350,
+  //     type: "area",
+  //   },
+  //   dataLabels: {
+  //     enabled: true,
+  //   },
+  //   stroke: {
+  //     curve: "smooth",
+  //   },
+  //   xaxis: {
+  //     categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+  //   },
+  // };
 
-  const seriesArea2 = [
-    {
-      name: "Notas",
-      data: [
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre1,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre2,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre3,
-        idItemNota > -1 &&
-          dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
-            idItemNota
-          ].bimestre4,
-      ],
-    },
-  ];
+  // const seriesArea2 = [
+  //   {
+  //     name: "Notas",
+  //     data: [
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre1,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre2,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre3,
+  //       idItemNota > -1 &&
+  //         dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
+  //           idItemNota
+  //         ].bimestre4,
+  //     ],
+  //   },
+  // ];
 
-  const optionsArea3 = {
-    chart: {
-      height: 350,
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
-    },
-  };
+  // const optionsArea3 = {
+  //   chart: {
+  //     height: 350,
+  //     type: "area",
+  //   },
+  //   dataLabels: {
+  //     enabled: true,
+  //   },
+  //   stroke: {
+  //     curve: "smooth",
+  //   },
+  //   xaxis: {
+  //     categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+  //   },
+  // };
 
-  const seriesArea3 = [
-    {
-      name: "Notas",
-      data: [4, 3, 2, 1],
-    },
-  ];
+  // const seriesArea3 = [
+  //   {
+  //     name: "Notas",
+  //     data: [4, 3, 2, 1],
+  //   },
+  // ];
 
-  const optionsArea4 = {
-    chart: {
-      height: 350,
-      type: "area",
-    },
-    dataLabels: {
-      enabled: true,
-    },
-    stroke: {
-      curve: "smooth",
-    },
-    xaxis: {
-      categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
-    },
-  };
+  // const optionsArea4 = {
+  //   chart: {
+  //     height: 350,
+  //     type: "area",
+  //   },
+  //   dataLabels: {
+  //     enabled: true,
+  //   },
+  //   stroke: {
+  //     curve: "smooth",
+  //   },
+  //   xaxis: {
+  //     categories: ["1º Bimestre", "2º Bimestre", "3º Bimestre", "4º Bimestre"],
+  //   },
+  // };
 
-  const seriesArea4 = [
-    {
-      name: "Notas",
-      data: [1, 2, 3, 4],
-    },
-  ];
+  // const seriesArea4 = [
+  //   {
+  //     name: "Notas",
+  //     data: [1, 2, 3, 4],
+  //   },
+  // ];
 
   return (
     <div className="flex flex-col ml-12 w-4/5">
       <div>
-        <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333] pr-10">
-          <div className="w-full flex flex-row p-6 pt-2 pr-10 grid grid-cols-4 gap-4 pb-1">
+        <div className="w-full flex flex-col p-6 pt-4 bg-white rounded-lg shadow-md shaow-[#333]">
+          <div className="w-full flex flex-row pt-2 grid grid-cols-5 gap-5 pb-1 ml-10">
             <div className="flex flex-col text-[#4263EB]">
               <p className="text-[20px] font-semibold">Disciplina</p>
               <select
-                className="bg-[#FFFFFF] w-4/5 text-[16px]"
+                className="bg-[#FFFFFF] text-[16px]"
                 onClick={handleCarregarDisc}
                 name="disciplina"
               >
@@ -224,7 +223,7 @@ function ContentDados() {
                 {Object.entries(dados).map((item, i) => {
                   return (
                     <option key={"disciplina" + i} value={i}>
-                      {item[1].name}
+                      {item[1].disciplinas.name}
                     </option>
                   );
                 })}
@@ -234,35 +233,39 @@ function ContentDados() {
             <div className="flex flex-col text-[#4263EB]">
               <p className="text-[20px] font-semibold">Série</p>
               <select
-                className="bg-[#FFFFFF] w-4/5 text-[16px]"
+                className="bg-[#FFFFFF] text-[16px]"
                 onClick={handleCarregarSerie}
                 name="serie"
               >
                 <option value={-1}> Selecione uma série:</option>
                 {idItemSerie > -1 &&
-                  dados[idItemSerie].series.map((item, i) => (
-                    <option key={"serie" + i} value={i}>
-                      {item.name}
-                    </option>
-                  ))}
+                  dados[idItemSerie].disciplinas.series.map((item, i) => {
+                    return (
+                      <option key={"serie" + i} value={i}>
+                        {item.name}
+                      </option>
+                    );
+                  })}
               </select>
             </div>
 
             <div className="flex flex-col text-[#4263EB]">
               <p className="text-[20px]">Turma</p>
               <select
-                className="bg-[#FFFFFF] w-4/5 text-[16px]"
+                className="bg-[#FFFFFF] text-[16px]"
                 onClick={handleCarregarTurma}
                 name="turma"
               >
                 <option value={-1}> Selecione uma turma:</option>
                 {idItemTurma > -1 &&
-                  dados[idItemSerie].series[idItemTurma].turmas.map(
-                    (item, i) => (
-                      <option key={"turma" + i} value={i}>
-                        {item.name}
-                      </option>
-                    )
+                  dados[idItemSerie].disciplinas.series[idItemTurma].turmas.map(
+                    (item, i) => {
+                      return (
+                        <option key={"turma" + i} value={i}>
+                          {item.name}
+                        </option>
+                      );
+                    }
                   )}
               </select>
             </div>
@@ -270,14 +273,14 @@ function ContentDados() {
             <div className="flex flex-col text-[#4263EB]">
               <p className="text-[20px]">Aluno</p>
               <select
-                className="bg-[#FFFFFF] w-4/5 text-[16px]"
+                className="bg-[#FFFFFF] text-[16px]"
                 onClick={handleCarregarAluno}
                 name="aluno"
               >
                 <option value={-1}> Selecione um aluno:</option>
 
                 {idItemAluno > -1 &&
-                  dados[idItemSerie].series[idItemTurma].turmas[
+                  dados[idItemSerie].disciplinas.series[idItemTurma].turmas[
                     idItemAluno
                   ].alunos.map((item, i) => {
                     return (
@@ -290,6 +293,7 @@ function ContentDados() {
             </div>
           </div>
         </div>
+
         <div className="w-full flex flex-col p-6 pt-6 bg-white rounded-lg shadow-md shaow-[#333] mt-4">
           <div className="flex flex-row justify-between pb-8 border-b border-[#4263EB] px-10 mt-10">
             <div className="">
@@ -350,7 +354,7 @@ function ContentDados() {
             <div className="flex flex-col w-1/3 items-center">
               <p className="text-[#02C4B2] text-[20px] font-bold">Média</p>
 
-              {idItemNota > -1 &&
+              {/* {idItemNota > -1 &&
               dados[idItemSerie].series[idItemTurma].turmas[idItemAluno].alunos[
                 idItemNota
               ].media_geral > 0 ? (
@@ -368,7 +372,7 @@ function ContentDados() {
                     Sem nota cadastrada.
                   </p>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
 
@@ -460,7 +464,7 @@ function ContentDados() {
                   </label>
                 </div>
               </div>
-
+              {/* 
               {visivle == "1" && (
                 <ApexChart
                   className=""
@@ -501,7 +505,7 @@ function ContentDados() {
                   height={300}
                   width={700}
                 />
-              )}
+              )} */}
             </div>
           </div>
 
@@ -536,8 +540,29 @@ function ContentDados() {
                       Turma
                     </p>
                     {idItemAluno > -1 &&
-                      dados[idItemSerie].series[idItemTurma].turmas.map(
+                      dados[idItemSerie].disciplinas.series[
+                        idItemTurma
+                      ].turmas.map(
                         (item, index) =>
+                          // {
+                          //   for (
+                          //     var t = 0;
+                          //     t <
+                          //     dados[idItemSerie].disciplinas.series[idItemTurma]
+                          //       .turmas[idItemAluno].alunos.length;
+                          //     t++
+                          //   ) {
+                          //     console.log(t);
+                          //     idItemAluno == index && (
+                          //       <div className="bg-[#748FFC] h-full flex items-center px-5">
+                          //         {console.log(item.name)}
+                          //         <p className=" text-[18px] text-white font-normal w-full ">
+                          //           {item.name}
+                          //         </p>
+                          //       </div>
+                          //     );
+                          //   }
+                          // }
                           idItemAluno == index && (
                             <div className="bg-[#748FFC] h-full flex items-center px-5">
                               <p className=" text-[18px] text-white font-normal w-full ">
@@ -553,13 +578,21 @@ function ContentDados() {
                       Aluno
                     </p>
                     {idItemAluno > -1 &&
-                      dados[idItemSerie].series[idItemTurma].turmas[
+                      dados[idItemSerie].disciplinas.series[idItemTurma].turmas[
                         idItemAluno
-                      ].alunos.map((item, i) => (
-                        <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
-                          {item.name}
-                        </p>
-                      ))}
+                      ].alunos.map((item, i) => {
+                        return (
+                          <p
+                            className={`pr-4 text-[18px] pl-4 ${
+                              i % 2 != 0
+                                ? `bg-[#748FFC] text-white`
+                                : `bg-[#EDF2FF] text-dark-purple`
+                            } font-normal w-full flex justify-center items-center`}
+                          >
+                            {item.name}
+                          </p>
+                        );
+                      })}
                   </div>
 
                   <div className="flex flex-col items-center">
@@ -568,19 +601,31 @@ function ContentDados() {
                     </p>
 
                     {idItemAluno > -1 &&
-                      dados[idItemSerie].series[idItemTurma].turmas[
+                      dados[idItemSerie].disciplinas.series[idItemTurma].turmas[
                         idItemAluno
                       ].alunos.map((item, i) => {
                         handleVerificarNota(item.media_geral);
                         if (item.media_geral > 0) {
                           return (
-                            <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                            <p
+                              className={`pr-4 text-[18px] pl-4 ${
+                                i % 2 != 0
+                                  ? `bg-[#748FFC] text-white`
+                                  : `bg-[#EDF2FF] text-dark-purple`
+                              } font-normal w-full flex justify-center items-center`}
+                            >
                               {item.media_geral}
                             </p>
                           );
                         }
                         return (
-                          <p className="pr-4 text-[18px] pl-4 bg-[#748FFC] text-white font-normal w-full flex justify-center items-center">
+                          <p
+                            className={`pr-4 text-[18px] pl-4 ${
+                              i % 2 != 0
+                                ? `bg-[#748FFC] text-white`
+                                : `bg-[#EDF2FF] text-dark-purple`
+                            } font-normal w-full flex justify-center items-center`}
+                          >
                             Sem nota cadastrada.
                           </p>
                         );
@@ -594,7 +639,13 @@ function ContentDados() {
                   series={[count5, count3, count3, count2, count1]}
                   options={{
                     labels: ["0-2", "2-4", "4-6", "6-8", "8-10"],
-                    colors:['#7ebd0b', '#661818', "#333",'#7ebd0b', '#661818', "#333"],
+                    colors: [
+                      "#4263EB",
+                      "#661818",
+                      "#808080",
+                      "#7ebd0b",
+                      "#02C4B2",
+                    ],
                     plotOptions: {
                       pie: {
                         donut: {
