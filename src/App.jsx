@@ -9,6 +9,7 @@ import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
+import { EditAula2 } from "./pages/drag n drops/EditAula2";
 import { EditAtiv } from "./pages/drag n drops/EditAtiv";
 
 function App() {
@@ -47,6 +48,14 @@ function App() {
             element={
               <Private>
                 <EditAula />
+              </Private>
+            }
+          />
+          <Route
+            path="/editar-disciplinas-Aulas2/:id"
+            element={
+              <Private>
+                <EditAula2 />
               </Private>
             }
           />

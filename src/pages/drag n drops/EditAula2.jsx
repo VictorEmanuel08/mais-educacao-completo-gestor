@@ -13,7 +13,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import EyesCloked from "../../assets/hidden.png";
 import EyesOpen from "../../assets/view.png";
 
-export function EditAula() {
+export function EditAula2() {
   const [aula, setAula] = useState([]);
   const [ready, setReady] = useState(true);
   const [text, setText] = useState();
@@ -171,15 +171,16 @@ export function EditAula() {
                               ? "bg-dark-purple p-3 w-[300px] h-full select-none"
                               : "0"
                           }
-                          ${board.name == "atividades" ? `bg-black` : "0"}
                           ${
                             board.name == "conteudos"
-                              ? `h-[800px] mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12 scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#EDF2FF]-300 overflow-y-scroll`
-                              : "0"
+                            ? `h-[800px] mt-6 w-[60rem] h-screen flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-12 scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#EDF2FF]-300 overflow-y-scroll`
+                            : "0"
                           }
+                          ${board.name == "atividades" ? `w-[300px] h-full bg-black` : "0"}
+                          ${board.name == "materiais" ? `w-[300px] h-full bg-dark-purple` : "0"}
                           `}
                             >
-                              <div className="flex justify-between items-center">
+                              {/* <div className="flex justify-between items-center">
                                 <div className="text-[22px] text-[#FFFFFF] font-roboto mt-4 mb-4 ">
                                   <p>
                                     {board.name == "aulas" ? `Vídeo Aulas` : ""}
@@ -318,7 +319,7 @@ export function EditAula() {
                                       </div>
                                     );
                                   })
-                                : ""}
+                                : ""} */}
 
                               {provided.placeholder}
                             </div>
