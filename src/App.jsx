@@ -5,7 +5,7 @@ import DisciplinasFirst from "./pages/DisciplinasFirst";
 import DisciplinasSecond from "./pages/DisciplinasSecond";
 import Dados from "./pages/Dados";
 import Teste from "./teste";
-import { ItemNewEdit } from "./pages/drag n drops/items/ItemNewEdit";
+import { ItemAulaEdit } from "./pages/drag n drops/items/ItemAulaEdit";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
@@ -76,10 +76,10 @@ function App() {
             }
           />
           <Route
-            path="/ItemNewEdit/:id"
+            path="/ItemAulaEdit/:id"
             element={
               <Private>
-                <ItemNewEdit />
+                <ItemAulaEdit />
               </Private>
             }
           />

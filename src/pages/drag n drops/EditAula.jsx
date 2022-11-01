@@ -6,7 +6,7 @@ import logo from "../../assets/logo.png";
 import { app } from "../../api/app";
 import { useParams } from "react-router-dom";
 import { Calendario } from "../../components/Calendario";
-import { ItemNewEdit } from "./items/ItemNewEdit";
+import { ItemAulaEdit } from "./items/ItemAulaEdit";
 import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
 import MenuIcon from "@mui/icons-material/Menu";
 
@@ -252,7 +252,7 @@ export function EditAula() {
                                               <div className="bg-[#EDF2FF] rounded-lg p-4">
                                                 <div className="flex flex-row items-center">
                                                   <div className="w-1/3 flex items-center">
-                                                    <ItemNewEdit
+                                                    <ItemAulaEdit
                                                       key={item.id}
                                                       data={item}
                                                       index={iIndex}
@@ -310,7 +310,7 @@ export function EditAula() {
                                     return (
                                       <div className="flex items-center">
                                         <MenuIcon className="text-[#FFFFFF] active:text-[#263B4A] opacity-1 mb-8" />
-                                        <ItemNewEdit
+                                        <ItemAulaEdit
                                           key={item.id}
                                           data={item}
                                           index={iIndex}
