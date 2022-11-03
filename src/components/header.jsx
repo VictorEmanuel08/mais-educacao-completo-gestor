@@ -5,7 +5,7 @@ import logo from "../assets/logo.png";
 export function Header() {
   return (
     <div className="relative">
-      <div className="w-full h-16 bg-dark-purple fixed z-10">
+      <div className="w-full h-16 bg-dark-purple">
         <div className="flex flex-row justify-between items-center p-4">
           <a href="/home">
             <img

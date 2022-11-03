@@ -19,7 +19,7 @@ module.exports = {
         "dark-theme": "#EDF2FF",
         "white-write": "#dee2e6",
         "blue-write": "#4263EB",
-        125: "#4263EB",
+        'black-rgba': 'rgba(0, 0, 0, 0.54)',
       },
       spacing: {
         128: "73rem",
