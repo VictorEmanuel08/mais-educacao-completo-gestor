@@ -9,15 +9,17 @@ export function ItemAulaEdit({ data, index }) {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
-          className="flex flex-col justify-center items-center mb-8 mt-4 w-[200px] h-[100px]"
+          className="flex flex-col justify-center items-center mb-14 mt-4 w-[200px] h-[100px]"
         >
-          <a className="flex items-center active:opacity-50">
+          <a className="flex flex-col items-center active:opacity-50">
             {/* <MenuIcon className="text-[#4263EB] active:text-[#263B4A] opacity-1 mr-1" /> */}
-            <img src={data.thumb} className="rounded-t-lg"/>
+            <img src={data.thumb} className="rounded-t-lg" />
+            <div className="bg-[#EDF2FF] w-full h-[40px] rounded-b-lg">
+              <p className="text-[14px] text-dark-purple leading-4 px-3 py-1">
+                {data.title}
+              </p>
+            </div>
           </a>
-          <div className="bg-[#EDF2FF] w-full h-[55px] mt-[-35px] rounded-b-lg">
-            <p className="text-[14px] text-dark-purple leading-4 px-3 py-1">{data.title}</p>
-          </div>
         </div>
       )}
     </Draggable>

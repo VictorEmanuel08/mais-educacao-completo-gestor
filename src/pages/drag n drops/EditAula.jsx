@@ -10,10 +10,14 @@ import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
 import MenuIcon from "@mui/icons-material/Menu";
 import Modal from "react-modal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import CloseIcon from "@mui/icons-material/Close";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import EyesCloked from "../../assets/hidden.png";
 import EyesOpen from "../../assets/view.png";
 import { Header } from "../../components/header";
+import { Checkbox } from "@mui/material";
 
 export function EditAula() {
   const { user } = useContext(AuthContext);
@@ -32,7 +36,6 @@ export function EditAula() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const [tipoQuestao, setTipoQuestao] = useState("multipla");
-  const [nivelQuestao, setNivelQuestao] = useState("facil");
 
   function openModal() {
     setModalIsOpen(true);
@@ -53,12 +56,12 @@ export function EditAula() {
   useEffect(() => {
     const getData = async () => {
       const response = await app.get(
-        "/escolas/users/professores/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/0edbbd06-e902-4714-a18e-ddd4dc82ddeb"
+        `/escolas/users/professores/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/${id}`
       );
       setAula(response.data);
     };
     getData();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     const getData = async () => {
@@ -88,8 +91,6 @@ export function EditAula() {
   };
   console.log(bimestreId);
 
-  
-
   async function AddAula() {
     try {
       await app.post("/conteudos", {
@@ -111,7 +112,7 @@ export function EditAula() {
     const Valores = { id, type };
     setAddItemArray([...addItemArray, Valores]);
   };
-  console.log(addItemArray)
+  console.log(addItemArray);
 
   const ConteudoToAulas = (id) => {
     const Valores = { id };
@@ -159,11 +160,6 @@ export function EditAula() {
     setTipoQuestao(opQuest);
   };
 
-  const handleNivelQuestao = function (e) {
-    const opNivel = e.target.value;
-    setNivelQuestao(opNivel);
-  };
-
   return (
     <div className="flex flex-col w-full h-full text-2xl bg-dark-theme relative">
       <Header />
@@ -183,12 +179,12 @@ export function EditAula() {
                           className={`
                           ${
                             board.name == "aulas"
-                              ? "bg-dark-purple w-[300px] h-screen select-none crollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#EDF2FF]-300 overflow-y-scroll"
+                              ? "bg-dark-purple w-[300px] h-screen select-none scrollbar-thin "
                               : "0"
                           }
                           ${
                             board.name == "conteudos"
-                              ? `h-[40rem] w-[60rem] mt-6 flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-20 scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#EDF2FF]-300 overflow-y-scroll`
+                              ? `h-[40rem] w-[60rem] mt-6 flex flex-col bg-white rounded-lg shadow-md shaow-[#333] ml-20 scrollbar-thin `
                               : "0"
                           }
 
@@ -240,11 +236,11 @@ export function EditAula() {
                                       onChange={(e) => setText(e.target.value)}
                                     />
 
-                                    <div className=" rounded-sm border-solid border-4 border-sky-300 w-[200px] mb-5 flex justify-center text-zinc-700">
+                                    <div className=" rounded-lg w-[200px] mb-5 flex justify-center text-zinc-700">
                                       <select
                                         name=""
                                         id=""
-                                        className="text-[14px] w-[200px]"
+                                        className="text-[14px] w-[200px] border-none outline-none"
                                         onClick={handleBimestre}
                                       >
                                         <option className="text-[12px]">
@@ -283,6 +279,7 @@ export function EditAula() {
                                       </button>
                                     )}
                                   </div>
+
                                   {board.items.length == 0 && (
                                     <div className="bg-[#EDF2FF] h-[150px] rounded-lg mb-4 p-1 pl-4 flex items-center justify-center">
                                       <p className="text-center text-[#707070] text-[18px] font-roboto">
@@ -357,8 +354,8 @@ export function EditAula() {
                               <Modal
                                 isOpen={modalIsOpen}
                                 onRequestClose={closeModal}
-                                overlayClassName="flex items-center justify-center fixed top-0 bottom-0 right-0 left-0 rounded-lg bg-black-rgba"
-                                className="flex flex-col bg-white w-1/2 h-4/5 p-1 px-6 text-dark-purple"
+                                overlayClassName="flex items-center justify-center fixed top-0 bottom-0 right-0 left-0 bg-black-rgba"
+                                className="flex flex-col bg-white w-2/5 h-4/5 rounded-lg p-1 px-8 text-dark-purple scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#000000]-300 overflow-y-scroll"
                               >
                                 <div className="flex items-center justify-center">
                                   <p className="text-[25px] font-semibold">
@@ -371,86 +368,140 @@ export function EditAula() {
                                     placeholder="Título"
                                     className="w-fit placeholder-dark-purple outline-none text-[25px]"
                                   />
-                                  <input
-                                    placeholder="Descrição da Atividade"
-                                    className="w-fit placeholder-dark-purple outline-none text-[18px]"
-                                  />
                                 </div>
+                                <div>
+                                  <div className="flex flex-col mt-4 px-4">
+                                    <div className="flex flex-row w-full justify-between items-center text-black">
+                                      <p className="mr-4 text-dark-purple text-[20px]">
+                                        1)
+                                      </p>
 
-                                <div className="flex flex-col mt-4">
-                                  <div className="flex flex-row items-center text-black pr-4">
-                                    <p className="mr-4 text-dark-purple text-[25px]">
-                                      1)
-                                    </p>
-
-                                    <div className="flex flex-row justify-between w-full h-[40px]">
-                                      <select
-                                        onClick={handleTipoQuestao}
-                                        className="bg-[#EDF2FF] w-full mr-4 rounded-lg p-2"
-                                        name="TipoDeQuestão"
-                                      >
-                                        <option value="multipla">
-                                          Múltipla Escolha
-                                        </option>
-                                        <option value="subjetiva">
-                                          Subjetiva
-                                        </option>
-                                      </select>
-
-                                      <select
-                                        onClick={handleNivelQuestao}
-                                        className="bg-[#EDF2FF] w-full mr-4 rounded-lg p-2"
-                                      >
-                                        <option value="facil">
-                                          Nível: Fácil
-                                        </option>
-                                        <option value="medio">
-                                          Nível: Médio
-                                        </option>
-                                        <option value="dificil">
-                                          Nível: Difícil
-                                        </option>
-                                      </select>
-
-                                      <div className="bg-[#EDF2FF] w-full flex items-center justify-center rounded-lg p-2">
-                                        Adicionar Imagem
+                                      <div className="flex items-center h-[40px] w-1/3">
+                                        <DeleteForeverOutlinedIcon
+                                          sx={{ fontSize: 30 }}
+                                          className="cursor-pointer text-dark-purple mr-2"
+                                        />
+                                        <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                                          <select
+                                            onClick={handleTipoQuestao}
+                                            className="bg-transparent w-full rounded-lg outline-none"
+                                            name="TipoDeQuestão"
+                                          >
+                                            <option value="multipla">
+                                              Múltipla Escolha
+                                            </option>
+                                            <option value="subjetiva">
+                                              Subjetiva
+                                            </option>
+                                          </select>
+                                        </div>
                                       </div>
                                     </div>
+
+                                    <div className="mt-4 mb-8 w-full h-[40px]">
+                                      <textarea
+                                        placeholder="Pergunta"
+                                        className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                      />
+                                    </div>
+                                    {tipoQuestao === "multipla" ? (
+                                      <div>
+                                        <div className="flex flex-row items-center justify-between mt-4">
+                                          <Checkbox className="cursor-pointer text-dark-purple" />
+                                          <textarea
+                                            placeholder="Alternativa 1"
+                                            className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                          />
+                                          <CloseIcon className="cursor-pointer text-dark-purple" />
+                                        </div>
+                                        <div className="h-[40px] mt-4 mb-4">
+                                          <button className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white ">
+                                            <AddCircleOutlineIcon className="mr-4" />
+                                            Adicionar Alternativa
+                                          </button>
+                                        </div>
+                                      </div>
+                                    ) : null}
+
+                                    {tipoQuestao === "subjetiva" ? (
+                                      <div className="mt-4 mb-8 w-full h-[40px]">
+                                        <textarea
+                                          placeholder="Resposta"
+                                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                        />
+                                      </div>
+                                    ) : null}
                                   </div>
 
-                                  <div className="mr-4 ml-9 mt-4">
-                                    <input
-                                      placeholder="Pergunta"
-                                      className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2"
-                                    />
+                                  <div className="flex flex-col mt-4 px-4">
+                                    <div className="flex flex-row w-full justify-between items-center text-black">
+                                      <p className="mr-4 text-dark-purple text-[20px]">
+                                        2)
+                                      </p>
+
+                                      <div className="flex items-center h-[40px] w-1/3">
+                                        <DeleteForeverOutlinedIcon
+                                          sx={{ fontSize: 30 }}
+                                          className="cursor-pointer text-dark-purple mr-2"
+                                        />
+                                        <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                                          <select
+                                            onClick={handleTipoQuestao}
+                                            className="bg-transparent w-full rounded-lg outline-none"
+                                            name="TipoDeQuestão"
+                                          >
+                                            <option value="multipla">
+                                              Múltipla Escolha
+                                            </option>
+                                            <option value="subjetiva">
+                                              Subjetiva
+                                            </option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div className="mt-4 mb-8 w-full h-[40px]">
+                                      <textarea
+                                        placeholder="Pergunta"
+                                        className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                      />
+                                    </div>
+
+                                    <div className="flex flex-row items-center justify-between mt-2">
+                                      <Checkbox className="cursor-pointer text-dark-purple" />
+                                      <textarea
+                                        placeholder="Alternativa 1"
+                                        className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                      />
+                                      <CloseIcon className="cursor-pointer text-dark-purple" />
+                                    </div>
+
+                                    <div className="h-[40px] mt-4 mb-4">
+                                      <button className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white ">
+                                        <AddCircleOutlineIcon className="mr-4" />
+                                        Adicionar Alternativa
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
 
-                                <div className="flex items-center justify-center w-full px-16 h-[40px] my-4 mb-4">
-                                  <button className="bg-[#EDF2FF] rounded-lg text-black w-1/2 h-full mr-8">
-                                    Adicionar do Banco de Questões
-                                  </button>
-                                  <button className="bg-dark-purple rounded-lg text-white w-1/2 h-full">
-                                    Adicionar Nova Questão
+                                <div className="flex items-center justify-center mt-4">
+                                  <button className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white">
+                                    Adicionar Questão
                                   </button>
                                 </div>
 
-                                <div className="flex flex-row h-[40px]">
+                                <div className="flex flex-row items-center justify-end my-8 px-4 w-full">
                                   <button
                                     onClick={closeModal}
-                                    className="bg-[#EDF2FF] rounded-lg text-black w-full ml-72 mr-4"
+                                    className="bg-[#EDF2FF] rounded-lg text-black w-1/6 h-[40px] mr-4"
                                   >
                                     Cancelar
                                   </button>
                                   <button
                                     onClick={closeModal}
-                                    className="bg-[#EDF2FF] rounded-lg text-black w-full mr-4"
-                                  >
-                                    Salvar Rascunho
-                                  </button>
-                                  <button
-                                    onClick={closeModal}
-                                    className="bg-dark-purple rounded-lg text-white w-full"
+                                    className="bg-dark-purple rounded-lg text-white w-1/6 h-[40px]"
                                   >
                                     Salvar
                                   </button>
