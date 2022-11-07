@@ -11,6 +11,7 @@ import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
 // import { EditAula2 } from "./pages/drag n drops/EditAula";
 import { EditAtiv } from "./pages/drag n drops/EditAtiv";
+import {Modalcomponent} from "./components/Modalcomponent"
 
 function App() {
   return (
@@ -72,6 +73,14 @@ function App() {
             element={
               <Private>
                 <ItemAulaEdit />
+              </Private>
+            }
+          />
+          <Route
+            path="/Modalcomponent"
+            element={
+              <Private>
+                <Modalcomponent />
               </Private>
             }
           />

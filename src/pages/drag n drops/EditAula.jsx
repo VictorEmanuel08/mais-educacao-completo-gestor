@@ -35,7 +35,36 @@ export function EditAula() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  const [tipoQuestao, setTipoQuestao] = useState("multipla");
+  const [selectValue, setSelectValue] = useState("Múltipla escolha"); // multipla
+
+  const [alternativa, setAlternativa] = useState([]);
+  const [alternativaId, setAlternativaId] = useState("");
+
+  const [questao, SetQuestao] = useState([]);
+
+  const optionTipo = [
+    { id: 1, nome: "Múltipla escolha" },
+    { id: 2, nome: "Subjetiva" },
+  ];
+
+  const addQuestao = (e) => {
+    e.preventDefault();
+
+    SetQuestao([...questao, ""]);
+    console.log(questao);
+  };
+
+  const addAlternativa = (e) => {
+    e.preventDefault();
+
+    setAlternativa([...alternativa, ""]);
+  };
+
+  const handleChangeAlternativa = (e, index) => {
+    alternativa[index] = e.target.value;
+    setAlternativa([...alternativa]);
+    console.log(alternativa);
+  };
 
   function openModal() {
     setModalIsOpen(true);
@@ -89,7 +118,7 @@ export function EditAula() {
     const getCondensaId = e.target.value;
     setBimestreId(getCondensaId);
   };
-  console.log(bimestreId);
+  // console.log(bimestreId);
 
   async function AddAula() {
     try {
@@ -112,7 +141,7 @@ export function EditAula() {
     const Valores = { id, type };
     setAddItemArray([...addItemArray, Valores]);
   };
-  console.log(addItemArray);
+  // console.log(addItemArray);
 
   const ConteudoToAulas = (id) => {
     const Valores = { id };
@@ -153,11 +182,6 @@ export function EditAula() {
       ConteudoToAulas(dragItem.id, "material");
     } else {
     }
-  };
-
-  const handleTipoQuestao = function (e) {
-    const opQuest = e.target.value;
-    setTipoQuestao(opQuest);
   };
 
   return (
@@ -371,125 +395,108 @@ export function EditAula() {
                                 </div>
                                 <div>
                                   <div className="flex flex-col mt-4 px-4">
-                                    <div className="flex flex-row w-full justify-between items-center text-black">
-                                      <p className="mr-4 text-dark-purple text-[20px]">
-                                        1)
-                                      </p>
-
-                                      <div className="flex items-center h-[40px] w-1/3">
-                                        <DeleteForeverOutlinedIcon
-                                          sx={{ fontSize: 30 }}
-                                          className="cursor-pointer text-dark-purple mr-2"
-                                        />
-                                        <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
-                                          <select
-                                            onClick={handleTipoQuestao}
-                                            className="bg-transparent w-full rounded-lg outline-none"
-                                            name="TipoDeQuestão"
-                                          >
-                                            <option value="multipla">
-                                              Múltipla Escolha
-                                            </option>
-                                            <option value="subjetiva">
-                                              Subjetiva
-                                            </option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div className="mt-4 mb-8 w-full h-[40px]">
-                                      <textarea
-                                        placeholder="Pergunta"
-                                        className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                                      />
-                                    </div>
-                                    {tipoQuestao === "multipla" ? (
+                                    {questao.map((_, index) => (
                                       <div>
-                                        <div className="flex flex-row items-center justify-between mt-4">
-                                          <Checkbox className="cursor-pointer text-dark-purple" />
+                                        <div className="flex flex-row w-full justify-between items-center text-black">
+                                          <p className="mr-4 text-dark-purple text-[20px]">
+                                            {index + 1})
+                                          </p>
+
+                                          <div className="flex items-center h-[40px] w-1/3">
+                                            <DeleteForeverOutlinedIcon
+                                              sx={{ fontSize: 30 }}
+                                              className="cursor-pointer text-dark-purple mr-2"
+                                            />
+                                            <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                                              <select
+                                                className="bg-transparent w-full rounded-lg outline-none"
+                                                name="TipoDeQuestão"
+                                                value={selectValue}
+                                                onChange={(e) =>
+                                                  setSelectValue(e.target.value)
+                                                }
+                                              >
+                                                {optionTipo.map((item) => (
+                                                  <option
+                                                    key={item.id}
+                                                    value={item.nome}
+                                                  >
+                                                    {item.nome}
+                                                  </option>
+                                                ))}
+                                              </select>
+                                            </div>
+                                          </div>
+                                        </div>
+
+                                        <div className="mt-4 mb-12 w-full h-[40px]">
                                           <textarea
-                                            placeholder="Alternativa 1"
-                                            className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                            placeholder="Pergunta"
+                                            className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
                                           />
-                                          <CloseIcon className="cursor-pointer text-dark-purple" />
                                         </div>
-                                        <div className="h-[40px] mt-4 mb-4">
-                                          <button className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white ">
-                                            <AddCircleOutlineIcon className="mr-4" />
-                                            Adicionar Alternativa
-                                          </button>
-                                        </div>
+
+                                        {selectValue === "Múltipla escolha" ? (
+                                          <div>
+                                            {alternativa.map(
+                                              (description, index) => (
+                                                <div
+                                                  key={index}
+                                                  className="flex flex-row items-center justify-between mt-2"
+                                                >
+                                                  <Checkbox className="cursor-pointer text-dark-purple" />
+                                                  <textarea
+                                                    id={`descricao-${
+                                                      index + 1
+                                                    }`}
+                                                    value={description}
+                                                    onChange={(e) =>
+                                                      handleChangeAlternativa(
+                                                        e,
+                                                        index
+                                                      )
+                                                    }
+                                                    placeholder={`Alternativa ${
+                                                      index + 1
+                                                    }`}
+                                                    className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                                  />
+                                                  <CloseIcon className="cursor-pointer text-dark-purple" />
+                                                </div>
+                                              )
+                                            )}
+
+                                            <div className="h-[40px] mt-4 mb-4">
+                                              <button
+                                                onClick={addAlternativa}
+                                                className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
+                                              >
+                                                <AddCircleOutlineIcon className="mr-4" />
+                                                Adicionar Alternativa
+                                              </button>
+                                            </div>
+                                          </div>
+                                        ) : null}
+
+                                        {/* {selectValue == "Subjetiva" ? (
+                                          <div className="mt-4 mb-8 w-full h-[40px]">
+                                            <textarea
+                                              placeholder="Resposta"
+                                              className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                            />
+                                          </div>
+                                        ) : null} */}
                                       </div>
-                                    ) : null}
-
-                                    {tipoQuestao === "subjetiva" ? (
-                                      <div className="mt-4 mb-8 w-full h-[40px]">
-                                        <textarea
-                                          placeholder="Resposta"
-                                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                                        />
-                                      </div>
-                                    ) : null}
-                                  </div>
-
-                                  <div className="flex flex-col mt-4 px-4">
-                                    <div className="flex flex-row w-full justify-between items-center text-black">
-                                      <p className="mr-4 text-dark-purple text-[20px]">
-                                        2)
-                                      </p>
-
-                                      <div className="flex items-center h-[40px] w-1/3">
-                                        <DeleteForeverOutlinedIcon
-                                          sx={{ fontSize: 30 }}
-                                          className="cursor-pointer text-dark-purple mr-2"
-                                        />
-                                        <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
-                                          <select
-                                            onClick={handleTipoQuestao}
-                                            className="bg-transparent w-full rounded-lg outline-none"
-                                            name="TipoDeQuestão"
-                                          >
-                                            <option value="multipla">
-                                              Múltipla Escolha
-                                            </option>
-                                            <option value="subjetiva">
-                                              Subjetiva
-                                            </option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div className="mt-4 mb-8 w-full h-[40px]">
-                                      <textarea
-                                        placeholder="Pergunta"
-                                        className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                                      />
-                                    </div>
-
-                                    <div className="flex flex-row items-center justify-between mt-2">
-                                      <Checkbox className="cursor-pointer text-dark-purple" />
-                                      <textarea
-                                        placeholder="Alternativa 1"
-                                        className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                                      />
-                                      <CloseIcon className="cursor-pointer text-dark-purple" />
-                                    </div>
-
-                                    <div className="h-[40px] mt-4 mb-4">
-                                      <button className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white ">
-                                        <AddCircleOutlineIcon className="mr-4" />
-                                        Adicionar Alternativa
+                                    ))}
+                                    <div className="flex items-center justify-center mt-2">
+                                      <button
+                                        onClick={addQuestao}
+                                        className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white"
+                                      >
+                                        Adicionar Questão
                                       </button>
                                     </div>
                                   </div>
-                                </div>
-
-                                <div className="flex items-center justify-center mt-4">
-                                  <button className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white">
-                                    Adicionar Questão
-                                  </button>
                                 </div>
 
                                 <div className="flex flex-row items-center justify-end my-8 px-4 w-full">
