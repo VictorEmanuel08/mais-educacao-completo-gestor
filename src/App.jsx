@@ -12,6 +12,7 @@ import { EditAula } from "./pages/drag n drops/EditAula";
 // import { EditAula2 } from "./pages/drag n drops/EditAula";
 import { EditAtiv } from "./pages/drag n drops/EditAtiv";
 import {Modalcomponent} from "./components/Modalcomponent"
+import {NewModalcomponent} from "./components/NewModalcomponent"
 
 function App() {
   return (
@@ -81,6 +82,14 @@ function App() {
             element={
               <Private>
                 <Modalcomponent />
+              </Private>
+            }
+          />
+          <Route
+            path="/NewModalcomponent"
+            element={
+              <Private>
+                <NewModalcomponent />
               </Private>
             }
           />
