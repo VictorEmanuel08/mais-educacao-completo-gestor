@@ -10,48 +10,39 @@ import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 export function NewModalcomponent() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [atividade, setAtividade] = useState([]);
-  const [selectValue, setSelectValue] = useState("Múltipla escolha"); // multipla
-  const [alternativa, setAlternativa] = useState([]);
-  const [questao, setQuestao] = useState([]);
-  const [title_question, setTitle_question] = useState([]);
 
-  const [arrayCount, setArrayCount] = useState(-1);
+  const [questions, setQuestions] = useState([
+    {
+      questionText: "Escolha a capital do Brasil:",
+      questionType: "radio",
+      options: [
+        { optionText: "Rio de Janeiro" },
+        { optionText: "São Paulo" },
+        { optionText: "Brasília" },
+        { optionText: "São Luís" },
+      ],
+      open: true,
+      required: false,
+    },
+  ]);
+
+  function questionsUI() {
+    return <h2>Question boxes</h2>;
+  }
+
+  function changeQuestions(text, i) {
+    var newQuestion = [...questions];
+    newQuestion[i].questionText = text;
+    setQuestions(newQuestion);
+    console.log(newQuestion);
+  }
+
+  const [selectValue, setSelectValue] = useState("Múltipla escolha");
 
   const optionTipo = [
     { id: 1, nome: "Múltipla escolha" },
     { id: 2, nome: "Subjetiva" },
   ];
-
-  const addInputAlternativa = (e) => {
-    e.preventDefault();
-
-    const objetoOptions = { description: e };
-    setAlternativa([...alternativa, objetoOptions]);
-  };
-
-  const handleChangeAlternativa = (e, index) => {
-    alternativa[index] = e.target.value;
-    setAlternativa([...alternativa]);
-    console.log(alternativa);
-  };
-
-  const addInputQuestao = (e) => {
-    e.preventDefault();
-    const objetoQuestao = {
-      title_question: title_question[arrayCount],
-      question_type: selectValue,
-      options: alternativa,
-    };
-    setQuestao([...questao, objetoQuestao]);
-    setArrayCount(arrayCount + 1);
-  };
-  console.log(questao);
-
-  const handleChangeTitleQuestion = (e, index) => {
-    title_question[index] = e.target.value;
-    setTitle_question([...title_question]);
-  };
 
   function openModal() {
     setModalIsOpen(true);
@@ -87,90 +78,66 @@ export function NewModalcomponent() {
           </div>
           <div>
             <div className="flex flex-col mt-4 px-4">
-              {questao.map((_, index) => (
-                <div key={index}>
-                  <div className="flex flex-row w-full justify-between items-center text-black">
-                    <p className="mr-4 text-dark-purple text-[20px]">
-                      {index + 1})
-                    </p>
+              <div className="flex flex-row w-full justify-between items-center text-black">
+                <p className="mr-4 text-dark-purple text-[20px]">1)</p>
 
-                    <div className="flex items-center h-[40px] w-1/3">
-                      <DeleteForeverOutlinedIcon
-                        sx={{ fontSize: 30 }}
-                        className="cursor-pointer text-dark-purple mr-2"
-                      />
-                      <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
-                        <select
-                          className="bg-transparent w-full rounded-lg outline-none"
-                          name="TipoDeQuestão"
-                          value={selectValue}
-                          onChange={(e) => setSelectValue(e.target.value)}
-                        >
-                          {optionTipo.map((item) => (
-                            <option key={item.id} value={item.nome}>
-                              {item.nome}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 mb-12 w-full h-[40px]">
-                    <textarea
-                      placeholder="Pergunta"
-                      onChange={(e) => handleChangeTitleQuestion(e, index)}
-                      className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                    />
-                  </div>
-
-                  <div>
-                    {selectValue === "Múltipla escolha" ? (
-                      <div>
-                        {alternativa.map((description, index) => (
-                          <div
-                            key={index}
-                            className="flex flex-row items-center justify-between mt-2"
-                          >
-                            <Checkbox className="cursor-pointer text-dark-purple" />
-                            <textarea
-                              id={`descricao-${index + 1}`}
-                              // value={description}
-                              placeholder={`Alternativa ${index + 1}`}
-                              onChange={(e) =>
-                                handleChangeAlternativa(e, index)
-                              }
-                              className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                            />
-                            <CloseIcon className="cursor-pointer text-dark-purple" />
-                          </div>
-                        ))}
-
-                        <div className="h-[40px] mt-4 mb-4">
-                          <button
-                            onClick={addInputAlternativa}
-                            className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
-                          >
-                            <AddCircleOutlineIcon className="mr-4" />
-                            Adicionar Alternativas
-                          </button>
-                        </div>
-                      </div>
-                    ) : null}
-
-                    {selectValue == "Subjetiva" ? <div></div> : null}
+                <div className="flex items-center h-[40px] w-1/3">
+                  <DeleteForeverOutlinedIcon
+                    sx={{ fontSize: 30 }}
+                    className="cursor-pointer text-dark-purple mr-2"
+                  />
+                  <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                    <select
+                      className="bg-transparent w-full rounded-lg outline-none"
+                      name="TipoDeQuestão"
+                      value={selectValue}
+                      onChange={(e) => setSelectValue(e.target.value)}
+                    >
+                      {optionTipo.map((item) => (
+                        <option key={item.id} value={item.nome}>
+                          {item.nome}
+                        </option>
+                      ))}
+                    </select>
                   </div>
                 </div>
-              ))}
-
-              <div className="flex items-center justify-center mt-2">
-                <button
-                  onClick={addInputQuestao}
-                  className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white"
-                >
-                  Adicionar Questão
-                </button>
               </div>
+
+              <div className="mt-4 mb-12 w-full h-[40px]">
+                <textarea
+                  placeholder="Pergunta"
+                  className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                />
+              </div>
+
+              <div>
+                {selectValue === "Múltipla escolha" ? (
+                  <div>
+                    <div className="flex flex-row items-center justify-between mt-2">
+                      <Checkbox className="cursor-pointer text-dark-purple" />
+                      <textare
+                        placeholder="Alternativa 1"
+                        className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                      />
+                      <CloseIcon className="cursor-pointer text-dark-purple" />
+                    </div>
+                    <div className="h-[40px] mt-4 mb-4">
+                      <button className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white ">
+                        <AddCircleOutlineIcon className="mr-4" />
+                        Adicionar Alternativas
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+
+                {selectValue == "Subjetiva" ? <div></div> : null}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-center mt-2">
+              <button className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white">
+                Adicionar Questão
+              </button>
             </div>
           </div>
 
