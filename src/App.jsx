@@ -13,7 +13,7 @@ import { EditAula } from "./pages/drag n drops/EditAula";
 import { EditAtiv } from "./pages/drag n drops/EditAtiv";
 import { Modalcomponent } from "./components/Modalcomponent";
 import { NewModalcomponent } from "./components/NewModalcomponent";
-import { GoogleForms } from "./components/GoogleForms";
+import { GoogleForms } from "./components/GoogleForms/GoogleForms";
 
 function App() {
   return (

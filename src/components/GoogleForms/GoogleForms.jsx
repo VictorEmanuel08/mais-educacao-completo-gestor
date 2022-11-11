@@ -24,6 +24,8 @@ import { BsTrash } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import { MdOndemandVideo, MdTextFields } from "react-icons/md";
+import TextField from "@mui/material/TextField";
+import "./GoogleForms.css";
 
 export function GoogleForms() {
   const [questions, setQuestions] = useState([
@@ -35,6 +37,7 @@ export function GoogleForms() {
         { optionText: "São Paulo" },
         { optionText: "Brasília" },
         { optionText: "São Luís" },
+        { optionText: "Barreirinhas" },
       ],
       open: true,
       required: false,
@@ -69,9 +72,12 @@ export function GoogleForms() {
     if (RemoveOptionQuestion[i].options.length > 1) {
       RemoveOptionQuestion[i].options.splice(j, 1);
       setQuestions(RemoveOptionQuestion);
-      console.log(i + "___" + j);
+      // console.log(i + "___" + j);
     }
+    console.log(questions);
   }
+
+  console.log(questions);
 
   function addOption(i) {
     var optionsOfQuestion = [...questions];
@@ -86,16 +92,31 @@ export function GoogleForms() {
     setQuestions(optionsOfQuestion);
   }
 
+  function copyQuestion(i) {
+    let qs = [...questions];
+    var newQuestion = qs[i];
+
+    setQuestions([...questions, newQuestion]);
+  }
+
+  function deleteQuestion(i) {
+    let qs = [...questions];
+    if (questions.lenght > 1) {
+      qs.splice(i, 1);
+    }
+    setQuestions(qs);
+  }
+
   function questionsUI() {
     return questions.map((ques, i) => (
       <div>
         <Accordion
-          expanded={ques.open}
-          // className={ques[i].open ? "add_border" : ""}
+          expanded={questions[i].open}
+          className={questions[i].open ? "add_border" : ""}
         >
           <AccordionSummary
-            aria-controls="panelia-content"
-            id="panelia-header"
+            aria-controls="panel1a-content"
+            id="panel1a-header"
             elevation={1}
             style={{ width: "100%" }}
           >
@@ -115,7 +136,7 @@ export function GoogleForms() {
 
                 {ques.options.map((op, j) => (
                   <div key={j}>
-                    <div>
+                    <div style={{ display: "flex" }}>
                       <FormControlLabel
                         style={{ marginLeft: "5px", marginBottom: "5px" }}
                         disabled
@@ -157,7 +178,7 @@ export function GoogleForms() {
                 <input
                   type="text"
                   className="question"
-                  placeholder="Pergunta"
+                  placeholder="Question"
                   value={ques.questionText}
                   onChange={(e) => {
                     changeQuestion(e.target.value, i);
@@ -213,13 +234,13 @@ export function GoogleForms() {
                       style={{ marginRight: "10px" }}
                     />
                   ) : (
-                    <ShortTextIcon style={{ marginRight: "10px" }} />
+                    <TextField style={{ marginRight: "10px" }} />
                   )}
                   <div>
                     <input
                       type="text"
                       className="text_input"
-                      placeholder="Alternativa"
+                      placeholder="option"
                       value={ques.options[j].optionText}
                       onChange={(e) => {
                         changeOptionValue(e.target.value, i, j);
@@ -260,11 +281,11 @@ export function GoogleForms() {
                           type="text"
                           className="text_input"
                           style={{ fontSize: "13px", width: "60px" }}
-                          placeholder="Adicionar outra alternativa"
+                          placeholder="Add other"
                         ></input>
                         <Button
                           size="small"
-                          onClick={addOption(i)}
+                          onClick={() => addOption(i)}
                           style={{
                             textTransform: "none",
                             color: "#4285f4",
@@ -272,7 +293,7 @@ export function GoogleForms() {
                             fontWeight: "600",
                           }}
                         >
-                          Add Option
+                          Add option
                         </Button>
                       </div>
                     }
@@ -312,7 +333,7 @@ export function GoogleForms() {
                   </IconButton>
                   <span style={{ color: "#5f6368", fontSize: "13px" }}>
                     Required
-                  </span>{" "}
+                  </span>
                   <Switch name="checkedA" color="primary" checked />
                   <IconButton>
                     <MoreVertIcon />
