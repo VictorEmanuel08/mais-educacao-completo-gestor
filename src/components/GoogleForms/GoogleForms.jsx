@@ -23,26 +23,43 @@ import { FcRightUp } from "react-icons/fc";
 import { BsTrash } from "react-icons/bs";
 import React, { useEffect, useState } from "react";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
-import { MdOndemandVideo, MdTextFields } from "react-icons/md";
+import { MdDragIndicator, MdOndemandVideo, MdTextFields } from "react-icons/md";
 import TextField from "@mui/material/TextField";
 import "./GoogleForms.css";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import Modal from "react-modal";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Checkbox } from "@mui/material";
 
 export function GoogleForms() {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
   const [questions, setQuestions] = useState([
     {
-      questionText: "Escolha a capital do Brasil:",
+      questionText: "",
       questionType: "radio",
       options: [
-        { optionText: "Rio de Janeiro" },
-        { optionText: "São Paulo" },
-        { optionText: "Brasília" },
-        { optionText: "São Luís" },
-        { optionText: "Barreirinhas" },
+        { optionText: "" },
+        { optionText: "" },
+        { optionText: "" },
+        { optionText: "" },
+        { optionText: "" },
       ],
+      answer: false,
+      answerKey: "",
+      points: 0,
       open: true,
       required: false,
     },
   ]);
+
+  function openModal() {
+    setModalIsOpen(true);
+  }
+
+  function closeModal() {
+    setModalIsOpen(false);
+  }
 
   function changeQuestion(text, i) {
     var newQuestion = [...questions];
@@ -72,7 +89,7 @@ export function GoogleForms() {
     if (RemoveOptionQuestion[i].options.length > 1) {
       RemoveOptionQuestion[i].options.splice(j, 1);
       setQuestions(RemoveOptionQuestion);
-      // console.log(i + "___" + j);
+      console.log(i + "___" + j);
     }
     console.log(questions);
   }
@@ -101,281 +118,231 @@ export function GoogleForms() {
 
   function deleteQuestion(i) {
     let qs = [...questions];
-    if (questions.lenght > 1) {
+    if (questions.length > 1) {
       qs.splice(i, 1);
     }
     setQuestions(qs);
   }
 
+  function requiredQuestion(i) {
+    var reqQuestion = [...questions];
+
+    reqQuestion[i].required = !reqQuestion[i].required;
+    console.log(reqQuestion[i].required + "" + i);
+    setQuestions(reqQuestion);
+  }
+
+  function addMoreQuestionField() {
+    setQuestions([
+      ...questions,
+      {
+        questionText: "",
+        questionType: "radio",
+        options: [{ optionText: "" }],
+        open: true,
+        required: false,
+      },
+    ]);
+  }
+
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return;
+    }
+    var itemgg = [...questions];
+    const itemF = reorder(
+      itemgg,
+      result.source.index,
+      result.destination.index
+    );
+    setQuestions(itemF);
+  }
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
   function questionsUI() {
     return questions.map((ques, i) => (
-      <div>
-        <Accordion
-          expanded={questions[i].open}
-          className={questions[i].open ? "add_border" : ""}
-        >
-          <AccordionSummary
-            aria-controls="panel1a-content"
-            id="panel1a-header"
-            elevation={1}
-            style={{ width: "100%" }}
+      <Draggable key={i} draggableId={i + "id"} index={i}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
           >
-            {questions[i].open ? (
-              <div className="saved_questions">
-                <Typography
+            <div>
+              <div>
+                <MdDragIndicator
                   style={{
-                    fontsize: "15px",
-                    fontWeight: "400",
-                    letterSpacing: ".1px",
-                    lineHeight: "24px",
-                    paddingBottom: "8px",
+                    transform: "rotate(-90deg)",
+                    color: "#DAE0E2",
+                    position: "relative",
+                    left: "330px",
                   }}
+                  fontSize="small"
+                />
+              </div>
+              <div>
+                <Accordion
+                  expanded={questions[i].open}
+                  className={questions[i].open ? "add_border" : ""}
                 >
-                  {i + 1}.{questions[i].questionText}
-                </Typography>
+                  <div className="question_boxes">
+                    <div className="add_question">
+                      <div className="flex flex-row w-full justify-between items-center text-black">
+                        <p className="mr-4 text-dark-purple text-[20px]">
+                          {i + 1})
+                        </p>
+                      </div>
 
-                {ques.options.map((op, j) => (
-                  <div key={j}>
-                    <div style={{ display: "flex" }}>
-                      <FormControlLabel
-                        style={{ marginLeft: "5px", marginBottom: "5px" }}
-                        disabled
-                        control={
-                          <input
-                            type={ques.questionType}
-                            color="primary"
-                            style={{ marginRight: "3px" }}
-                            required={ques.type}
+                      <div className="mt-4 mb-12 w-full h-[40px]">
+                        <textarea
+                          placeholder="Pergunta"
+                          value={ques.questionText}
+                          onChange={(e) => {
+                            changeQuestion(e.target.value, i);
+                          }}
+                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                        />
+                      </div>
+                      {ques.options.map((op, j) => (
+                        <div className="add_question_body" key={j}>
+                          {/* alternativas */}
+                          <div>
+                            <div className="flex flex-row items-center justify-between mt-2">
+                              <Checkbox className="cursor-pointer text-dark-purple" />
+                              <textarea
+                                type="text"
+                                className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                                placeholder={`Alternativa ${j + 1}`}
+                                value={ques.options[j].optionText}
+                                onChange={(e) => {
+                                  changeOptionValue(e.target.value, i, j);
+                                }}
+                              />
+                              <CloseIcon
+                                className="cursor-pointer text-dark-purple"
+                                onClick={() => {
+                                  removeOption(i, j);
+                                }}
+                              />
+                              {/* Deletar alternativa */}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+
+                      {ques.options.length < 5 ? (
+                        <div className="add_question_body">
+                          <FormControlLabel
+                            disabled
+                            control={
+                              ques.questionType != "text" ? <input /> : ""
+                            }
+                            label={
+                              <div className="h-[40px] mt-4 mb-4">
+                                <button
+                                  onClick={() => addOption(i)}
+                                  className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
+                                >
+                                  <AddCircleOutlineIcon className="mr-4" />
+                                  Adicionar Alternativas
+                                </button>
+                              </div>
+                            }
                           />
-                        }
-                        label={
-                          <Typography
-                            style={{
-                              fontFamily: "Roboto, Arial, sans-serif",
-                              fontSize: "13px",
-                              fontWeight: "400",
-                              letterSpacing: ".2px",
-                              lineHeight: "20px",
-                              color: "#202124",
-                            }}
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      <div className="add_footer">
+                        <div className="add_question_bottom">
+                          <IconButton
+                            aria-label="delete"
+                            onClick={() => deleteQuestion(i)}
                           >
-                            {ques.options[j].optionText}
-                          </Typography>
-                        }
+                            <BsTrash />
+                          </IconButton>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="question_edit">
+                      <AddCircleOutline
+                        onClick={addMoreQuestionField}
+                        className="edit"
                       />
+                      <MdOndemandVideo className="edit" />
+                      <CropOriginalIcon className="edit" />
+                      <MdTextFields className="edit" />
                     </div>
                   </div>
-                ))}
+                </Accordion>
               </div>
-            ) : (
-              ""
-            )}
-          </AccordionSummary>
-
-          <div className="question_boxes">
-            <AccordionDetails className="add_question">
-              <div className="add_question_top">
-                <input
-                  type="text"
-                  className="question"
-                  placeholder="Question"
-                  value={ques.questionText}
-                  onChange={(e) => {
-                    changeQuestion(e.target.value, i);
-                  }}
-                ></input>
-                <CropOriginalIcon style={{ color: "#5f6368" }} />
-                <Select
-                  className="select"
-                  style={{ color: "#5f6368", fontSize: "13px" }}
-                >
-                  <MenuItem
-                    id="text"
-                    value="Text"
-                    onClick={() => {
-                      addQuestionType(i, "text");
-                    }}
-                  >
-                    <SubjectIcon style={{ marginRight: "10px" }} /> Paragraph
-                  </MenuItem>
-                  <MenuItem
-                    id="checkbox"
-                    value="Checkbox"
-                    onClick={() => {
-                      addQuestionType(i, "checkbox");
-                    }}
-                  >
-                    <CheckBoxIcon
-                      style={{ marginRight: "10px", color: "#70757a" }}
-                      checked
-                    />
-                    CheckBoxes
-                  </MenuItem>
-                  <MenuItem
-                    id="radio"
-                    value="Radio"
-                    onClick={() => {
-                      addQuestionType(i, "radio");
-                    }}
-                  >
-                    <Radio
-                      style={{ marginRight: "10px", color: "#70757a" }}
-                      checked
-                    />{" "}
-                    Multiple Choice
-                  </MenuItem>
-                </Select>
-              </div>
-              {ques.options.map((op, j) => (
-                <div className="add_question_body" key={j}>
-                  {ques.questionType != "text" ? (
-                    <input
-                      type={ques.questionType}
-                      style={{ marginRight: "10px" }}
-                    />
-                  ) : (
-                    <TextField style={{ marginRight: "10px" }} />
-                  )}
-                  <div>
-                    <input
-                      type="text"
-                      className="text_input"
-                      placeholder="option"
-                      value={ques.options[j].optionText}
-                      onChange={(e) => {
-                        changeOptionValue(e.target.value, i, j);
-                      }}
-                    ></input>
-                  </div>
-                  <CropOriginalIcon style={{ color: "#5f6368" }} />
-                  <IconButton aria-label="delete">
-                    <CloseIcon
-                      onClick={() => {
-                        removeOption(i, j);
-                      }} //Deletar alternativa
-                    />
-                  </IconButton>
-                </div>
-              ))}
-
-              {ques.options.length < 5 ? (
-                <div className="add_question_body">
-                  <FormControlLabel
-                    disabled
-                    control={
-                      ques.questionType != "text" ? (
-                        <input
-                          type={ques.questionType}
-                          color="primary"
-                          inputProps={{ "aria-label": "secondary checkbox" }}
-                          style={{ marginLeft: "10px", marginRight: "10px" }}
-                          disabled
-                        />
-                      ) : (
-                        <ShortTextIcon style={{ marginRight: "10px" }} />
-                      )
-                    }
-                    label={
-                      <div>
-                        <input
-                          type="text"
-                          className="text_input"
-                          style={{ fontSize: "13px", width: "60px" }}
-                          placeholder="Add other"
-                        ></input>
-                        <Button
-                          size="small"
-                          onClick={() => addOption(i)}
-                          style={{
-                            textTransform: "none",
-                            color: "#4285f4",
-                            fontSize: "13px",
-                            fontWeight: "600",
-                          }}
-                        >
-                          Add option
-                        </Button>
-                      </div>
-                    }
-                  />
-                </div>
-              ) : (
-                ""
-              )}
-
-              <div className="add_footer">
-                <div className="add_question_bottom_left">
-                  <Button
-                    size="small"
-                    style={{
-                      textTransform: "none",
-                      color: "#4285f4",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                    }}
-                  >
-                    <FcRightUp
-                      style={{
-                        border: "2px solif #4285f4",
-                        padding: "2px",
-                        marginRight: "8px",
-                      }}
-                    />
-                    Answer Key
-                  </Button>
-                </div>
-                <div className="add_question_bottom">
-                  <IconButton aria-label="Copy">
-                    <FilterNoneIcon />
-                  </IconButton>
-                  <IconButton aria-label="delete">
-                    <BsTrash />
-                  </IconButton>
-                  <span style={{ color: "#5f6368", fontSize: "13px" }}>
-                    Required
-                  </span>
-                  <Switch name="checkedA" color="primary" checked />
-                  <IconButton>
-                    <MoreVertIcon />
-                  </IconButton>
-                </div>
-              </div>
-            </AccordionDetails>
-
-            <div className="question_edit">
-              <AddCircleOutline className="edit" />
-              <MdOndemandVideo className="edit" />
-              <CropOriginalIcon className="edit" />
-              <MdTextFields className="edit" />
             </div>
           </div>
-        </Accordion>
-      </div>
+        )}
+      </Draggable>
     ));
   }
 
   return (
     <div>
-      <div className="question_form">
-        <br></br>
-        <div className="section">
-          <div className="question_title_section">
-            <div className="question_form_top">
-              <input
-                type="text"
-                className="question_form_top_name"
-                style={{ color: "black" }}
-                placeholder="Título"
-              ></input>
-              <input
-                type="text"
-                className="question_form_top_desc"
-                placeholder="Form description"
-              ></input>
-            </div>
+      <div className="flex justify-center text-dark-purple">
+        <button
+          onClick={openModal}
+          className="bg-white p-1 mb-4 rounded-lg w-full h-fit flex items-center justify-center"
+        >
+          <AddCircleIcon /> Nova Atividade
+        </button>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          overlayClassName="flex items-center justify-center fixed top-0 bottom-0 right-0 left-0 bg-black-rgba"
+          className="flex flex-col bg-white w-2/5 h-4/5 rounded-lg p-1 px-8 text-dark-purple scrollbar-thin scrollbar-thumb-[#EDF2FF]-700 scrollbar-track-[#000000]-300 overflow-y-scroll"
+        >
+          <div className="flex items-center justify-center">
+            <p className="text-[25px] font-semibold">Nova Atividade</p>
           </div>
-          {questionsUI()}
-        </div>
+
+          <div className="flex flex-col text-dark-purple py-4 border-dashed border-b-2 border-dark-purple">
+            <input
+              placeholder="Título"
+              className="w-fit placeholder-dark-purple outline-none text-[25px]"
+            />
+          </div>
+
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {questionsUI()}
+
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <div className="flex flex-row items-center justify-end my-8 px-4 w-full">
+            <button
+              onClick={closeModal}
+              className="bg-[#EDF2FF] rounded-lg text-black w-1/6 h-[40px] mr-4"
+            >
+              Cancelar
+            </button>
+            <button
+              onClick={closeModal}
+              className="bg-dark-purple rounded-lg text-white w-1/6 h-[40px]"
+            >
+              Salvar
+            </button>
+          </div>
+        </Modal>
       </div>
     </div>
   );

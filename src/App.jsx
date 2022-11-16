@@ -10,7 +10,6 @@ import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
 // import { EditAula2 } from "./pages/drag n drops/EditAula";
-import { EditAtiv } from "./pages/drag n drops/EditAtiv";
 import { Modalcomponent } from "./components/Modalcomponent";
 import { NewModalcomponent } from "./components/NewModalcomponent";
 import { GoogleForms } from "./components/GoogleForms/GoogleForms";
@@ -51,14 +50,6 @@ function App() {
             element={
               <Private>
                 <EditAula />
-              </Private>
-            }
-          />
-          <Route
-            path="/editar-disciplinas-Atividades/:id"
-            element={
-              <Private>
-                <EditAtiv />
               </Private>
             }
           />
