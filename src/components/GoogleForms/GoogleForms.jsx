@@ -1,57 +1,48 @@
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Button,
-  FormControlLabel,
-  IconButton,
-  MenuItem,
-  Radio,
-  Select,
-  Switch,
-  Typography,
-} from "@mui/material";
-
-import ShortTextIcon from "@material-ui/icons/ShortText";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import SubjectIcon from "@material-ui/icons/Subject";
-import CropOriginalIcon from "@material-ui/icons/CropOriginal";
+import React, { useEffect, useState, useReducer } from "react";
+import { app } from "../../api/app";
 import CloseIcon from "@material-ui/icons/Close";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import FilterNoneIcon from "@material-ui/icons/FilterNone";
-import { FcRightUp } from "react-icons/fc";
-import { BsTrash } from "react-icons/bs";
-import React, { useEffect, useState } from "react";
-import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
-import { MdDragIndicator, MdOndemandVideo, MdTextFields } from "react-icons/md";
-import TextField from "@mui/material/TextField";
-import "./GoogleForms.css";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { MdDragIndicator } from "react-icons/md";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "react-modal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import { Checkbox } from "@mui/material";
+import { Checkbox, checkboxClasses } from "@mui/material";
 
 export function GoogleForms() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [checked, setChecked] = useState(false);
+  const optionTipo = [
+    { id: 1, nome: "Múltipla escolha" },
+    { id: 2, nome: "Subjetiva" },
+  ];
+
   const [questions, setQuestions] = useState([
     {
-      questionText: "",
-      questionType: "radio",
-      options: [
-        { optionText: "" },
-        { optionText: "" },
-        { optionText: "" },
-        { optionText: "" },
-        { optionText: "" },
-      ],
-      answer: false,
-      answerKey: "",
-      points: 0,
-      open: true,
-      required: false,
+      title_question: "",
+      id_disciplina: "0edbbd06-e902-4714-a18e-ddd4dc82ddeb",
+      question_type: "Múltipla escolha",
+      options: [{ description: "", is_correct: false }],
     },
   ]);
+
+  async function AddAtiv() {
+    try {
+      await app.post("/atividades", {
+        title: "Teste Teste 1",
+        description: "Resolva as questões para ganhar pontos",
+        id_serie: "f076177d-ea29-4695-87bb-14a0a8a29c7b",
+        id_disciplina: "e63e2452-56bd-4ab1-805d-3784eae45ce4",
+        questions: questions,
+      });
+      document.location.reload(true);
+      alert("Conteudo cadastrado!");
+    } catch {
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  }
+  
+  console.log(questions);
 
   function openModal() {
     setModalIsOpen(true);
@@ -63,25 +54,27 @@ export function GoogleForms() {
 
   function changeQuestion(text, i) {
     var newQuestion = [...questions];
-    newQuestion[i].questionText = text;
+    newQuestion[i].title_question = text;
     setQuestions(newQuestion);
-    console.log(newQuestion);
   }
 
   function changeOptionValue(text, i, j) {
     var optionsQuestion = [...questions];
-    optionsQuestion[i].options[j].optionText = text;
-
+    optionsQuestion[i].options[j].description = text;
     setQuestions(optionsQuestion);
-    console.log(optionsQuestion);
   }
 
-  function addQuestionType(i, type) {
-    let qs = [...questions];
-    console.log(type);
-    qs[i].questionType = type;
+  function changeTipoQuestao(text, i) {
+    var TypeQuestion = [...questions];
+    TypeQuestion[i].question_type = text;
+    setQuestions(TypeQuestion);
+  }
 
-    setQuestions(qs);
+  function handleChange(text, i, j) {
+    var optionQuestionCorrect = [...questions];
+    optionQuestionCorrect[i].options[j].is_correct = !checked;
+    setQuestions(optionQuestionCorrect);
+    console.log(optionQuestionCorrect)
   }
 
   function removeOption(i, j) {
@@ -89,9 +82,7 @@ export function GoogleForms() {
     if (RemoveOptionQuestion[i].options.length > 1) {
       RemoveOptionQuestion[i].options.splice(j, 1);
       setQuestions(RemoveOptionQuestion);
-      console.log(i + "___" + j);
     }
-    console.log(questions);
   }
 
   console.log(questions);
@@ -99,21 +90,12 @@ export function GoogleForms() {
   function addOption(i) {
     var optionsOfQuestion = [...questions];
     if (optionsOfQuestion[i].options.length < 5) {
-      optionsOfQuestion[i].options.push({
-        optionText: "Alternativa " + (optionsOfQuestion[i].options.length + 1),
-      });
+      optionsOfQuestion[i].options.push({ description: "", is_correct: false });
     } else {
       console.log("Máximo de 5 alternativas");
     }
 
     setQuestions(optionsOfQuestion);
-  }
-
-  function copyQuestion(i) {
-    let qs = [...questions];
-    var newQuestion = qs[i];
-
-    setQuestions([...questions, newQuestion]);
   }
 
   function deleteQuestion(i) {
@@ -124,25 +106,22 @@ export function GoogleForms() {
     setQuestions(qs);
   }
 
-  function requiredQuestion(i) {
-    var reqQuestion = [...questions];
-
-    reqQuestion[i].required = !reqQuestion[i].required;
-    console.log(reqQuestion[i].required + "" + i);
-    setQuestions(reqQuestion);
-  }
-
   function addMoreQuestionField() {
     setQuestions([
       ...questions,
       {
-        questionText: "",
-        questionType: "radio",
-        options: [{ optionText: "" }],
-        open: true,
-        required: false,
+        title_question: "",
+        id_disciplina: "0edbbd06-e902-4714-a18e-ddd4dc82ddeb",
+        question_type: "Múltipla escolha",
+        options: [{ description: "", is_correct: false }],
       },
     ]);
+  }
+
+  function clearQuestion() {
+    questions.pop();
+    closeModal();
+    console.log(questions);
   }
 
   function onDragEnd(result) {
@@ -175,114 +154,99 @@ export function GoogleForms() {
             {...provided.dragHandleProps}
           >
             <div>
+              <MdDragIndicator
+                style={{
+                  transform: "rotate(-90deg)",
+                  color: "#DAE0E2",
+                  position: "relative",
+                  left: "330px",
+                }}
+                fontSize="small"
+              />
               <div>
-                <MdDragIndicator
-                  style={{
-                    transform: "rotate(-90deg)",
-                    color: "#DAE0E2",
-                    position: "relative",
-                    left: "330px",
-                  }}
-                  fontSize="small"
-                />
-              </div>
-              <div>
-                <Accordion
-                  expanded={questions[i].open}
-                  className={questions[i].open ? "add_border" : ""}
-                >
-                  <div className="question_boxes">
-                    <div className="add_question">
-                      <div className="flex flex-row w-full justify-between items-center text-black">
-                        <p className="mr-4 text-dark-purple text-[20px]">
-                          {i + 1})
-                        </p>
-                      </div>
+                <div className="flex flex-row w-full justify-between items-center text-black">
+                  <p className="mr-4 text-dark-purple text-[20px]">{i + 1})</p>
 
-                      <div className="mt-4 mb-12 w-full h-[40px]">
-                        <textarea
-                          placeholder="Pergunta"
-                          value={ques.questionText}
-                          onChange={(e) => {
-                            changeQuestion(e.target.value, i);
-                          }}
-                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                        />
-                      </div>
-                      {ques.options.map((op, j) => (
-                        <div className="add_question_body" key={j}>
-                          {/* alternativas */}
-                          <div>
-                            <div className="flex flex-row items-center justify-between mt-2">
-                              <Checkbox className="cursor-pointer text-dark-purple" />
-                              <textarea
-                                type="text"
-                                className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                                placeholder={`Alternativa ${j + 1}`}
-                                value={ques.options[j].optionText}
-                                onChange={(e) => {
-                                  changeOptionValue(e.target.value, i, j);
-                                }}
-                              />
-                              <CloseIcon
-                                className="cursor-pointer text-dark-purple"
-                                onClick={() => {
-                                  removeOption(i, j);
-                                }}
-                              />
-                              {/* Deletar alternativa */}
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-
-                      {ques.options.length < 5 ? (
-                        <div className="add_question_body">
-                          <FormControlLabel
-                            disabled
-                            control={
-                              ques.questionType != "text" ? <input /> : ""
-                            }
-                            label={
-                              <div className="h-[40px] mt-4 mb-4">
-                                <button
-                                  onClick={() => addOption(i)}
-                                  className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
-                                >
-                                  <AddCircleOutlineIcon className="mr-4" />
-                                  Adicionar Alternativas
-                                </button>
-                              </div>
-                            }
-                          />
-                        </div>
-                      ) : (
-                        ""
-                      )}
-
-                      <div className="add_footer">
-                        <div className="add_question_bottom">
-                          <IconButton
-                            aria-label="delete"
-                            onClick={() => deleteQuestion(i)}
-                          >
-                            <BsTrash />
-                          </IconButton>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="question_edit">
-                      <AddCircleOutline
-                        onClick={addMoreQuestionField}
-                        className="edit"
-                      />
-                      <MdOndemandVideo className="edit" />
-                      <CropOriginalIcon className="edit" />
-                      <MdTextFields className="edit" />
+                  <div className="flex items-center h-[40px] w-1/3">
+                    <DeleteForeverOutlinedIcon
+                      sx={{ fontSize: 30 }}
+                      onClick={() => deleteQuestion(i)}
+                      className="cursor-pointer text-dark-purple mr-2"
+                    />
+                    <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                      <select
+                        className="bg-transparent w-full rounded-lg outline-none"
+                        name="TipoDeQuestão"
+                        onChange={(e) => {
+                          changeTipoQuestao(e.target.value, i);
+                        }}
+                      >
+                        {optionTipo.map((item) => (
+                          <option key={item.id} value={item.nome}>
+                            {item.nome}
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
-                </Accordion>
+                </div>
+
+                <div className="mt-4 mb-12 w-full h-[40px]">
+                  <textarea
+                    placeholder="Pergunta"
+                    value={ques.title_question}
+                    onChange={(e) => {
+                      changeQuestion(e.target.value, i);
+                    }}
+                    className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                  />
+                </div>
+                {ques.options.map((op, j) => (
+                  <div className="add_question_body" key={j}>
+                    <div>
+                      <div className="flex flex-row items-center justify-between mt-2">
+                        <Checkbox
+                          className="cursor-pointer text-black"
+                          value={ques.options[j].is_correct}
+                          onChange={(e) => {
+                            handleChange(e.target.value, i, j);
+                          }}
+                        />
+                        <textarea
+                          type="text"
+                          className="bg-[#EDF2FF] w-full h-[40px] text-black placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                          placeholder={`Alternativa ${j + 1}`}
+                          value={ques.options[j].optionText}
+                          onChange={(e) => {
+                            changeOptionValue(e.target.value, i, j);
+                          }}
+                        />
+                        <CloseIcon
+                          className="cursor-pointer text-dark-purple"
+                          onClick={() => {
+                            removeOption(i, j);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {ques.options.length < 5 ? (
+                  <div className="add_question_body">
+                    <div className="h-[40px] mt-4 mb-4">
+                      <button
+                        onClick={() => addOption(i)}
+                        className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
+                      >
+                        <AddCircleOutlineIcon className="mr-4" />
+                        Adicionar Alternativas
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
@@ -328,15 +292,24 @@ export function GoogleForms() {
               )}
             </Droppable>
           </DragDropContext>
+          <div className="flex items-center justify-center mt-2">
+            <button
+              onClick={addMoreQuestionField}
+              className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white"
+            >
+              Adicionar Questão
+            </button>
+          </div>
           <div className="flex flex-row items-center justify-end my-8 px-4 w-full">
             <button
-              onClick={closeModal}
+              // onClick={closeModal}
+              onClick={clearQuestion}
               className="bg-[#EDF2FF] rounded-lg text-black w-1/6 h-[40px] mr-4"
             >
               Cancelar
             </button>
             <button
-              onClick={closeModal}
+              onClick={AddAtiv}
               className="bg-dark-purple rounded-lg text-white w-1/6 h-[40px]"
             >
               Salvar
