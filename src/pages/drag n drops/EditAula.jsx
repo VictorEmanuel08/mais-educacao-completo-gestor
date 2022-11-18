@@ -7,22 +7,15 @@ import { ItemAulaEdit } from "./items/ItemAulaEdit";
 import { ItemAtivEdit } from "./items/ItemAtivEdit";
 import { ItemContEdit } from "./items/ItemContEdit";
 import { ComponentMiniHeader } from "../../components/ComponentMiniHeader";
-import MenuIcon from "@mui/icons-material/Menu";
-import Modal from "react-modal";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import CloseIcon from "@mui/icons-material/Close";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
 import EyesCloked from "../../assets/hidden.png";
 import EyesOpen from "../../assets/view.png";
 import { Header } from "../../components/header";
-import { Checkbox } from "@mui/material";
-import { Modalcomponent } from "../../components/Modalcomponent";
+import { ModalComponent } from "../../components/ModalComponent";
 
 export function EditAula() {
   const { user } = useContext(AuthContext);
-  const { id } = useParams();
+  const { idSerie, idDisc } = useParams();
   const [aula, setAula] = useState([]);
   const [bimestre, setBimestre] = useState([]);
   const [bimestreId, setBimestreId] = useState(null);
@@ -33,47 +26,6 @@ export function EditAula() {
 
   const [disc, setDisc] = useState();
   const [addItemArray, setAddItemArray] = useState([]);
-
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const [selectValue, setSelectValue] = useState("Múltipla escolha"); // multipla
-
-  const [alternativa, setAlternativa] = useState([]);
-  const [alternativaId, setAlternativaId] = useState("");
-
-  const [questao, SetQuestao] = useState([]);
-
-  const optionTipo = [
-    { id: 1, nome: "Múltipla escolha" },
-    { id: 2, nome: "Subjetiva" },
-  ];
-
-  const addQuestao = (e) => {
-    e.preventDefault();
-
-    SetQuestao([...questao, ""]);
-    console.log(questao);
-  };
-
-  const addAlternativa = (e) => {
-    e.preventDefault();
-
-    setAlternativa([...alternativa, ""]);
-  };
-
-  const handleChangeAlternativa = (e, index) => {
-    alternativa[index] = e.target.value;
-    setAlternativa([...alternativa]);
-    console.log(alternativa);
-  };
-
-  function openModal() {
-    setModalIsOpen(true);
-  }
-
-  function closeModal() {
-    setModalIsOpen(false);
-  }
 
   useEffect(() => {
     const getData = async () => {
@@ -86,20 +38,20 @@ export function EditAula() {
   useEffect(() => {
     const getData = async () => {
       const response = await app.get(
-        `/escolas/users/professores/aulas/series/f076177d-ea29-4695-87bb-14a0a8a29c7b/${id}`
+        `/escolas/users/professores/aulas/series/${idSerie}/${idDisc}`
       );
       setAula(response.data);
     };
     getData();
-  }, [id]);
+  }, [idDisc]);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await app.get(`/disciplinas/${id}`);
+      const response = await app.get(`/disciplinas/${idDisc}`);
       setDisc(response.data.disciplina.name);
     };
     getData();
-  }, [id]);
+  }, [idDisc]);
 
   function switchEyes() {
     setClicked(!clicked);
@@ -125,7 +77,7 @@ export function EditAula() {
     try {
       await app.post("/conteudos", {
         name: text,
-        id_disciplina: id,
+        id_disciplina: idDisc,
         created_by: user,
         array_conteudos: addItemArray,
         id_bimestre: bimestreId,
@@ -142,7 +94,6 @@ export function EditAula() {
     const Valores = { id, type };
     setAddItemArray([...addItemArray, Valores]);
   };
-  // console.log(addItemArray);
 
   const ConteudoToAulas = (id) => {
     const Valores = { id };
@@ -204,7 +155,7 @@ export function EditAula() {
                           className={`
                           ${
                             board.name == "aulas"
-                              ? "bg-dark-purple w-[300px] h-screen select-none scrollbar-thin "
+                              ? "bg-dark-purple w-[300px] h-screen select-none scrollbar-thin"
                               : "0"
                           }
                           ${
@@ -215,12 +166,12 @@ export function EditAula() {
 
                           ${
                             board.name == "atividades"
-                              ? `absolute top-0 right-0 w-[350px] h-1/2 bg-dark-purple`
+                              ? `absolute top-0 right-0 w-[350px] h-1/2 bg-dark-purple select-none scrollbar-thin`
                               : "0"
                           }
                           ${
                             board.name == "materiais"
-                              ? `absolute bottom-0 right-0 w-[350px] h-1/2 bg-dark-purple `
+                              ? `absolute bottom-0 right-0 w-[350px] h-1/2 bg-dark-purple select-none scrollbar-thin`
                               : "0"
                           }
 
@@ -370,7 +321,7 @@ export function EditAula() {
 
                           {board.name == "atividades" ? (
                             <div className="flex justify-center text-dark-purple">
-                              <Modalcomponent />
+                              <ModalComponent />
                             </div>
                           ) : (
                             ""

@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { app } from "../api/app";
 import { AuthContext } from "../context/auth";
 
@@ -38,12 +37,15 @@ export function ContentDisciplinas() {
                             key={Disciplina.id}
                             className="flex justify-center mr-1 mt-4 items-center scale-100 ease-in duration-200 hover:scale-110"
                           >
-                            <a href={`/editar-disciplinas/${Disciplina.id}`}>
+                            <a
+                              href={`/editar-disciplinas/${serie.serie.id}/${Disciplina.id}`}
+                            >
                               <img
                                 src={Disciplina.bk_img}
                                 alt={Disciplina.name}
                                 className="w-64 h-36 rounded-lg"
                               />
+
                               <p className="flex items-center mt-[-4px] justify-center text-dark-purple text-[18px] font-rubik">
                                 {Disciplina.name}
                               </p>

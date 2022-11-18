@@ -4,15 +4,26 @@ import Home from "./pages/Home";
 import DisciplinasFirst from "./pages/DisciplinasFirst";
 import DisciplinasSecond from "./pages/DisciplinasSecond";
 import Dados from "./pages/Dados";
-import Teste from "./teste";
 import { ItemAulaEdit } from "./pages/drag n drops/items/ItemAulaEdit";
 import { AuthProvider } from "./context/auth";
 import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
-// import { EditAula2 } from "./pages/drag n drops/EditAula";
-import { Modalcomponent } from "./components/Modalcomponent";
-import { NewModalcomponent } from "./components/NewModalcomponent";
-import { GoogleForms } from "./components/GoogleForms/GoogleForms";
+import { ModalComponent } from "./components/ModalComponent";
+import { Chats } from "./components/chat/index";
+
+import { initializeApp } from "firebase/app";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC_lP-XRuonKQ2bSnTEAw_RD6kUDnNO6hg",
+  authDomain: "chatram-89e1e.firebaseapp.com",
+  projectId: "chatram-89e1e",
+  storageBucket: "chatram-89e1e.appspot.com",
+  messagingSenderId: "867113784649",
+  appId: "1:867113784649:web:2dca6de296c61bc0c0f698",
+  measurementId: "G-22RQXFHSEK",
+};
+
+initializeApp(firebaseConfig);
 
 function App() {
   return (
@@ -20,7 +31,6 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Login />} />
-          <Route path="/teste" element={<Teste />} />
           <Route
             path="/home"
             element={
@@ -38,7 +48,7 @@ function App() {
             }
           />
           <Route
-            path="/editar-disciplinas/:id"
+            path="/editar-disciplinas/:idSerie/:idDisc"
             element={
               <Private>
                 <DisciplinasSecond />
@@ -46,7 +56,7 @@ function App() {
             }
           />
           <Route
-            path="/editar-disciplinas-Aulas/:id"
+            path="/editar-disciplinas-Aulas/:idSerie/:idDisc"
             element={
               <Private>
                 <EditAula />
@@ -73,23 +83,15 @@ function App() {
             path="/Modalcomponent"
             element={
               <Private>
-                <Modalcomponent />
+                <ModalComponent />
               </Private>
             }
           />
           <Route
-            path="/NewModalcomponent"
+            path="Chats"
             element={
               <Private>
-                <NewModalcomponent />
-              </Private>
-            }
-          />
-          <Route
-            path="/GoogleForms"
-            element={
-              <Private>
-                <GoogleForms />
+                <Chats />
               </Private>
             }
           />

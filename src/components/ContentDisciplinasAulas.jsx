@@ -5,7 +5,7 @@ import { AuthContext } from "../context/auth";
 import { ComponentMiniHeader } from "./ComponentMiniHeader";
 
 export function ContentDisciplinasAulas() {
-  const { id } = useParams();
+  const { idSerie, idDisc } = useParams();
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -15,7 +15,7 @@ export function ContentDisciplinasAulas() {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await app.get(`/disciplinas/${id}`);
+      const response = await app.get(`/disciplinas/${idDisc}`);
       setDisc(response.data.disciplina);
     };
     getData();
@@ -23,7 +23,7 @@ export function ContentDisciplinasAulas() {
   console.log(disc);
 
   function EditarConteudo() {
-    navigate(`/editar-disciplinas-${nameHook}/${disc.id}`);
+    navigate(`/editar-disciplinas-${nameHook}/${idSerie}/${disc.id}`);
   }
 
   function HandleVerificar(nameHook) {

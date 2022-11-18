@@ -1,58 +1,52 @@
-import React, { useState } from "react";
-
-import { Checkbox } from "@mui/material";
-
+import React, { useEffect, useState } from "react";
+import { app } from "../api/app";
+import { useParams } from "react-router-dom";
+import CloseIcon from "@material-ui/icons/Close";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import { MdDragIndicator } from "react-icons/md";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import Modal from "react-modal";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
-import CloseIcon from "@mui/icons-material/Close";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import { Checkbox } from "@mui/material";
 
-export function Modalcomponent() {
+export function ModalComponent() {
+  const { idSerie, idDisc } = useParams();
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [atividade, setAtividade] = useState([]);
-  const [questao, SetQuestao] = useState([]);
-  const [alternativas, setAlternativas] = useState([]);
-  const [isCorrect, setIsCorrect] = useState(false);
-  const [title_question, setTitle_question] = useState("");
-  const [selectValue, setSelectValue] = useState("Múltipla escolha"); // multipla
-  const [description, setDescription] = useState("");
+  const [checked, setChecked] = useState(false);
+  const [title, setTitle] = useState("");
 
   const optionTipo = [
-    { id: 1, nome: "Múltipla escolha" },
-    { id: 2, nome: "Subjetiva" },
+    { id: 1, nome: "Múltipla escolha", value: "objetiva" },
+    { id: 2, nome: "Subjetiva", value: "subjetiva" },
   ];
 
-  const addQuestao = (e) => {
-    e.preventDefault();
+  const [questions, setQuestions] = useState([
+    {
+      title_question: "",
+      id_disciplina: idDisc,
+      question_type: "objetiva",
+      options: [{ description: "", is_correct: false }],
+    },
+  ]);
 
-    const objetoOptions = { description: description, isCorrect: isCorrect };
-    setAlternativas([...alternativas, objetoOptions]);
+  async function AddAtiv() {
+    try {
+      await app.post("/atividades", {
+        title: title,
+        description: "Resolva as questões para ganhar pontos",
+        id_serie: idSerie,
+        id_disciplina: idDisc,
+        questions: questions,
+      });
+      document.location.reload(true);
+      alert("Conteudo cadastrado!");
+    } catch {
+      alert("Ocorreu um erro. Tente novamente.");
+    }
+  }
 
-    const objetoQuestao = {
-      title_question: title_question,
-      question_type: selectValue,
-      options: alternativas,
-    };
-    setAtividade([...atividade, objetoQuestao]);
-    setTitle_question("");
-    setDescription("");
-    setAlternativas([]);
-    SetQuestao([...questao, ""])
-    console.log(alternativas);
-  };
-
-  const addAlternativas = (e) => {
-    e.preventDefault();
-
-    setAlternativas([...alternativas, ""]);
-  };
-
-  // const handleChangeAlternativas = (e, index) => {
-  //   alternativas[index] = e.target.value;
-  //   setAlternativas([...alternativas]);
-  //   console.log(alternativas);
-  // };
+  console.log(title);
 
   function openModal() {
     setModalIsOpen(true);
@@ -61,12 +55,216 @@ export function Modalcomponent() {
   function closeModal() {
     setModalIsOpen(false);
   }
+
+  function changeQuestion(text, i) {
+    var newQuestion = [...questions];
+    newQuestion[i].title_question = text;
+    setQuestions(newQuestion);
+  }
+
+  function changeOptionValue(text, i, j) {
+    var optionsQuestion = [...questions];
+    optionsQuestion[i].options[j].description = text;
+    setQuestions(optionsQuestion);
+  }
+
+  function changeTipoQuestao(text, i) {
+    var TypeQuestion = [...questions];
+    TypeQuestion[i].question_type = text;
+    setQuestions(TypeQuestion);
+  }
+
+  function handleChange(text, i, j) {
+    var optionQuestionCorrect = [...questions];
+    optionQuestionCorrect[i].options[j].is_correct = !checked;
+    setQuestions(optionQuestionCorrect);
+    console.log(optionQuestionCorrect);
+  }
+
+  function removeOption(i, j) {
+    var RemoveOptionQuestion = [...questions];
+    if (RemoveOptionQuestion[i].options.length > 1) {
+      RemoveOptionQuestion[i].options.splice(j, 1);
+      setQuestions(RemoveOptionQuestion);
+    }
+  }
+
+  console.log(questions);
+
+  function addOption(i) {
+    var optionsOfQuestion = [...questions];
+    if (optionsOfQuestion[i].options.length < 5) {
+      optionsOfQuestion[i].options.push({ description: "", is_correct: false });
+    } else {
+      console.log("Máximo de 5 alternativas");
+    }
+
+    setQuestions(optionsOfQuestion);
+  }
+
+  function deleteQuestion(i) {
+    let qs = [...questions];
+    if (questions.length > 1) {
+      qs.splice(i, 1);
+    }
+    setQuestions(qs);
+  }
+
+  function addMoreQuestionField() {
+    setQuestions([
+      ...questions,
+      {
+        title_question: "",
+        id_disciplina: "0edbbd06-e902-4714-a18e-ddd4dc82ddeb",
+        question_type: "objetiva",
+        options: [{ description: "", is_correct: false }],
+      },
+    ]);
+  }
+
+  function clearQuestion() {
+    questions.pop();
+    closeModal();
+    console.log(questions);
+  }
+
+  function onDragEnd(result) {
+    if (!result.destination) {
+      return;
+    }
+    var itemgg = [...questions];
+    const itemF = reorder(
+      itemgg,
+      result.source.index,
+      result.destination.index
+    );
+    setQuestions(itemF);
+  }
+
+  const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
+    return result;
+  };
+
+  function questionsUI() {
+    return questions.map((ques, i) => (
+      <Draggable key={i} draggableId={i + "id"} index={i}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+          >
+            <div>
+              <MdDragIndicator
+                style={{
+                  transform: "rotate(-90deg)",
+                  color: "#DAE0E2",
+                  position: "relative",
+                  left: "330px",
+                }}
+                fontSize="small"
+              />
+              <div>
+                <div className="flex flex-row w-full justify-between items-center text-black">
+                  <p className="mr-4 text-dark-purple text-[20px]">{i + 1})</p>
+
+                  <div className="flex items-center h-[40px] w-1/3">
+                    <DeleteForeverOutlinedIcon
+                      sx={{ fontSize: 30 }}
+                      onClick={() => deleteQuestion(i)}
+                      className="cursor-pointer text-dark-purple mr-2"
+                    />
+                    <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
+                      <select
+                        className="bg-transparent w-full rounded-lg outline-none"
+                        name="TipoDeQuestão"
+                        onChange={(e) => {
+                          changeTipoQuestao(e.target.value, i);
+                        }}
+                      >
+                        {optionTipo.map((item) => (
+                          <option key={item.id} value={item.value}>
+                            {item.nome}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-4 mb-12 w-full h-[40px]">
+                  <textarea
+                    placeholder="Pergunta"
+                    value={ques.title_question}
+                    onChange={(e) => {
+                      changeQuestion(e.target.value, i);
+                    }}
+                    className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                  />
+                </div>
+                {ques.options.map((op, j) => (
+                  <div className="add_question_body" key={j}>
+                    <div>
+                      <div className="flex flex-row items-center justify-between mt-2">
+                        <Checkbox
+                          className="cursor-pointer text-black"
+                          value={ques.options[j].is_correct}
+                          onChange={(e) => {
+                            handleChange(e.target.value, i, j);
+                          }}
+                        />
+                        <textarea
+                          type="text"
+                          className="bg-[#EDF2FF] w-full h-[40px] text-black placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
+                          placeholder={`Alternativa ${j + 1}`}
+                          value={ques.options[j].optionText}
+                          onChange={(e) => {
+                            changeOptionValue(e.target.value, i, j);
+                          }}
+                        />
+                        <CloseIcon
+                          className="cursor-pointer text-dark-purple"
+                          onClick={() => {
+                            removeOption(i, j);
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+
+                {ques.options.length < 5 ? (
+                  <div className="add_question_body">
+                    <div className="h-[40px] mt-4 mb-4">
+                      <button
+                        onClick={() => addOption(i)}
+                        className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
+                      >
+                        <AddCircleOutlineIcon className="mr-4" />
+                        Adicionar Alternativas
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </Draggable>
+    ));
+  }
+
   return (
     <div>
       <div className="flex justify-center text-dark-purple">
         <button
           onClick={openModal}
-          className="bg-white mb-4 rounded-lg w-4/5 h-fit flex items-center justify-center"
+          className="bg-white p-1 mb-4 rounded-lg w-full h-fit flex items-center justify-center"
         >
           <AddCircleIcon /> Nova Atividade
         </button>
@@ -83,144 +281,41 @@ export function Modalcomponent() {
           <div className="flex flex-col text-dark-purple py-4 border-dashed border-b-2 border-dark-purple">
             <input
               placeholder="Título"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
               className="w-fit placeholder-dark-purple outline-none text-[25px]"
             />
           </div>
-          <div>
-            <div className="flex flex-col mt-4 px-4">
-              {questao.map((_, index) => (
-                <div>
-                  {selectValue === "Múltipla escolha" ? (
-                    <div>
-                      <div className="flex flex-row w-full justify-between items-center text-black">
-                        <p className="mr-4 text-dark-purple text-[20px]">
-                          {index + 1})
-                        </p>
 
-                        <div className="flex items-center h-[40px] w-1/3">
-                          <DeleteForeverOutlinedIcon
-                            sx={{ fontSize: 30 }}
-                            className="cursor-pointer text-dark-purple mr-2"
-                          />
-                          <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
-                            <select
-                              className="bg-transparent w-full rounded-lg outline-none"
-                              name="TipoDeQuestão"
-                              value={selectValue}
-                              onChange={(e) => setSelectValue(e.target.value)}
-                            >
-                              {optionTipo.map((item) => (
-                                <option key={item.id} value={item.nome}>
-                                  {item.nome}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
+          <DragDropContext onDragEnd={onDragEnd}>
+            <Droppable droppableId="droppable">
+              {(provided, snapshot) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {questionsUI()}
 
-                      <div className="mt-4 mb-12 w-full h-[40px]">
-                        <textarea
-                          placeholder="Pergunta"
-                          value={title_question}
-                          onChange={(e) => setTitle_question(e.target.value)}
-                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                        />
-                      </div>
-                      {alternativas.map((desc, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-row items-center justify-between mt-2"
-                        >
-                          <Checkbox className="cursor-pointer text-dark-purple" />
-                          <textarea
-                            id={`descricao-${index + 1}`}
-                            value={description}
-                            onChange={(e) => setDescription(e.target.value)}
-                            placeholder={`Alternativa ${index + 1}`}
-                            className="bg-[#EDF2FF] w-full h-[40px] placeholder-black outline-none text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                          />
-                          <CloseIcon className="cursor-pointer text-dark-purple" />
-                        </div>
-                      ))}
-
-                      <div className="h-[40px] mt-4 mb-4">
-                        <button
-                          onClick={addAlternativas}
-                          className="flex items-center justify-center w-full h-full bg-dark-purple rounded-lg text-white "
-                        >
-                          <AddCircleOutlineIcon className="mr-4" />
-                          Adicionar Alternativas
-                        </button>
-                      </div>
-                    </div>
-                  ) : null}
-
-                  {selectValue == "Subjetiva" ? (
-                    <div>
-                      <div className="flex flex-row w-full justify-between items-center text-black">
-                        <p className="mr-4 text-dark-purple text-[20px]">
-                          {index + 1})
-                        </p>
-
-                        <div className="flex items-center h-[40px] w-1/3">
-                          <DeleteForeverOutlinedIcon
-                            sx={{ fontSize: 30 }}
-                            className="cursor-pointer text-dark-purple mr-2"
-                          />
-                          <div className="bg-[#EDF2FF] w-full rounded-lg p-2 pr-4">
-                            <select
-                              className="bg-transparent w-full rounded-lg outline-none"
-                              name="TipoDeQuestão"
-                              value={selectValue}
-                              onChange={(e) => setSelectValue(e.target.value)}
-                            >
-                              {optionTipo.map((item) => (
-                                <option key={item.id} value={item.nome}>
-                                  {item.nome}
-                                </option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-4 mb-12 w-full h-[40px]">
-                        <textarea
-                          placeholder="Pergunta"
-                          className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                        />
-                      </div>
-                    </div>
-                  ) : // <div className="mt-4 mb-8 w-full h-[40px]">
-                  //   <textarea
-                  //     placeholder="Resposta"
-                  //     className="bg-[#EDF2FF] w-full h-fit placeholder-black outline-none text-black text-[18px] rounded-lg p-2 scrollbar-thin resize-none"
-                  //   />
-                  // </div>
-                  null}
+                  {provided.placeholder}
                 </div>
-              ))}
-              <div className="flex items-center justify-center mt-2">
-                <button
-                  onClick={addQuestao}
-                  className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white"
-                >
-                  Adicionar Questão
-                </button>
-              </div>
-            </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+          <div className="flex items-center justify-center mt-2">
+            <button
+              onClick={addMoreQuestionField}
+              className="flex items-center justify-center w-1/3 h-[40px] bg-dark-purple rounded-lg text-white"
+            >
+              Adicionar Questão
+            </button>
           </div>
-
           <div className="flex flex-row items-center justify-end my-8 px-4 w-full">
             <button
-              onClick={closeModal}
+              onClick={clearQuestion}
               className="bg-[#EDF2FF] rounded-lg text-black w-1/6 h-[40px] mr-4"
             >
               Cancelar
             </button>
             <button
-              onClick={closeModal}
+              onClick={AddAtiv}
               className="bg-dark-purple rounded-lg text-white w-1/6 h-[40px]"
             >
               Salvar

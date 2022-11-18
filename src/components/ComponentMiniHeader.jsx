@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { app } from "../api/app";
 
 export function ComponentMiniHeader({ nameHook, setNameHook, rotaId }) {
-  const { id } = useParams();
+  const { idDisc } = useParams();
   const navigate = useNavigate();
 
   const [disc, setDisc] = useState("");
@@ -24,7 +24,7 @@ export function ComponentMiniHeader({ nameHook, setNameHook, rotaId }) {
 
   useEffect(() => {
     const getData = async () => {
-      const response = await app.get(`/disciplinas/${id}`);
+      const response = await app.get(`/disciplinas/${idDisc}`);
       setDisc(response.data.disciplina);
     };
     getData();

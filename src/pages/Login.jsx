@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../context/auth";
-import backgroundImg from "../assets/background-1.png";
+import Logo from '../assets/logo2x.png'
 import backgroundImgNew from "../assets/FOTO.png";
 
 export function Login() {
@@ -29,9 +29,9 @@ export function Login() {
           className="max-w-[400px] w-full mx-auto bg-[#4263EB] rounded-md p-8"
           onSubmit={handleSubmit}
         >
-          <h2 className="text-4xl font-bold text-center py-6 text-white">
-            Logo
-          </h2>
+          <a className="w-full flex justify-center items-center my-2">
+            <img src={Logo} className='px-10'/>
+          </a>
           <div className="flex flex-col py-1">
             <label htmlFor="mat" className="text-zinc-200">
               Matrícula
