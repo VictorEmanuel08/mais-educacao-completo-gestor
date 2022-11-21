@@ -10,6 +10,7 @@ import { Private } from "./components/Private";
 import { EditAula } from "./pages/drag n drops/EditAula";
 import { ModalComponent } from "./components/ModalComponent";
 import { Chats } from "./components/chat/index";
+import { Chats } from "./components/Teste";
 
 import { initializeApp } from "firebase/app";
 
@@ -92,6 +93,14 @@ function App() {
             element={
               <Private>
                 <Chats />
+              </Private>
+            }
+          />
+          <Route
+            path="Teste"
+            element={
+              <Private>
+                <Teste />
               </Private>
             }
           />
